@@ -5,7 +5,7 @@ import os
 
 from app.core.config import settings
 from app.core.logging import logger
-from app.api.routers import health, auth, school, user, activity_log
+from app.api.routers import health, auth, school, user, activity_log, student
 
 # Ensure uploads folder exists
 os.makedirs("uploads", exist_ok=True)
@@ -39,6 +39,7 @@ app.include_router(auth.router, prefix=f"{settings.API_V1_STR}/auth", tags=["Aut
 app.include_router(school.router, prefix=f"{settings.API_V1_STR}/schools", tags=["School Management"])
 app.include_router(user.router, prefix=f"{settings.API_V1_STR}/users", tags=["User Management"])
 app.include_router(activity_log.router, prefix=f"{settings.API_V1_STR}/activity-logs", tags=["Activity Logs"])
+app.include_router(student.router, prefix=settings.API_V1_STR)
 
 @app.get("/")
 def root_endpoint():

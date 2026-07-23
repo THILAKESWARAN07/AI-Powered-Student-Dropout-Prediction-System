@@ -19,6 +19,10 @@ import UserManagement from './pages/UserManagement';
 import ActivityLogs from './pages/ActivityLogs';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
+import StudentList from './pages/StudentList';
+import StudentForm from './pages/StudentForm';
+import StudentDetails from './pages/StudentDetails';
+import ImportWizard from './pages/ImportWizard';
 import NotFoundPage from './pages/NotFoundPage';
 
 export default function App() {
@@ -48,6 +52,13 @@ export default function App() {
                   <Route path="/portal/schools" element={<SchoolManagement />} />
                   <Route path="/portal/profile" element={<Profile />} />
                   <Route path="/portal/settings" element={<Settings />} />
+                  
+                  {/* Student Management routes */}
+                  <Route path="/portal/students" element={<StudentList />} />
+                  <Route path="/portal/students/new" element={<StudentForm />} />
+                  <Route path="/portal/students/:id" element={<StudentDetails />} />
+                  <Route path="/portal/students/:id/edit" element={<StudentForm />} />
+                  <Route path="/portal/students/import" element={<ImportWizard />} />
 
                   {/* Admin & DEO specific views */}
                   <Route element={<ProtectedRoute allowedRoles={['admin', 'deo']} />}>

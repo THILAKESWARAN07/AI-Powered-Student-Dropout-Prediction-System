@@ -14,6 +14,7 @@ export default function Sidebar() {
   const navigationItems = [
     { name: 'Dashboard', path: '/portal/dashboard', icon: <LayoutDashboard className="h-5 w-5" />, roles: ['admin', 'headmaster', 'teacher', 'deo'] },
     { name: 'Schools', path: '/portal/schools', icon: <School className="h-5 w-5" />, roles: ['admin', 'headmaster', 'teacher', 'deo'] },
+    { name: 'Students', path: '/portal/students', icon: <GraduationCap className="h-5 w-5" />, roles: ['admin', 'headmaster', 'teacher', 'deo'] },
     { name: 'Users', path: '/portal/users', icon: <Users className="h-5 w-5" />, roles: ['admin', 'deo'] },
     { name: 'Activity Logs', path: '/portal/logs', icon: <History className="h-5 w-5" />, roles: ['admin'] },
     { name: 'Profile', path: '/portal/profile', icon: <User className="h-5 w-5" />, roles: ['admin', 'headmaster', 'teacher', 'deo'] },
