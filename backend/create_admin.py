@@ -11,7 +11,14 @@ try:
     existing = db.query(User).filter(User.email == "admin@test.com").first()
 
     if existing:
-        print("[+] Admin user already exists.")
+        existing.password_hash = get_password_hash("Admin@123")
+        existing.role = "admin"
+        existing.is_active = True
+        existing.email_verified = True
+
+        db.commit()
+
+        print("[+] Admin password reset successfully!")
     else:
         admin = User(
             full_name="System Administrator",
@@ -28,8 +35,6 @@ try:
         db.commit()
 
         print("[+] Admin created successfully!")
-        print("Email    : admin@test.com")
-        print("Password : Admin@123")
 
 finally:
     db.close()
