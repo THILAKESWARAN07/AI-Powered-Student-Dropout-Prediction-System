@@ -9,7 +9,7 @@ from app.schemas.auth import TokenData
 from typing import List
 
 oauth2_scheme = OAuth2PasswordBearer(
-    tokenUrl=f"{settings.API_V1_STR}/auth/login"
+    tokenUrl=f"{settings.API_V1_STR}/auth/token"
 )
 
 

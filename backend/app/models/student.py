@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 from typing import Optional, List
-from sqlalchemy import Integer, String, Float, Boolean, DateTime, ForeignKey
+from sqlalchemy import Integer, String, Float, Boolean, DateTime, ForeignKey, JSON
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.db.base_class import Base
 
@@ -158,6 +158,11 @@ class StudentPrediction(Base):
     student_id: Mapped[int] = mapped_column(ForeignKey("students.id", ondelete="CASCADE"), index=True)
     dropout_risk: Mapped[str] = mapped_column(String(50))  # "Low" / "Medium" / "High"
     dropout_status: Mapped[str] = mapped_column(String(50))  # "Yes" / "No"
+    probability: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    confidence: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    top_features: Mapped[Optional[dict]] = mapped_column(JSON, nullable=True)
+    recommended_actions: Mapped[Optional[list]] = mapped_column(JSON, nullable=True)
+    model_version: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
     predicted_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
     created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))

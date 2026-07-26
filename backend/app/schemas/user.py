@@ -35,10 +35,7 @@ class UserResponse(UserBase):
     id: int
     role: str
     profile_image: Optional[str] = None
-    provider: str
-    google_id: Optional[str] = None
     email_verified: bool
-    profile_picture: Optional[str] = None
     is_active: bool
     last_login: Optional[datetime] = None
     created_at: datetime

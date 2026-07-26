@@ -5,7 +5,7 @@ import os
 
 from app.core.config import settings
 from app.core.logging import logger
-from app.api.routers import health, auth, school, user, activity_log, student
+from app.api.routers import health, auth, school, user, activity_log, student, prediction, dashboard
 
 # Ensure uploads folder exists
 os.makedirs("uploads", exist_ok=True)
@@ -33,6 +33,24 @@ if settings.BACKEND_CORS_ORIGINS:
         allow_headers=["*"],
     )
 
+from fastapi.responses import JSONResponse
+from fastapi import Request
+import traceback
+
+@app.middleware("http")
+async def catch_exceptions_middleware(request: Request, call_next):
+    try:
+        response = await call_next(request)
+        return response
+    except Exception as e:
+        tb = traceback.format_exc()
+        with open("error.log", "a") as f:
+            f.write(f"\n--- ERROR ---\n{tb}\n")
+        return JSONResponse(
+            status_code=500,
+            content={"detail": f"Internal Server Error: {str(e)}", "traceback": tb}
+        )
+
 # Include routers
 app.include_router(health.router, prefix=settings.API_V1_STR, tags=["System Health"])
 app.include_router(auth.router, prefix=f"{settings.API_V1_STR}/auth", tags=["Authentication"])
@@ -40,6 +58,8 @@ app.include_router(school.router, prefix=f"{settings.API_V1_STR}/schools", tags=
 app.include_router(user.router, prefix=f"{settings.API_V1_STR}/users", tags=["User Management"])
 app.include_router(activity_log.router, prefix=f"{settings.API_V1_STR}/activity-logs", tags=["Activity Logs"])
 app.include_router(student.router, prefix=settings.API_V1_STR)
+app.include_router(prediction.router, prefix=settings.API_V1_STR)
+app.include_router(dashboard.router, prefix=f"{settings.API_V1_STR}/dashboard", tags=["Dashboard Analytics"])
 
 @app.get("/")
 def root_endpoint():
@@ -51,4 +71,3 @@ def root_endpoint():
     }
 
 logger.info(f"{settings.PROJECT_NAME} backend application initialized successfully with Module 2.")
-

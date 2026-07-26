@@ -23,6 +23,10 @@ import StudentList from './pages/StudentList';
 import StudentForm from './pages/StudentForm';
 import StudentDetails from './pages/StudentDetails';
 import ImportWizard from './pages/ImportWizard';
+import RiskAnalysis from './pages/RiskAnalysis';
+import ModelInfo from './pages/ModelInfo';
+import Reports from './pages/Reports';
+import XaiDashboard from './pages/XaiDashboard';
 import NotFoundPage from './pages/NotFoundPage';
 
 export default function App() {
@@ -36,13 +40,13 @@ export default function App() {
               <Route path="/" element={<MainLayout />}>
                 <Route index element={<LandingPage />} />
               </Route>
-
+ 
               {/* Public Authentication routes */}
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/reset-password" element={<ResetPassword />} />
-
+ 
               {/* Secure Portal Panel Routes */}
               <Route element={<ProtectedRoute />}>
                 <Route element={<AppLayout />}>
@@ -59,6 +63,10 @@ export default function App() {
                   <Route path="/portal/students/:id" element={<StudentDetails />} />
                   <Route path="/portal/students/:id/edit" element={<StudentForm />} />
                   <Route path="/portal/students/import" element={<ImportWizard />} />
+                  <Route path="/portal/risk-analysis" element={<RiskAnalysis />} />
+                  <Route path="/portal/xai" element={<XaiDashboard />} />
+                  <Route path="/portal/reports" element={<Reports />} />
+                  <Route path="/portal/model-info" element={<ModelInfo />} />
 
                   {/* Admin & DEO specific views */}
                   <Route element={<ProtectedRoute allowedRoles={['admin', 'deo']} />}>

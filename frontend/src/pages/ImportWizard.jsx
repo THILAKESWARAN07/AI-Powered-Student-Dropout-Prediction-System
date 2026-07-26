@@ -13,6 +13,8 @@ export default function ImportWizard() {
   const { showToast } = useToast();
   const navigate = useNavigate();
 
+  const isAdmin = currentUser?.role === 'admin';
+
   // Wizard state: 1: Upload, 2: Map Headers, 3: Import Summary
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);

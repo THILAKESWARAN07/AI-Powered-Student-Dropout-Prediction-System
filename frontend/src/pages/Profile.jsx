@@ -252,57 +252,55 @@ export default function Profile() {
           </GlassCard>
 
           {/* Change Password */}
-          {user?.provider !== 'google' && (
-            <GlassCard className="p-8 border-white/30 dark:border-white/5" hoverEffect={false}>
-              <h3 className="text-lg font-bold mb-6 flex items-center gap-2">
-                <Lock className="h-5 w-5 text-indigo-500" />
-                Security Password Change
-              </h3>
-              <form onSubmit={handlePasswordUpdate} className="space-y-4">
+          <GlassCard className="p-8 border-white/30 dark:border-white/5" hoverEffect={false}>
+            <h3 className="text-lg font-bold mb-6 flex items-center gap-2">
+              <Lock className="h-5 w-5 text-indigo-500" />
+              Security Password Change
+            </h3>
+            <form onSubmit={handlePasswordUpdate} className="space-y-4">
+              <div>
+                <label className="text-xs font-bold text-slate-500 block mb-1 uppercase">Current Password</label>
+                <input
+                  type="password"
+                  value={oldPassword}
+                  onChange={(e) => setOldPassword(e.target.value)}
+                  className="w-full px-4 py-2.5 rounded-xl bg-white/50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 text-slate-800 dark:text-white"
+                  required
+                />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-xs font-bold text-slate-500 block mb-1 uppercase">Current Password</label>
+                  <label className="text-xs font-bold text-slate-500 block mb-1 uppercase">New Password</label>
                   <input
                     type="password"
-                    value={oldPassword}
-                    onChange={(e) => setOldPassword(e.target.value)}
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
                     className="w-full px-4 py-2.5 rounded-xl bg-white/50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 text-slate-800 dark:text-white"
                     required
                   />
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-xs font-bold text-slate-500 block mb-1 uppercase">New Password</label>
-                    <input
-                      type="password"
-                      value={newPassword}
-                      onChange={(e) => setNewPassword(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl bg-white/50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 text-slate-800 dark:text-white"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="text-xs font-bold text-slate-500 block mb-1 uppercase">Confirm New Password</label>
-                    <input
-                      type="password"
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl bg-white/50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 text-slate-800 dark:text-white"
-                      required
-                    />
-                  </div>
+                <div>
+                  <label className="text-xs font-bold text-slate-500 block mb-1 uppercase">Confirm New Password</label>
+                  <input
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    className="w-full px-4 py-2.5 rounded-xl bg-white/50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 text-slate-800 dark:text-white"
+                    required
+                  />
                 </div>
+              </div>
 
-                <button
-                  type="submit"
-                  disabled={updatingPassword}
-                  className="bg-primary hover:bg-primary/95 text-white px-5 py-2.5 rounded-xl font-semibold text-sm shadow-md transition-all active:scale-[0.98] flex items-center gap-2 disabled:opacity-75 disabled:pointer-events-none"
-                >
-                  {updatingPassword && <Loader2 className="h-4 w-4 animate-spin" />}
-                  Change Password
-                </button>
-              </form>
-            </GlassCard>
-          )}
+              <button
+                type="submit"
+                disabled={updatingPassword}
+                className="bg-primary hover:bg-primary/95 text-white px-5 py-2.5 rounded-xl font-semibold text-sm shadow-md transition-all active:scale-[0.98] flex items-center gap-2 disabled:opacity-75 disabled:pointer-events-none"
+              >
+                {updatingPassword && <Loader2 className="h-4 w-4 animate-spin" />}
+                Change Password
+              </button>
+            </form>
+          </GlassCard>
         </div>
       </div>
     </div>

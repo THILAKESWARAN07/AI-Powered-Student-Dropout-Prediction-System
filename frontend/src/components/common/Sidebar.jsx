@@ -1,68 +1,67 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { 
-  LayoutDashboard, School, Users, History, User, Settings, LogOut, Menu, X, GraduationCap, Sun, Moon
+  LayoutDashboard, School, Users, History, GraduationCap, Brain, Cpu, FileText, X
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
-import { useTheme } from '../../context/ThemeContext';
 
-export default function Sidebar() {
-  const { user, logout } = useAuth();
-  const { theme, toggleTheme } = useTheme();
-  const [mobileOpen, setMobileOpen] = useState(false);
+export default function Sidebar({ mobileOpen, setMobileOpen }) {
+  const { user } = useAuth();
 
   const navigationItems = [
     { name: 'Dashboard', path: '/portal/dashboard', icon: <LayoutDashboard className="h-5 w-5" />, roles: ['admin', 'headmaster', 'teacher', 'deo'] },
     { name: 'Schools', path: '/portal/schools', icon: <School className="h-5 w-5" />, roles: ['admin', 'headmaster', 'teacher', 'deo'] },
     { name: 'Students', path: '/portal/students', icon: <GraduationCap className="h-5 w-5" />, roles: ['admin', 'headmaster', 'teacher', 'deo'] },
+    { name: 'Risk Analysis', path: '/portal/risk-analysis', icon: <Brain className="h-5 w-5" />, roles: ['admin', 'headmaster', 'teacher', 'deo'] },
+    { name: 'Explainable AI', path: '/portal/xai', icon: <Brain className="h-5 w-5" />, roles: ['admin', 'headmaster', 'teacher', 'deo'] },
+    { name: 'Reports', path: '/portal/reports', icon: <FileText className="h-5 w-5" />, roles: ['admin', 'headmaster', 'teacher', 'deo'] },
+    { name: 'Model Info', path: '/portal/model-info', icon: <Cpu className="h-5 w-5" />, roles: ['admin', 'headmaster', 'teacher', 'deo'] },
     { name: 'Users', path: '/portal/users', icon: <Users className="h-5 w-5" />, roles: ['admin', 'deo'] },
     { name: 'Activity Logs', path: '/portal/logs', icon: <History className="h-5 w-5" />, roles: ['admin'] },
-    { name: 'Profile', path: '/portal/profile', icon: <User className="h-5 w-5" />, roles: ['admin', 'headmaster', 'teacher', 'deo'] },
-    { name: 'Settings', path: '/portal/settings', icon: <Settings className="h-5 w-5" />, roles: ['admin', 'headmaster', 'teacher', 'deo'] },
   ];
 
   const visibleItems = navigationItems.filter(item => item.roles.includes(user?.role));
 
-  const roleLabels = {
-    admin: 'Administrator',
-    headmaster: 'Headmaster',
-    teacher: 'Educator',
-    deo: 'District Officer (DEO)'
-  };
-
   const SidebarContent = () => (
-    <div className="flex flex-col h-full bg-slate-900 text-slate-100 border-r border-slate-800 p-4 w-64">
-      {/* Brand Logo */}
-      <div className="flex items-center gap-3 px-2 py-4 border-b border-slate-800 mb-6 justify-between">
-        <div className="flex items-center gap-2">
-          <div className="bg-primary/20 text-primary p-2 rounded-xl">
-            <GraduationCap className="h-6 w-6 text-indigo-400" />
+    <div className="flex flex-col h-full bg-slate-950 text-slate-100 border-r border-slate-900/60 p-5 w-64 shadow-2xl">
+      {/* Brand Logo & Close Menu */}
+      <div className="flex items-center justify-between px-1 py-4 mb-6 border-b border-slate-900/80">
+        <div className="flex items-center gap-3">
+          <div className="bg-indigo-650 text-white p-2.5 rounded-xl shadow-lg shadow-indigo-650/20 flex items-center justify-center">
+            <GraduationCap className="h-5.5 w-5.5" />
           </div>
-          <span className="text-xl font-bold tracking-tight text-white">
-            DropGuard<span className="text-indigo-400">.</span>
-          </span>
+          <div>
+            <span className="text-md font-black tracking-wider text-white block">
+              DROPGUARD
+            </span>
+            <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest block -mt-1">
+              Retention AI
+            </span>
+          </div>
         </div>
+        
+        {/* Close Button on Mobile view */}
         <button
-          onClick={toggleTheme}
-          className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors"
-          title="Toggle Theme"
+          onClick={() => setMobileOpen(false)}
+          className="lg:hidden p-1.5 rounded-lg text-slate-450 hover:bg-slate-900 hover:text-white transition-colors"
+          title="Close Navigation"
         >
-          {theme === 'dark' ? <Sun className="h-4 w-4 text-amber-400" /> : <Moon className="h-4 w-4 text-indigo-400" />}
+          <X className="h-5 w-5" />
         </button>
       </div>
 
       {/* Navigation Links */}
-      <nav className="flex-grow space-y-1">
+      <nav className="flex-grow space-y-1.5 overflow-y-auto pr-1 select-none">
         {visibleItems.map((item) => (
           <NavLink
             key={item.name}
             to={item.path}
             onClick={() => setMobileOpen(false)}
             className={({ isActive }) =>
-              `flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-semibold transition-all duration-200 ${
+              `flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-bold transition-all duration-205 ${
                 isActive 
-                  ? 'bg-primary text-white shadow-lg shadow-primary/20' 
-                  : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'
+                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20' 
+                  : 'text-slate-450 hover:bg-slate-900 hover:text-white hover:translate-x-1'
               }`
             }
           >
@@ -72,61 +71,20 @@ export default function Sidebar() {
         ))}
       </nav>
 
-      {/* User Info & Logout */}
-      <div className="border-t border-slate-800 pt-4 mt-auto">
-        <div className="flex items-center gap-3 px-2 py-2 mb-3">
-          <div className="w-10 h-10 rounded-full overflow-hidden bg-slate-800 border border-slate-700 flex items-center justify-center font-bold text-white uppercase">
-            {user?.profile_image ? (
-              <img 
-                src={user.profile_image.startsWith('http') ? user.profile_image : `http://localhost:8000${user.profile_image}`} 
-                alt="Avatar" 
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              user?.full_name.charAt(0)
-            )}
-          </div>
-          <div className="flex-grow min-w-0">
-            <h4 className="text-sm font-bold text-white truncate">{user?.full_name}</h4>
-            <span className="text-xs text-slate-500 font-medium truncate block">
-              {roleLabels[user?.role] || user?.role}
-            </span>
-          </div>
-        </div>
-
-        <button
-          onClick={() => {
-            setMobileOpen(false);
-            logout();
-          }}
-          className="flex w-full items-center gap-3 px-3 py-3 rounded-xl text-sm font-semibold text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-colors"
-        >
-          <LogOut className="h-5 w-5" />
-          Logout
-        </button>
+      {/* Footer Branding Label */}
+      <div className="pt-4 border-t border-slate-900/80 text-center">
+        <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">
+          Version 1.0.0
+        </span>
       </div>
     </div>
   );
 
   return (
     <>
-      {/* Desktop Sidebar */}
-      <div className="hidden lg:block h-screen sticky top-0 shrink-0">
+      {/* Desktop Sidebar (Fixed Position) */}
+      <div className="hidden lg:block fixed inset-y-0 left-0 w-64 z-20">
         <SidebarContent />
-      </div>
-
-      {/* Mobile Top Header */}
-      <div className="lg:hidden w-full bg-slate-900 border-b border-slate-800 p-4 flex justify-between items-center text-white sticky top-0 z-40">
-        <div className="flex items-center gap-2">
-          <GraduationCap className="h-6 w-6 text-indigo-400" />
-          <span className="text-lg font-bold">DropGuard</span>
-        </div>
-        <button 
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700"
-        >
-          {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
       </div>
 
       {/* Mobile Overlay Sidebar Drawer */}
@@ -134,11 +92,11 @@ export default function Sidebar() {
         <div className="fixed inset-0 z-50 lg:hidden flex">
           {/* Backdrop */}
           <div 
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm" 
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 animate-fade-in" 
             onClick={() => setMobileOpen(false)}
           />
           {/* Sidebar Drawer Panel */}
-          <div className="relative flex flex-col h-full w-64 max-w-sm bg-slate-900 animate-in slide-in-from-left duration-300">
+          <div className="relative flex flex-col h-full w-64 max-w-sm bg-slate-950 animate-in slide-in-from-left duration-300">
             <SidebarContent />
           </div>
         </div>

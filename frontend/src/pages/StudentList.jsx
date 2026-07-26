@@ -34,6 +34,17 @@ export default function StudentList() {
   const [classFilter, setClassFilter] = useState('');
   const [sectionFilter, setSectionFilter] = useState('');
   const [genderFilter, setGenderFilter] = useState('');
+  const [schoolTypeFilter, setSchoolTypeFilter] = useState('');
+  const [communityFilter, setCommunityFilter] = useState('');
+  const [attendanceMinFilter, setAttendanceMinFilter] = useState('');
+  const [attendanceMaxFilter, setAttendanceMaxFilter] = useState('');
+  const [marksMinFilter, setMarksMinFilter] = useState('');
+  const [marksMaxFilter, setMarksMaxFilter] = useState('');
+  const [dropoutStatusFilter, setDropoutStatusFilter] = useState('');
+  const [financialDifficultyFilter, setFinancialDifficultyFilter] = useState('');
+  const [childLabourRiskFilter, setChildLabourRiskFilter] = useState('');
+  const [lowMotivationFilter, setLowMotivationFilter] = useState('');
+  const [academicBacklogsFilter, setAcademicBacklogsFilter] = useState('');
   const [showFilters, setShowFilters] = useState(false);
 
   // Pagination state
@@ -66,6 +77,17 @@ export default function StudentList() {
       if (classFilter) params.class_name = classFilter;
       if (sectionFilter) params.section = sectionFilter;
       if (genderFilter) params.gender = genderFilter;
+      if (schoolTypeFilter) params.school_type = schoolTypeFilter;
+      if (communityFilter) params.community = communityFilter;
+      if (attendanceMinFilter) params.attendance_min = parseFloat(attendanceMinFilter);
+      if (attendanceMaxFilter) params.attendance_max = parseFloat(attendanceMaxFilter);
+      if (marksMinFilter) params.marks_min = parseFloat(marksMinFilter);
+      if (marksMaxFilter) params.marks_max = parseFloat(marksMaxFilter);
+      if (dropoutStatusFilter) params.dropout_status = dropoutStatusFilter;
+      if (financialDifficultyFilter) params.financial_difficulty = financialDifficultyFilter;
+      if (childLabourRiskFilter) params.child_labour_risk = childLabourRiskFilter;
+      if (lowMotivationFilter) params.low_motivation = lowMotivationFilter;
+      if (academicBacklogsFilter) params.academic_backlogs = academicBacklogsFilter;
 
       const res = await api.get('/students', { params });
       setStudents(res.data.results);
@@ -86,7 +108,7 @@ export default function StudentList() {
 
   useEffect(() => {
     fetchStudents();
-  }, [page, limit, sortBy, sortDir, schoolFilter, classFilter, sectionFilter, genderFilter]);
+  }, [page, limit, sortBy, sortDir, schoolFilter, classFilter, sectionFilter, genderFilter, schoolTypeFilter, communityFilter, attendanceMinFilter, attendanceMaxFilter, marksMinFilter, marksMaxFilter, dropoutStatusFilter, financialDifficultyFilter, childLabourRiskFilter, lowMotivationFilter, academicBacklogsFilter]);
 
   useEffect(() => {
     fetchSchools();
@@ -164,6 +186,17 @@ export default function StudentList() {
       if (classFilter) params.class_name = classFilter;
       if (sectionFilter) params.section = sectionFilter;
       if (genderFilter) params.gender = genderFilter;
+      if (schoolTypeFilter) params.school_type = schoolTypeFilter;
+      if (communityFilter) params.community = communityFilter;
+      if (attendanceMinFilter) params.attendance_min = parseFloat(attendanceMinFilter);
+      if (attendanceMaxFilter) params.attendance_max = parseFloat(attendanceMaxFilter);
+      if (marksMinFilter) params.marks_min = parseFloat(marksMinFilter);
+      if (marksMaxFilter) params.marks_max = parseFloat(marksMaxFilter);
+      if (dropoutStatusFilter) params.dropout_status = dropoutStatusFilter;
+      if (financialDifficultyFilter) params.financial_difficulty = financialDifficultyFilter;
+      if (childLabourRiskFilter) params.child_labour_risk = childLabourRiskFilter;
+      if (lowMotivationFilter) params.low_motivation = lowMotivationFilter;
+      if (academicBacklogsFilter) params.academic_backlogs = academicBacklogsFilter;
       params.export_format = format;
 
       const res = await api.post('/students/export', null, { 
@@ -312,6 +345,151 @@ export default function StudentList() {
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
               </select>
+            </div>
+
+            <div>
+              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-1">School Type</label>
+              <select
+                value={schoolTypeFilter}
+                onChange={(e) => setSchoolTypeFilter(e.target.value)}
+                className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-sm text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50"
+              >
+                <option value="">All School Types</option>
+                <option value="Government">Government</option>
+                <option value="Private">Private</option>
+                <option value="Aided">Aided</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-1">Community</label>
+              <select
+                value={communityFilter}
+                onChange={(e) => setCommunityFilter(e.target.value)}
+                className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-sm text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50"
+              >
+                <option value="">All Communities</option>
+                <option value="General">General</option>
+                <option value="OBC">OBC</option>
+                <option value="SC">SC</option>
+                <option value="ST">ST</option>
+                <option value="EWS">EWS</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-1">Dropout Status</label>
+              <select
+                value={dropoutStatusFilter}
+                onChange={(e) => setDropoutStatusFilter(e.target.value)}
+                className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-sm text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50"
+              >
+                <option value="">All Statuses</option>
+                <option value="Yes">Dropout (Yes)</option>
+                <option value="No">Active (No)</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-1">Financial Difficulty</label>
+              <select
+                value={financialDifficultyFilter}
+                onChange={(e) => setFinancialDifficultyFilter(e.target.value)}
+                className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-sm text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50"
+              >
+                <option value="">All</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-1">Child Labour Risk</label>
+              <select
+                value={childLabourRiskFilter}
+                onChange={(e) => setChildLabourRiskFilter(e.target.value)}
+                className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-sm text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50"
+              >
+                <option value="">All</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-1">Low Motivation</label>
+              <select
+                value={lowMotivationFilter}
+                onChange={(e) => setLowMotivationFilter(e.target.value)}
+                className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-sm text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50"
+              >
+                <option value="">All</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-1">Academic Backlogs</label>
+              <select
+                value={academicBacklogsFilter}
+                onChange={(e) => setAcademicBacklogsFilter(e.target.value)}
+                className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-sm text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50"
+              >
+                <option value="">All</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-1">Attendance Range (%)</label>
+              <div className="flex gap-2 items-center">
+                <input
+                  type="number"
+                  placeholder="Min"
+                  min="0"
+                  max="100"
+                  value={attendanceMinFilter}
+                  onChange={(e) => setAttendanceMinFilter(e.target.value)}
+                  className="w-1/2 px-2 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-955 text-xs text-slate-850 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 bg-white/50 dark:bg-slate-950"
+                />
+                <span className="text-slate-400 font-bold text-xs">-</span>
+                <input
+                  type="number"
+                  placeholder="Max"
+                  min="0"
+                  max="100"
+                  value={attendanceMaxFilter}
+                  onChange={(e) => setAttendanceMaxFilter(e.target.value)}
+                  className="w-1/2 px-2 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-955 text-xs text-slate-850 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 bg-white/50 dark:bg-slate-950"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-1">Overall % Range (%)</label>
+              <div className="flex gap-2 items-center">
+                <input
+                  type="number"
+                  placeholder="Min"
+                  min="0"
+                  max="100"
+                  value={marksMinFilter}
+                  onChange={(e) => setMarksMinFilter(e.target.value)}
+                  className="w-1/2 px-2 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-955 text-xs text-slate-850 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 bg-white/50 dark:bg-slate-950"
+                />
+                <span className="text-slate-400 font-bold text-xs">-</span>
+                <input
+                  type="number"
+                  placeholder="Max"
+                  min="0"
+                  max="100"
+                  value={marksMaxFilter}
+                  onChange={(e) => setMarksMaxFilter(e.target.value)}
+                  className="w-1/2 px-2 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-955 text-xs text-slate-850 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 bg-white/50 dark:bg-slate-950"
+                />
+              </div>
             </div>
           </div>
         )}
@@ -463,25 +641,51 @@ export default function StudentList() {
       )}
 
       {/* Pagination component */}
-      {totalPages > 1 && (
-        <div className="flex justify-center items-center gap-4 py-4 select-none">
-          <button
-            disabled={page === 1}
-            onClick={() => setPage(prev => Math.max(prev - 1, 1))}
-            className="p-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 disabled:opacity-50 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all"
-          >
-            <ChevronLeft className="h-5 w-5" />
-          </button>
-          <span className="text-xs font-bold text-slate-500">
-            Page {page} of {totalPages}
-          </span>
-          <button
-            disabled={page === totalPages}
-            onClick={() => setPage(prev => Math.min(prev + 1, totalPages))}
-            className="p-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 disabled:opacity-50 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all"
-          >
-            <ChevronRight className="h-5 w-5" />
-          </button>
+      {total > 0 && (
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 py-4 select-none border-t border-slate-200 dark:border-slate-800/80 mt-4">
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-bold text-slate-500">
+              Showing {Math.min((page - 1) * limit + 1, total)} to {Math.min(page * limit, total)} of {total} records
+            </span>
+            <span className="text-slate-300 dark:text-slate-700 font-bold">•</span>
+            <div className="flex items-center gap-1.5">
+              <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Rows per page:</span>
+              <select
+                value={limit}
+                onChange={(e) => {
+                  setLimit(parseInt(e.target.value));
+                  setPage(1);
+                }}
+                className="px-2 py-1 text-xs font-bold rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-700 dark:text-slate-350 focus:outline-none focus:ring-1 focus:ring-primary/50"
+              >
+                {[10, 25, 50, 100].map(size => (
+                  <option key={size} value={size}>{size}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {totalPages > 1 && (
+            <div className="flex items-center gap-3">
+              <button
+                disabled={page === 1}
+                onClick={() => setPage(prev => Math.max(prev - 1, 1))}
+                className="p-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 disabled:opacity-50 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+              <span className="text-xs font-bold text-slate-500">
+                Page {page} of {totalPages}
+              </span>
+              <button
+                disabled={page === totalPages}
+                onClick={() => setPage(prev => Math.min(prev + 1, totalPages))}
+                className="p-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 disabled:opacity-50 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </button>
+            </div>
+          )}
         </div>
       )}
 

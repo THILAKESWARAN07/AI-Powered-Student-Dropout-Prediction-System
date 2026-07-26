@@ -116,7 +116,7 @@ export default function StudentDetails() {
 
   const [student, setStudent] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [activeSubTab, setActiveSubTab] = useState('overview');
+  const [activeSubTab, setActiveSubTab] = useState('demographics');
 
   const completeness = student ? calculateCompleteness(student) : { score: 0, missing: [] };
 
@@ -335,14 +335,12 @@ export default function StudentDetails() {
             </div>
           </GlassCard>
 
-        </div>
-
-        {/* RIGHT COLUMN: Full Data Metrics Tabs */}
+        </div>        {/* RIGHT COLUMN: Full Data Metrics Tabs */}
         <div className="lg:col-span-2 space-y-6">
           
           {/* Sub Navigation bar */}
           <div className="flex items-center gap-2 overflow-x-auto bg-slate-100 dark:bg-slate-900/60 p-1.5 rounded-2xl border border-slate-200/50 dark:border-slate-800/80">
-            {['overview', 'academic', 'behaviour', 'family', 'health', 'tech', 'predictions'].map(tab => (
+            {['demographics', 'academics', 'attendance', 'behaviour', 'family', 'health', 'technology', 'prediction'].map(tab => (
               <button
                 key={tab}
                 onClick={() => setActiveSubTab(tab)}
@@ -360,69 +358,66 @@ export default function StudentDetails() {
           {/* Sub-tab view panel */}
           <GlassCard className="p-8 border-white/30 dark:border-white/5" hoverEffect={false}>
             
-            {/* OVERVIEW PANEL */}
-            {activeSubTab === 'overview' && (
+            {/* DEMOGRAPHICS PANEL */}
+            {activeSubTab === 'demographics' && (
               <div className="space-y-6">
                 <h3 className="text-lg font-black mb-4 flex items-center gap-2">
-                  <User className="h-5 w-5 text-primary" /> Student Highlights
+                  <User className="h-5 w-5 text-primary" /> Demographics & Travel Characteristics
                 </h3>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* Attendance highlight */}
-                  <div className="p-4 bg-slate-50 dark:bg-slate-900/40 border border-slate-150 dark:border-slate-800 rounded-2xl flex items-center gap-3">
-                    <Clock className="h-8 w-8 text-primary shrink-0" />
-                    <div>
-                      <span className="text-[10px] font-bold text-slate-400 block uppercase">Attendance Rate</span>
-                      <span className="text-lg font-extrabold">{student.attendance?.attendance_percentage?.toFixed(1) || 0}%</span>
-                    </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 font-bold text-slate-500">
+                  <div>
+                    <span className="text-xs text-slate-400 block mb-0.5">Student ID</span>
+                    <span className="text-sm text-slate-800 dark:text-white">{student.student_id}</span>
                   </div>
-
-                  {/* Academics overall highlight */}
-                  <div className="p-4 bg-slate-50 dark:bg-slate-900/40 border border-slate-150 dark:border-slate-800 rounded-2xl flex items-center gap-3">
-                    <BookOpen className="h-8 w-8 text-indigo-500 shrink-0" />
-                    <div>
-                      <span className="text-[10px] font-bold text-slate-400 block uppercase">Grade Average</span>
-                      <span className="text-lg font-extrabold">{student.academics?.overall_percentage?.toFixed(1) || 0}%</span>
-                    </div>
+                  <div>
+                    <span className="text-xs text-slate-400 block mb-0.5">Full Name</span>
+                    <span className="text-sm text-slate-800 dark:text-white">{student.full_name}</span>
                   </div>
-
-                  {/* Behavior incidents highlight */}
-                  <div className="p-4 bg-slate-50 dark:bg-slate-900/40 border border-slate-150 dark:border-slate-800 rounded-2xl flex items-center gap-3">
-                    <Activity className="h-8 w-8 text-amber-500 shrink-0" />
-                    <div>
-                      <span className="text-[10px] font-bold text-slate-400 block uppercase">Discipline Log</span>
-                      <span className="text-lg font-extrabold">{student.behaviour?.discipline_incidents || 0} Incidents</span>
-                    </div>
+                  <div>
+                    <span className="text-xs text-slate-400 block mb-0.5">Gender</span>
+                    <span className="text-sm text-slate-800 dark:text-white">{student.gender}</span>
                   </div>
-
-                  {/* Study environment highlight */}
-                  <div className="p-4 bg-slate-50 dark:bg-slate-900/40 border border-slate-150 dark:border-slate-800 rounded-2xl flex items-center gap-3">
-                    <Home className="h-8 w-8 text-emerald-500 shrink-0" />
-                    <div>
-                      <span className="text-[10px] font-bold text-slate-400 block uppercase">Study Hours at Home</span>
-                      <span className="text-lg font-extrabold">{student.family?.home_study_hours || 0} Hours/Day</span>
-                    </div>
+                  <div>
+                    <span className="text-xs text-slate-400 block mb-0.5">Age</span>
+                    <span className="text-sm text-slate-800 dark:text-white">{student.age} Years</span>
+                  </div>
+                  <div>
+                    <span className="text-xs text-slate-400 block mb-0.5">Class / Section</span>
+                    <span className="text-sm text-slate-800 dark:text-white">Class {student.class_name} - {student.section}</span>
+                  </div>
+                  <div>
+                    <span className="text-xs text-slate-400 block mb-0.5">Instruction Medium</span>
+                    <span className="text-sm text-slate-800 dark:text-white">{student.medium_of_instruction}</span>
+                  </div>
+                  <div>
+                    <span className="text-xs text-slate-400 block mb-0.5">Community Group</span>
+                    <span className="text-sm text-slate-800 dark:text-white">{student.community}</span>
+                  </div>
+                  <div>
+                    <span className="text-xs text-slate-400 block mb-0.5">School Type</span>
+                    <span className="text-sm text-slate-800 dark:text-white">{student.school_type || 'Government'}</span>
+                  </div>
+                  <div>
+                    <span className="text-xs text-slate-400 block mb-0.5">Teacher-Student Ratio</span>
+                    <span className="text-sm text-slate-800 dark:text-white">{student.teacher_student_ratio || '1:35'}</span>
                   </div>
                 </div>
 
                 <div className="border-t border-slate-200 dark:border-slate-800 pt-6">
-                  <h4 className="text-xs font-black uppercase text-slate-400 tracking-wider mb-2">School Travel & Context</h4>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs font-bold text-slate-500">
+                  <h4 className="text-xs font-black uppercase text-slate-400 tracking-wider mb-4">Commute & Travel details</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 font-bold text-slate-500">
                     <div>
-                      <span className="text-slate-400 block mb-0.5">School Type</span>
-                      <span className="text-slate-800 dark:text-white">{student.school_type || 'Government'}</span>
+                      <span className="text-xs text-slate-400 block mb-0.5">Distance to School</span>
+                      <span className="text-sm text-slate-800 dark:text-white">{student.distance_to_school_km || 0} km</span>
                     </div>
                     <div>
-                      <span className="text-slate-400 block mb-0.5">Distance (km)</span>
-                      <span className="text-slate-800 dark:text-white">{student.distance_to_school_km || 0} km</span>
+                      <span className="text-xs text-slate-400 block mb-0.5">Transport Mode</span>
+                      <span className="text-sm text-slate-800 dark:text-white">{student.transport_mode || 'Walking'}</span>
                     </div>
                     <div>
-                      <span className="text-slate-400 block mb-0.5">Transport Mode</span>
-                      <span className="text-slate-800 dark:text-white">{student.transport_mode || 'Walking'}</span>
-                    </div>
-                    <div>
-                      <span className="text-slate-400 block mb-0.5">Travel Time</span>
-                      <span className="text-slate-800 dark:text-white">{student.travel_time_min || 0} mins</span>
+                      <span className="text-xs text-slate-400 block mb-0.5">Travel Time</span>
+                      <span className="text-sm text-slate-800 dark:text-white">{student.travel_time_min || 0} mins</span>
                     </div>
                   </div>
                 </div>
@@ -430,15 +425,15 @@ export default function StudentDetails() {
             )}
 
             {/* ACADEMICS PANEL */}
-            {activeSubTab === 'academic' && (
+            {activeSubTab === 'academics' && (
               <div className="space-y-6">
                 <h3 className="text-lg font-black mb-4 flex items-center gap-2">
-                  <BookOpen className="h-5 w-5 text-primary" /> Academic Profile
+                  <BookOpen className="h-5 w-5 text-primary" /> Academic Records
                 </h3>
 
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-6 font-bold text-slate-500">
                   <div>
-                    <span className="text-xs text-slate-400 block mb-0.5">Previous Year Average</span>
+                    <span className="text-xs text-slate-400 block mb-0.5">Previous Year Percentage</span>
                     <span className="text-lg text-slate-800 dark:text-white">{student.academics?.previous_year_percentage}%</span>
                   </div>
                   <div>
@@ -460,6 +455,24 @@ export default function StudentDetails() {
                 </div>
 
                 <div className="border-t border-slate-200 dark:border-slate-800 pt-6">
+                  <h4 className="text-xs font-black uppercase text-slate-400 tracking-wider mb-4">Exam Term Marks</h4>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 font-bold text-slate-500">
+                    <div>
+                      <span className="text-xs text-slate-400 block mb-0.5">Quarterly Exam</span>
+                      <span className="text-sm text-slate-800 dark:text-white">{student.academics?.quarterly_exam?.toFixed(1) || 0}%</span>
+                    </div>
+                    <div>
+                      <span className="text-xs text-slate-400 block mb-0.5">Half Yearly Exam</span>
+                      <span className="text-sm text-slate-800 dark:text-white">{student.academics?.half_yearly_exam?.toFixed(1) || 0}%</span>
+                    </div>
+                    <div>
+                      <span className="text-xs text-slate-400 block mb-0.5">Annual Exam</span>
+                      <span className="text-sm text-slate-800 dark:text-white">{student.academics?.annual_exam?.toFixed(1) || 0}%</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="border-t border-slate-200 dark:border-slate-800 pt-6">
                   <h4 className="text-xs font-black uppercase text-slate-400 tracking-wider mb-4">Subject Wise Marks</h4>
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
                     {['Mathematics', 'Science', 'English', 'Social Science', 'Regional Language'].map(sub => {
@@ -477,11 +490,39 @@ export default function StudentDetails() {
               </div>
             )}
 
+            {/* ATTENDANCE PANEL */}
+            {activeSubTab === 'attendance' && (
+              <div className="space-y-6">
+                <h3 className="text-lg font-black mb-4 flex items-center gap-2">
+                  <Clock className="h-5 w-5 text-primary" /> Attendance Records
+                </h3>
+
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 font-bold text-slate-500">
+                  <div>
+                    <span className="text-xs text-slate-400 block mb-0.5">Attendance Percentage</span>
+                    <span className="text-lg text-slate-800 dark:text-white">{student.attendance?.attendance_percentage?.toFixed(1) || 0}%</span>
+                  </div>
+                  <div>
+                    <span className="text-xs text-slate-400 block mb-0.5">Consecutive Absences</span>
+                    <span className="text-lg text-slate-800 dark:text-white">{student.attendance?.consecutive_absences || 0} Days</span>
+                  </div>
+                  <div>
+                    <span className="text-xs text-slate-400 block mb-0.5">Leave Days</span>
+                    <span className="text-lg text-slate-800 dark:text-white">{student.attendance?.leave_days || 0} Days</span>
+                  </div>
+                  <div>
+                    <span className="text-xs text-slate-400 block mb-0.5">Late Arrivals</span>
+                    <span className="text-lg text-slate-800 dark:text-white">{student.attendance?.late_arrivals || 0} Times</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* BEHAVIOUR PANEL */}
             {activeSubTab === 'behaviour' && (
               <div className="space-y-6">
                 <h3 className="text-lg font-black mb-4 flex items-center gap-2">
-                  <Activity className="h-5 w-5 text-primary" /> Behavioural Performance
+                  <Activity className="h-5 w-5 text-primary" /> Behaviour & Feedback
                 </h3>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs font-bold text-slate-500">
@@ -506,11 +547,11 @@ export default function StudentDetails() {
                     <span className="text-slate-800 dark:text-white text-sm">{student.behaviour?.participation_in_extracurricular}</span>
                   </div>
                   <div>
-                    <span className="text-slate-400 block mb-0.5">Library Usage frequency</span>
+                    <span className="text-slate-400 block mb-0.5">Library Usage Frequency</span>
                     <span className="text-slate-800 dark:text-white text-sm">{student.behaviour?.library_usage}</span>
                   </div>
                   <div>
-                    <span className="text-slate-400 block mb-0.5">Low Motivation Factor</span>
+                    <span className="text-slate-400 block mb-0.5">Low Motivation</span>
                     <span className="text-slate-800 dark:text-white text-sm">{student.behaviour?.low_motivation}</span>
                   </div>
                   <div>
@@ -521,7 +562,7 @@ export default function StudentDetails() {
 
                 <div className="border-t border-slate-200 dark:border-slate-800 pt-6">
                   <span className="text-xs font-black uppercase text-slate-400 block mb-1">Teacher Feedback Description</span>
-                  <p className="text-sm font-semibold italic text-slate-600 dark:text-slate-300">
+                  <p className="text-sm font-semibold italic text-slate-650 dark:text-slate-350 bg-slate-50 dark:bg-slate-900/40 p-4 rounded-xl border border-slate-150 dark:border-slate-800">
                     "{student.behaviour?.teacher_feedback || 'No comments logged.'}"
                   </p>
                 </div>
@@ -561,6 +602,10 @@ export default function StudentDetails() {
                     <span className="text-slate-850 dark:text-white text-sm">{student.family?.guardian_support}</span>
                   </div>
                   <div>
+                    <span className="text-slate-400 block mb-0.5">Home Study Hours</span>
+                    <span className="text-slate-850 dark:text-white text-sm">{student.family?.home_study_hours || 0} Hours/Day</span>
+                  </div>
+                  <div>
                     <span className="text-slate-400 block mb-0.5">Financial Difficulty</span>
                     <span className="text-slate-850 dark:text-white text-sm">{student.family?.financial_difficulty}</span>
                   </div>
@@ -569,12 +614,12 @@ export default function StudentDetails() {
                     <span className="text-slate-850 dark:text-white text-sm">{student.family?.child_labour_risk}</span>
                   </div>
                   <div>
-                    <span className="text-slate-400 block mb-0.5">Domestic Family Issues</span>
-                    <span className="text-slate-850 dark:text-white text-sm">{student.family?.family_issues}</span>
-                  </div>
-                  <div>
                     <span className="text-slate-400 block mb-0.5">Frequent Migration history</span>
                     <span className="text-slate-850 dark:text-white text-sm">{student.family?.frequent_migration}</span>
+                  </div>
+                  <div>
+                    <span className="text-slate-400 block mb-0.5">Domestic Family Issues</span>
+                    <span className="text-slate-850 dark:text-white text-sm">{student.family?.family_issues}</span>
                   </div>
                 </div>
               </div>
@@ -617,7 +662,7 @@ export default function StudentDetails() {
             )}
 
             {/* TECHNOLOGY ACCESS PANEL */}
-            {activeSubTab === 'tech' && (
+            {activeSubTab === 'technology' && (
               <div className="space-y-6">
                 <h3 className="text-lg font-black mb-4 flex items-center gap-2">
                   <Cpu className="h-5 w-5 text-primary" /> Technology & Infrastructure
@@ -645,11 +690,28 @@ export default function StudentDetails() {
             )}
 
             {/* PREDICTIONS HISTORICAL PANEL */}
-            {activeSubTab === 'predictions' && (
+            {activeSubTab === 'prediction' && (
               <div className="space-y-6">
                 <h3 className="text-lg font-black mb-4 flex items-center gap-2">
                   <AlertTriangle className="h-5 w-5 text-primary" /> Prediction History
                 </h3>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 font-bold text-slate-500 mb-6 bg-slate-50 dark:bg-slate-900/40 p-4 rounded-xl border border-slate-150 dark:border-slate-800">
+                  <div>
+                    <span className="text-xs text-slate-400 block mb-0.5">Latest Predicted Dropout Risk</span>
+                    <span className={`px-2.5 py-1 rounded-full text-[10px] uppercase font-black tracking-wider ${
+                      latestPrediction.dropout_risk === 'High' ? 'bg-red-500/10 text-red-500' :
+                      latestPrediction.dropout_risk === 'Medium' ? 'bg-amber-500/10 text-amber-500' :
+                      'bg-emerald-500/10 text-emerald-500'
+                    }`}>
+                      {latestPrediction.dropout_risk}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-xs text-slate-400 block mb-0.5">Latest Predicted Dropout Status</span>
+                    <span className="text-sm text-slate-850 dark:text-white">{latestPrediction.dropout_status === 'Yes' ? 'Dropout' : 'Active'}</span>
+                  </div>
+                </div>
 
                 {(!student.predictions || student.predictions.length === 0) ? (
                   <p className="text-sm font-semibold text-slate-500">No predictions have been recorded for this student yet.</p>
@@ -682,7 +744,7 @@ export default function StudentDetails() {
                             <td className="px-4 py-3 font-semibold text-slate-650 dark:text-slate-350">
                               {p.dropout_status === 'Yes' ? 'Dropout' : 'Enrolled'}
                             </td>
-                            <td className="px-4 py-3 text-slate-450 font-mono">v1.0.0 (Baseline XGBoost)</td>
+                            <td className="px-4 py-3 text-slate-450 font-mono">v1.0.0 (Baseline CatBoost)</td>
                           </tr>
                         ))}
                       </tbody>

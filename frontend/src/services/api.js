@@ -34,8 +34,13 @@ api.interceptors.response.use(
     if (status === 401) {
       // Clear credentials if token expired (Module 2+)
       localStorage.removeItem('token');
-      // Redirect to login if user is in app views
-      if (!window.location.pathname.startsWith('/login') && window.location.pathname !== '/') {
+      // Redirect to login if user is in app views (exclude public auth routes)
+      const publicPaths = ['/login', '/register', '/forgot-password', '/reset-password', '/'];
+      const isPublicPath = publicPaths.some(path => {
+        if (path === '/') return window.location.pathname === '/';
+        return window.location.pathname === path || window.location.pathname.startsWith(path + '/');
+      });
+      if (!isPublicPath) {
         window.location.href = '/login';
       }
     }

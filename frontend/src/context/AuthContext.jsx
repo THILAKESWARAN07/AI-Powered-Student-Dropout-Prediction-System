@@ -55,7 +55,12 @@ export function AuthProvider({ children }) {
               localStorage.removeItem('token');
               localStorage.removeItem('refresh_token');
               delete api.defaults.headers.common['Authorization'];
-              if (!window.location.pathname.startsWith('/login') && window.location.pathname !== '/') {
+              const publicPaths = ['/login', '/register', '/forgot-password', '/reset-password', '/'];
+              const isPublicPath = publicPaths.some(path => {
+                if (path === '/') return window.location.pathname === '/';
+                return window.location.pathname === path || window.location.pathname.startsWith(path + '/');
+              });
+              if (!isPublicPath) {
                 window.location.href = '/login';
               }
               return Promise.reject(refreshErr);
@@ -97,22 +102,6 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const loginWithGoogle = async (googleToken) => {
-    try {
-      const res = await api.post('/auth/google', { token: googleToken });
-      const { access_token, refresh_token } = res.data;
-      localStorage.setItem('token', access_token);
-      localStorage.setItem('refresh_token', refresh_token);
-      api.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
-      await fetchCurrentUser();
-      showToast('Logged in with Google successfully', 'success');
-      return true;
-    } catch (err) {
-      showToast(err.response?.data?.detail || 'Google Login failed', 'error');
-      return false;
-    }
-  };
-
   const logout = async () => {
     try {
       await api.post('/auth/logout');
@@ -128,7 +117,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, loginWithGoogle, register: registerUser, logout, setUser, fetchCurrentUser }}>
+    <AuthContext.Provider value={{ user, loading, login, register: registerUser, logout, setUser, fetchCurrentUser }}>
       {children}
     </AuthContext.Provider>
   );

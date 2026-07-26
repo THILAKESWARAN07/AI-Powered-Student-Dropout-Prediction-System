@@ -4,15 +4,19 @@ __pycache__/
 *.egg-info/
 .venv/
 venv/
+ENV/
+env/
 
 # Environment
 .env
 .env.*
+!.env.example
 
 # Node
 node_modules/
 dist/
 build/
+coverage/
 
 # IDE
 .vscode/
@@ -20,6 +24,8 @@ build/
 
 # Logs
 *.log
+npm-debug.log*
+yarn-error.log*
 
 # OS
 .DS_Store
@@ -28,6 +34,17 @@ Thumbs.db
 # Python cache
 .pytest_cache/
 .mypy_cache/
+.coverage
+htmlcov/
+
+# Uploads
+uploads/
+temp/
+tmp/
 
 # Docker
 *.pid
+
+# Backups
+*.bak
+*.tmp

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Eye, EyeOff, GraduationCap, Loader2, ArrowLeft, Mail, Lock } from 'lucide-react';
+import { Eye, EyeOff, GraduationCap, Loader2, ArrowLeft, Mail, Lock, Brain } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import GlassCard from '../components/common/GlassCard';
 
 export default function Login() {
-  const { login, loginWithGoogle } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
@@ -14,33 +14,6 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-
-  useEffect(() => {
-    /* global google */
-    if (window.google) {
-      window.google.accounts.id.initialize({
-        client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID || "688094625700-mockclientid.apps.googleusercontent.com",
-        callback: async (response) => {
-          setLoading(true);
-          const success = await loginWithGoogle(response.credential);
-          setLoading(false);
-          if (success) {
-            navigate('/portal/dashboard');
-          }
-        },
-      });
-      window.google.accounts.id.renderButton(
-        document.getElementById("google-login-btn"),
-        { 
-          theme: "outline", 
-          size: "large", 
-          width: "350", 
-          text: "continue_with",
-          shape: "rectangular"
-        }
-      );
-    }
-  }, [loginWithGoogle, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -156,17 +129,7 @@ export default function Login() {
           </button>
         </form>
 
-        {/* Divider */}
-        <div className="my-6 flex items-center gap-3">
-          <div className="flex-grow h-[1px] bg-slate-200 dark:bg-slate-800" />
-          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Or</span>
-          <div className="flex-grow h-[1px] bg-slate-200 dark:bg-slate-800" />
-        </div>
 
-        {/* Google sign-in button container */}
-        <div className="flex justify-center w-full min-h-[44px]">
-          <div id="google-login-btn" className="w-full max-w-xs overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800" />
-        </div>
 
         <div className="mt-6 text-center text-xs text-slate-500 dark:text-slate-400">
           Don't have an administrator invite?{' '}
@@ -180,6 +143,8 @@ export default function Login() {
           <ArrowLeft className="h-4 w-4" /> Return to Landing Page
         </Link>
       </GlassCard>
+
+
     </div>
   );
 }

@@ -18,6 +18,7 @@ from app.models.student import (
     StudentTechnology, StudentPrediction
 )
 from app.models.school import School
+from app.core.logging import logger
 from app.schemas.student import (
     StudentCreate, StudentUpdate, StudentResponse,
     BulkDeleteRequest, BulkStatusUpdateRequest,
@@ -47,14 +48,21 @@ def list_students(
     class_name: Optional[str] = None,
     section: Optional[str] = None,
     gender: Optional[str] = None,
+    school_type: Optional[str] = None,
+    community: Optional[str] = None,
     attendance_min: Optional[float] = None,
     attendance_max: Optional[float] = None,
     marks_min: Optional[float] = None,
     marks_max: Optional[float] = None,
     family_income_min: Optional[float] = None,
     family_income_max: Optional[float] = None,
+    dropout_status: Optional[str] = None,
+    financial_difficulty: Optional[str] = None,
+    child_labour_risk: Optional[str] = None,
+    low_motivation: Optional[str] = None,
+    academic_backlogs: Optional[str] = None,
     skip: int = 0,
-    limit: int = 10,
+    limit: Optional[int] = None,
     sort_by: str = "student_id",
     sort_dir: str = "asc",
     current_user: User = Depends(get_current_user),
@@ -93,6 +101,10 @@ def list_students(
         query = query.filter(Student.section == section)
     if gender:
         query = query.filter(Student.gender == gender)
+    if school_type:
+        query = query.filter(Student.school_type == school_type)
+    if community:
+        query = query.filter(Student.community == community)
 
     # 5. Apply range filters
     if attendance_min is not None:
@@ -107,6 +119,32 @@ def list_students(
         query = query.filter(StudentFamily.family_income >= family_income_min)
     if family_income_max is not None:
         query = query.filter(StudentFamily.family_income <= family_income_max)
+
+    # Apply new sub-table binary / target filters
+    if financial_difficulty:
+        query = query.filter(StudentFamily.financial_difficulty == financial_difficulty)
+    if child_labour_risk:
+        query = query.filter(StudentFamily.child_labour_risk == child_labour_risk)
+    if low_motivation:
+        query = query.filter(StudentBehaviour.low_motivation == low_motivation)
+    if academic_backlogs:
+        query = query.filter(StudentAcademics.academic_backlogs == academic_backlogs)
+    if dropout_status:
+        from sqlalchemy import func
+        latest_pred_sub = db.query(
+            StudentPrediction.student_id,
+            func.max(StudentPrediction.id).label("latest_id")
+        ).group_by(StudentPrediction.student_id).subquery()
+        
+        query = query.join(
+            latest_pred_sub,
+            Student.id == latest_pred_sub.c.student_id
+        ).join(
+            StudentPrediction,
+            StudentPrediction.id == latest_pred_sub.c.latest_id
+        ).filter(
+            StudentPrediction.dropout_status == dropout_status
+        )
 
     # Count total matching records before paginating
     total = query.count()
@@ -128,7 +166,10 @@ def list_students(
         query = query.order_by(asc(sort_attr))
 
     # Apply pagination offset & limit
-    students_list = query.offset(skip).limit(limit).all()
+    if limit is not None:
+        students_list = query.offset(skip).limit(limit).all()
+    else:
+        students_list = query.offset(skip).all()
 
     return {
         "total": total,
@@ -470,6 +511,19 @@ def export_students(
     class_name: Optional[str] = None,
     section: Optional[str] = None,
     gender: Optional[str] = None,
+    school_type: Optional[str] = None,
+    community: Optional[str] = None,
+    attendance_min: Optional[float] = None,
+    attendance_max: Optional[float] = None,
+    marks_min: Optional[float] = None,
+    marks_max: Optional[float] = None,
+    family_income_min: Optional[float] = None,
+    family_income_max: Optional[float] = None,
+    dropout_status: Optional[str] = None,
+    financial_difficulty: Optional[str] = None,
+    child_labour_risk: Optional[str] = None,
+    low_motivation: Optional[str] = None,
+    academic_backlogs: Optional[str] = None,
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
@@ -482,6 +536,9 @@ def export_students(
     elif school_id:
         query = query.filter(Student.school_id == school_id)
 
+    # Join sub-tables
+    query = query.outerjoin(StudentAcademics).outerjoin(StudentAttendance).outerjoin(StudentBehaviour).outerjoin(StudentFamily)
+
     if search:
         query = query.filter(or_(
             Student.full_name.ilike(f"%{search}%"),
@@ -493,6 +550,48 @@ def export_students(
         query = query.filter(Student.section == section)
     if gender:
         query = query.filter(Student.gender == gender)
+    if school_type:
+        query = query.filter(Student.school_type == school_type)
+    if community:
+        query = query.filter(Student.community == community)
+
+    if attendance_min is not None:
+        query = query.filter(StudentAttendance.attendance_percentage >= attendance_min)
+    if attendance_max is not None:
+        query = query.filter(StudentAttendance.attendance_percentage <= attendance_max)
+    if marks_min is not None:
+        query = query.filter(StudentAcademics.overall_percentage >= marks_min)
+    if marks_max is not None:
+        query = query.filter(StudentAcademics.overall_percentage <= marks_max)
+    if family_income_min is not None:
+        query = query.filter(StudentFamily.family_income >= family_income_min)
+    if family_income_max is not None:
+        query = query.filter(StudentFamily.family_income <= family_income_max)
+
+    if financial_difficulty:
+        query = query.filter(StudentFamily.financial_difficulty == financial_difficulty)
+    if child_labour_risk:
+        query = query.filter(StudentFamily.child_labour_risk == child_labour_risk)
+    if low_motivation:
+        query = query.filter(StudentBehaviour.low_motivation == low_motivation)
+    if academic_backlogs:
+        query = query.filter(StudentAcademics.academic_backlogs == academic_backlogs)
+    if dropout_status:
+        from sqlalchemy import func
+        latest_pred_sub = db.query(
+            StudentPrediction.student_id,
+            func.max(StudentPrediction.id).label("latest_id")
+        ).group_by(StudentPrediction.student_id).subquery()
+        
+        query = query.join(
+            latest_pred_sub,
+            Student.id == latest_pred_sub.c.student_id
+        ).join(
+            StudentPrediction,
+            StudentPrediction.id == latest_pred_sub.c.latest_id
+        ).filter(
+            StudentPrediction.dropout_status == dropout_status
+        )
 
     students = query.all()
 
@@ -650,8 +749,8 @@ def preview_import_file(
 def run_import_file(
     request: Request,
     file: Optional[UploadFile] = File(None),
-    mapping_json: str = Form(...),
-    school_id: int = Form(...),
+    mapping_json: Optional[str] = Form(None),
+    school_id: Optional[str] = Form(None),
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
@@ -659,62 +758,106 @@ def run_import_file(
     Commit mappings and imports dataset records directly to normalized sub-tables.
     Falls back to loading the sample dataset if no file is uploaded.
     """
-    if current_user.role not in ["admin", "headmaster"]:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Permissions restricted to Admins and Headmasters."
-        )
-
-    # Restrict Headmaster school choice
-    if current_user.role == "headmaster" and current_user.school_id != school_id:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Headmasters can only import students into their own assigned school."
-        )
-
     try:
-        mapping = json.loads(mapping_json)
-    except Exception:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Invalid mapping JSON configuration."
+        if current_user.role not in ["admin", "headmaster"]:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Permissions restricted to Admins and Headmasters."
+            )
+
+        # Resolve school_id fallback
+        resolved_school_id = None
+        if school_id is not None and school_id not in ("", "0", 0):
+            try:
+                resolved_school_id = int(school_id)
+            except ValueError:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail=f"Invalid school_id configuration: '{school_id}'."
+                )
+
+        if resolved_school_id is None:
+            if current_user.school_id is not None:
+                resolved_school_id = current_user.school_id
+            else:
+                first_school = db.query(School).first()
+                if not first_school:
+                    raise HTTPException(
+                        status_code=status.HTTP_400_BAD_REQUEST,
+                        detail="No target school specified and no school exists in the database to fallback on."
+                    )
+                resolved_school_id = first_school.id
+
+        # Restrict Headmaster school choice
+        if current_user.role == "headmaster" and current_user.school_id != resolved_school_id:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Headmasters can only import students into their own assigned school."
+            )
+
+        mapping = {}
+        if mapping_json and mapping_json not in ("string", "{}", ""):
+            try:
+                mapping = json.loads(mapping_json)
+            except Exception:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail=f"Invalid mapping JSON configuration: '{mapping_json}'."
+                )
+
+        import os
+        if not file:
+            path = os.path.abspath(__file__)
+            for _ in range(5):
+                path = os.path.dirname(path)
+            sample_path = os.path.join(path, "dataset", "sample_dataset.csv")
+            try:
+                with open(sample_path, "rb") as sf:
+                    file_content = sf.read()
+                filename = "sample_dataset.csv"
+            except Exception as e:
+                raise HTTPException(
+                    status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                    detail=f"Could not load fallback sample dataset: {str(e)}"
+                )
+        else:
+            file_content = file.file.read()
+            filename = file.filename
+
+        report = import_mapped_records(
+            db=db,
+            file_content=file_content,
+            filename=filename,
+            mapping=mapping,
+            school_id=resolved_school_id
         )
 
-    import os
-    if not file:
-        path = os.path.abspath(__file__)
-        for _ in range(5):
-            path = os.path.dirname(path)
-        sample_path = os.path.join(path, "dataset", "sample_dataset.csv")
+        # Immediately check count using the same session as the API
+        from sqlalchemy import text
         try:
-            with open(sample_path, "rb") as sf:
-                file_content = sf.read()
-            filename = "sample_dataset.csv"
+            sql_count = db.execute(text("SELECT COUNT(*) FROM students WHERE is_deleted = false")).scalar()
+            logger.info(f"[IMPORT DIAGNOSTIC] SQL Count after import in same session: {sql_count}")
         except Exception as e:
-            raise HTTPException(
-                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail=f"Could not load fallback sample dataset: {str(e)}"
-            )
-    else:
-        file_content = file.file.read()
-        filename = file.filename
+            logger.error(f"[IMPORT DIAGNOSTIC] Failed to count students: {e}")
 
-    report = import_mapped_records(
-        db=db,
-        file_content=file_content,
-        filename=filename,
-        mapping=mapping,
-        school_id=school_id
-    )
+        # Audit log
+        client_ip = request.client.host if request.client else None
+        log_activity(
+            db=db,
+            user_id=current_user.id,
+            action="student_csv_imported",
+            description=f"CSV/Excel imported to school {resolved_school_id}: {report.imported} success, {report.failed} failures (Demo Mode)" if not file else f"CSV/Excel imported to school {resolved_school_id}: {report.imported} success, {report.failed} failures",
+            ip_address=client_ip
+        )
 
-    # Audit log
-    client_ip = request.client.host if request.client else None
-    log_activity(
-        db=db,
-        user_id=current_user.id,
-        action="student_csv_imported",
-        description=f"CSV/Excel imported to school {school_id}: {report.imported} success, {report.failed} failures (Demo Mode)" if not file else f"CSV/Excel imported to school {school_id}: {report.imported} success, {report.failed} failures",
-        ip_address=client_ip
-    )
-
-    return report
+        return report
+    except Exception as e:
+        import traceback
+        tb = traceback.format_exc()
+        logger.error(f"EXCEPTION IN IMPORT ROUTER:\n{tb}")
+        if isinstance(e, HTTPException):
+            raise e
+        raise HTTPException(
+            status_code=500,
+            detail=f"Import router exception: {str(e)}\nTraceback:\n{tb}"
+        )

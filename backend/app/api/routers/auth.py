@@ -1,23 +1,46 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Header, Request
+from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from datetime import datetime, timedelta, timezone
 from jose import jwt, JWTError
 from typing import Optional
 import os
-from google.oauth2 import id_token
-from google.auth.transport import requests as google_requests
-
 from app.api.dependencies.db import get_db
 from app.api.dependencies.auth import get_current_user
 from app.core.config import settings
 from app.core.security import verify_password, get_password_hash, create_access_token
 from app.models.user import User
 from app.models.school import School
-from app.schemas.auth import LoginRequest, RefreshRequest, Token, GoogleLoginRequest, ForgotPasswordRequest, ResetPasswordRequest
+from app.schemas.auth import LoginRequest, RefreshRequest, Token, ForgotPasswordRequest, ResetPasswordRequest
 from app.schemas.user import UserCreate, UserResponse, UserPasswordChange
 from app.services.activity_log import log_activity
 
 router = APIRouter()
+
+
+def authenticate_local_user(db: Session, email: str, password: str) -> User:
+    """Authenticate a local-password user from an email and password.
+
+    Both the JSON login endpoint and OAuth2 form endpoint call this function so
+    they use the same database session, user lookup, and password verifier.
+    """
+    email_normalized = email.lower().strip() if email else ""
+    user = db.query(User).filter(User.email.ilike(email_normalized)).first()
+    if (
+        not user
+        or not user.password_hash
+        or not verify_password(password, user.password_hash)
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Incorrect email or password."
+        )
+    if not user.is_active:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="User is inactive."
+        )
+    return user
 
 
 def get_current_user_optional(
@@ -51,7 +74,8 @@ def register(
     Anonymous registration defaults to role 'teacher' and school_id None.
     """
     # Check if email is already taken
-    existing_user = db.query(User).filter(User.email == user_in.email).first()
+    email_normalized = user_in.email.lower().strip() if user_in.email else ""
+    existing_user = db.query(User).filter(User.email.ilike(email_normalized)).first()
     if existing_user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -91,7 +115,7 @@ def register(
     # Create new user
     new_user = User(
         full_name=user_in.full_name,
-        email=user_in.email,
+        email=email_normalized,
         password_hash=get_password_hash(user_in.password),
         role=assigned_role,
         school_id=assigned_school_id,
@@ -124,17 +148,7 @@ def login(
     """
     Authenticate user and generate access & refresh tokens.
     """
-    user = db.query(User).filter(User.email == login_data.email).first()
-    if not user or not verify_password(login_data.password, user.password_hash):
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Incorrect email or password."
-        )
-    if not user.is_active:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="User is inactive."
-        )
+    user = authenticate_local_user(db, login_data.email, login_data.password)
 
     # Create tokens
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
@@ -157,6 +171,49 @@ def login(
         user_id=user.id,
         action="login",
         description="User logged in successfully",
+        ip_address=client_ip
+    )
+
+    return {
+        "access_token": access_token,
+        "refresh_token": refresh_token,
+        "token_type": "bearer"
+    }
+
+
+@router.post("/token", response_model=Token)
+def login_oauth2(
+    request: Request,
+    form_data: OAuth2PasswordRequestForm = Depends(),
+    db: Session = Depends(get_db)
+):
+    """
+    OAuth2 compatible token login endpoint for Swagger UI Authorization.
+    Accepts username (email) and password form parameters.
+    """
+    user = authenticate_local_user(db, form_data.username, form_data.password)
+
+    # Create tokens
+    access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(
+        subject=user.id, expires_delta=access_token_expires
+    )
+    refresh_token_expires = timedelta(days=7)
+    refresh_token = create_access_token(
+        subject=user.id, expires_delta=refresh_token_expires
+    )
+
+    # Update last login timestamp
+    user.last_login = datetime.now(timezone.utc)
+    db.commit()
+
+    # Log action
+    client_ip = request.client.host if request.client else None
+    log_activity(
+        db=db,
+        user_id=user.id,
+        action="login",
+        description="User logged in via Swagger UI / OAuth2",
         ip_address=client_ip
     )
 
@@ -269,137 +326,6 @@ def get_me(current_user: User = Depends(get_current_user)):
     return current_user
 
 
-@router.post("/google", response_model=Token)
-def google_login(
-    login_data: GoogleLoginRequest,
-    request: Request,
-    db: Session = Depends(get_db)
-):
-    """
-    Authenticate user via Google OAuth 2.0.
-    Automatically creates user account on first login.
-    """
-    token = login_data.token
-    email = None
-    name = None
-    google_id = None
-    picture = None
-
-    # Handle mock token for automated verification
-    if token.startswith("mock_google_token_"):
-        parts = token.split("_")
-        # mock_google_token_{email}_{name}_{sub}
-        if len(parts) >= 6:
-            email = parts[3]
-            name = parts[4].replace("-", " ")
-            google_id = parts[5]
-        else:
-            email = "mock_teacher@school.edu"
-            name = "Mock Teacher"
-            google_id = "mock_sub_id"
-        picture = "https://lh3.googleusercontent.com/a/default-user"
-    else:
-        try:
-            client_id = os.getenv("GOOGLE_CLIENT_ID")
-            idinfo = id_token.verify_oauth2_token(
-                token, google_requests.Request(), audience=client_id
-            )
-            google_id = idinfo.get("sub")
-            email = idinfo.get("email")
-            name = idinfo.get("name")
-            picture = idinfo.get("picture")
-        except ValueError as e:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail=f"Invalid Google ID token: {e}"
-            )
-
-    if not email:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Google ID token does not contain email address."
-        )
-
-    # 1. Check if user with this google_id exists
-    user = db.query(User).filter(User.google_id == google_id).first()
-
-    if not user:
-        # 2. Check if user with this email exists
-        user = db.query(User).filter(User.email == email).first()
-        if user:
-            # Link Google ID to existing account
-            user.provider = "google"
-            user.google_id = google_id
-            user.email_verified = True
-            if not user.profile_picture:
-                user.profile_picture = picture
-            if not user.profile_image:
-                user.profile_image = picture
-            db.commit()
-            db.refresh(user)
-        else:
-            # 3. Create a new Google User
-            user = User(
-                full_name=name or "Google User",
-                email=email,
-                password_hash=None,
-                role="teacher",
-                provider="google",
-                google_id=google_id,
-                email_verified=True,
-                profile_picture=picture,
-                profile_image=picture,
-                is_active=True
-            )
-            db.add(user)
-            db.commit()
-            db.refresh(user)
-
-            # Log registration
-            client_ip = request.client.host if request.client else None
-            log_activity(
-                db=db,
-                user_id=user.id,
-                action="register",
-                description="Google User registered with role teacher",
-                ip_address=client_ip
-            )
-
-    if not user.is_active:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="User account is inactive."
-        )
-
-    # Issue JWT tokens
-    access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
-    access_token = create_access_token(
-        subject=user.id, expires_delta=access_token_expires
-    )
-    refresh_token_expires = timedelta(days=7)
-    refresh_token = create_access_token(
-        subject=user.id, expires_delta=refresh_token_expires
-    )
-
-    # Update last login timestamp
-    user.last_login = datetime.now(timezone.utc)
-    db.commit()
-
-    # Log action
-    client_ip = request.client.host if request.client else None
-    log_activity(
-        db=db,
-        user_id=user.id,
-        action="login",
-        description="Google User logged in successfully",
-        ip_address=client_ip
-    )
-
-    return {
-        "access_token": access_token,
-        "refresh_token": refresh_token,
-        "token_type": "bearer"
-    }
 
 
 @router.post("/forgot-password")
@@ -411,7 +337,8 @@ def forgot_password(
     """
     Generate password reset token and print reset link to console for local testing.
     """
-    user = db.query(User).filter(User.email == data.email).first()
+    email_normalized = data.email.lower().strip() if data.email else ""
+    user = db.query(User).filter(User.email.ilike(email_normalized)).first()
     if not user:
         # Generic response to prevent user enumeration
         return {"detail": "If the email is registered, a password reset link has been generated."}

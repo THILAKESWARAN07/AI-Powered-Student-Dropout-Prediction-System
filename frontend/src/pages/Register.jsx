@@ -7,7 +7,7 @@ import api from '../services/api';
 import GlassCard from '../components/common/GlassCard';
 
 export default function Register() {
-  const { register, loginWithGoogle, user: currentUser } = useAuth();
+  const { register, user: currentUser } = useAuth();
   const { showToast } = useToast();
   const navigate = useNavigate();
 
@@ -25,45 +25,22 @@ export default function Register() {
 
   const isAdmin = currentUser?.role === 'admin';
 
-  useEffect(() => {
-    /* global google */
-    if (!isAdmin && window.google) {
-      window.google.accounts.id.initialize({
-        client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID || "688094625700-mockclientid.apps.googleusercontent.com",
-        callback: async (response) => {
-          setLoading(true);
-          const success = await loginWithGoogle(response.credential);
-          setLoading(false);
-          if (success) {
-            navigate('/portal/dashboard');
-          }
-        },
-      });
-      window.google.accounts.id.renderButton(
-        document.getElementById("google-register-btn"),
-        { 
-          theme: "outline", 
-          size: "large", 
-          width: "350", 
-          text: "signup_with",
-          shape: "rectangular"
-        }
-      );
-    }
-  }, [isAdmin, loginWithGoogle, navigate]);
+
 
   useEffect(() => {
     // Fetch schools list for select input if admin is registering a user
-    const fetchSchools = async () => {
-      try {
-        const res = await api.get('/schools');
-        setSchools(res.data);
-      } catch (err) {
-        // Fail silently
-      }
-    };
-    fetchSchools();
-  }, []);
+    if (isAdmin) {
+      const fetchSchools = async () => {
+        try {
+          const res = await api.get('/schools');
+          setSchools(res.data);
+        } catch (err) {
+          // Fail silently
+        }
+      };
+      fetchSchools();
+    }
+  }, [isAdmin]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -281,26 +258,12 @@ export default function Register() {
         </form>
 
         {!isAdmin && (
-          <>
-            {/* Divider */}
-            <div className="my-6 flex items-center gap-3">
-              <div className="flex-grow h-[1px] bg-slate-200 dark:bg-slate-800" />
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Or</span>
-              <div className="flex-grow h-[1px] bg-slate-200 dark:bg-slate-800" />
-            </div>
-
-            {/* Google sign-up button container */}
-            <div className="flex justify-center w-full min-h-[44px]">
-              <div id="google-register-btn" className="w-full max-w-xs overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800" />
-            </div>
-
-            <div className="mt-6 text-center text-xs text-slate-500 dark:text-slate-400">
-              Already have an active account?{' '}
-              <Link to="/login" className="text-primary font-bold hover:underline">
-                Portal Sign In
-              </Link>
-            </div>
-          </>
+          <div className="mt-6 text-center text-xs text-slate-500 dark:text-slate-400">
+            Already have an active account?{' '}
+            <Link to="/login" className="text-primary font-bold hover:underline">
+              Portal Sign In
+            </Link>
+          </div>
         )}
 
         {/* Back Link */}
@@ -308,6 +271,8 @@ export default function Register() {
           <ArrowLeft className="h-4 w-4" /> {isAdmin ? 'Back to User Registry' : 'Return to Landing Page'}
         </Link>
       </GlassCard>
+
+
     </div>
   );
 }
