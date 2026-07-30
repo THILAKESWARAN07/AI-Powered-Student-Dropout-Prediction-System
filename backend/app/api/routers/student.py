@@ -292,10 +292,10 @@ def update_student(
     Update a student record.
     Admin / Headmaster / Teacher. (DEO restricted).
     """
-    if current_user.role == "deo":
+    if current_user.role in ["teacher", "deo"]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="DEOs have read-only access and cannot perform updates."
+            detail="Teachers and DEOs are not permitted to modify student records."
         )
 
     student = db.query(Student).filter(Student.id == id, Student.is_deleted == False).first()
@@ -711,10 +711,10 @@ def preview_import_file(
     Upload CSV or Excel, reading columns and preview rows for map UI.
     Falls back to loading the sample dataset if no file is uploaded.
     """
-    if current_user.role == "deo":
+    if current_user.role not in ["admin", "headmaster"]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="DEOs have read-only access."
+            detail="Only Admins and Headmasters are permitted to import student files."
         )
 
     import os

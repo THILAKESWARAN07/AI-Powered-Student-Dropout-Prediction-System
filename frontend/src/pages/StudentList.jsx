@@ -20,7 +20,7 @@ export default function StudentList() {
   const isTeacher = currentUser?.role === 'teacher';
   const isDeo = currentUser?.role === 'deo';
   const canMutate = isAdmin || isHeadmaster;
-  const canEdit = isAdmin || isHeadmaster || isTeacher;
+  const canEdit = isAdmin || isHeadmaster;
 
   // Data states
   const [students, setStudents] = useState([]);

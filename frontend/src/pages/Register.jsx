@@ -28,19 +28,17 @@ export default function Register() {
 
 
   useEffect(() => {
-    // Fetch schools list for select input if admin is registering a user
-    if (isAdmin) {
-      const fetchSchools = async () => {
-        try {
-          const res = await api.get('/schools');
-          setSchools(res.data);
-        } catch (err) {
-          // Fail silently
-        }
-      };
-      fetchSchools();
-    }
-  }, [isAdmin]);
+    // Fetch schools list for select input
+    const fetchSchools = async () => {
+      try {
+        const res = await api.get('/schools');
+        setSchools(res.data);
+      } catch (err) {
+        // Fail silently
+      }
+    };
+    fetchSchools();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -56,6 +54,10 @@ export default function Register() {
       setError('Password must be at least 6 characters.');
       return;
     }
+    if (role !== 'admin' && !schoolId) {
+      setError('School selection is mandatory.');
+      return;
+    }
 
     setError('');
     setLoading(true);
@@ -65,31 +67,33 @@ export default function Register() {
       email,
       phone: phone || null,
       password,
+      role,
+      school_id: schoolId ? parseInt(schoolId) : null
     };
 
-    // Include admin-only fields if user is admin
-    if (isAdmin) {
-      payload.role = role;
-      payload.school_id = schoolId ? parseInt(schoolId) : null;
-    }
+    try {
+      const success = await register(payload);
+      setLoading(false);
 
-    const success = await register(payload);
-    setLoading(false);
-
-    if (success) {
-      if (isAdmin) {
-        showToast('Created user account successfully', 'success');
-        // Clear form
-        setFullName('');
-        setEmail('');
-        setPhone('');
-        setPassword('');
-        setConfirmPassword('');
-        setRole('teacher');
-        setSchoolId('');
-      } else {
-        navigate('/login');
+      if (success) {
+        if (isAdmin) {
+          showToast('Created user account successfully', 'success');
+          // Clear form
+          setFullName('');
+          setEmail('');
+          setPhone('');
+          setPassword('');
+          setConfirmPassword('');
+          setRole('teacher');
+          setSchoolId('');
+        } else {
+          showToast('Account registered successfully! Please log in.', 'success');
+          navigate('/login');
+        }
       }
+    } catch (err) {
+      setLoading(false);
+      setError(err.response?.data?.detail || 'An error occurred during registration.');
     }
   };
 
@@ -105,7 +109,7 @@ export default function Register() {
             <GraduationCap className="h-8 w-8 text-primary" />
           </div>
           <h1 className="text-2xl font-bold tracking-tight">
-            {isAdmin ? 'Register New User' : 'Create Teacher Account'}
+            {isAdmin ? 'Register New User' : 'Create School Account'}
           </h1>
           <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">
             {isAdmin ? 'System administrator enrollment console' : 'Register to log in and view school registries'}
@@ -166,31 +170,45 @@ export default function Register() {
             </div>
           </div>
 
-          {/* Admin Role & School Selectors */}
-          {isAdmin && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-100/50 dark:bg-slate-900/50 p-4 rounded-2xl border border-slate-200/50 dark:border-slate-800/50">
+          {/* Role & School Selectors */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-100/50 dark:bg-slate-900/50 p-4 rounded-2xl border border-slate-200/50 dark:border-slate-800/50">
+            <div>
+              <label className="text-xs font-bold text-slate-500 dark:text-slate-400 block mb-1.5 uppercase tracking-wider">User Role *</label>
+              <select
+                value={role}
+                onChange={(e) => {
+                  setRole(e.target.value);
+                  if (e.target.value === 'admin') {
+                    setSchoolId('');
+                  }
+                }}
+                className="w-full px-3 py-2.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all dark:text-white font-semibold"
+              >
+                {isAdmin ? (
+                  <>
+                    <option value="teacher">Teacher</option>
+                    <option value="headmaster">Headmaster</option>
+                    <option value="admin">Admin</option>
+                  </>
+                ) : (
+                  <>
+                    <option value="teacher">Teacher</option>
+                    <option value="headmaster">Headmaster</option>
+                  </>
+                )}
+              </select>
+            </div>
+            {role !== 'admin' && (
               <div>
-                <label className="text-xs font-bold text-slate-500 dark:text-slate-400 block mb-1.5 uppercase tracking-wider">User Role</label>
-                <select
-                  value={role}
-                  onChange={(e) => setRole(e.target.value)}
-                  className="w-full px-3 py-2.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all dark:text-white"
-                >
-                  <option value="admin">Admin</option>
-                  <option value="headmaster">Headmaster</option>
-                  <option value="deo">District Officer (DEO)</option>
-                  <option value="teacher">Teacher</option>
-                </select>
-              </div>
-              <div>
-                <label className="text-xs font-bold text-slate-500 dark:text-slate-400 block mb-1.5 uppercase tracking-wider">Assigned School</label>
+                <label className="text-xs font-bold text-slate-500 dark:text-slate-400 block mb-1.5 uppercase tracking-wider">Assigned School *</label>
                 <div className="relative">
                   <select
                     value={schoolId}
                     onChange={(e) => setSchoolId(e.target.value)}
-                    className="w-full px-3 py-2.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all dark:text-white"
+                    className="w-full px-3 py-2.5 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all dark:text-white font-semibold"
+                    required
                   >
-                    <option value="">No Assigned School</option>
+                    <option value="">-- Choose School --</option>
                     {schools.map((s) => (
                       <option key={s.id} value={s.id}>
                         {s.school_name}
@@ -199,8 +217,8 @@ export default function Register() {
                   </select>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
 
           {/* Password & Confirm */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

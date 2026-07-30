@@ -107,7 +107,7 @@ export default function StudentForm() {
       if (!isEdit && res.data.length > 0) {
         setFormData(prev => ({
           ...prev,
-          school_id: currentUser?.school_id || res.data[0].id
+          school_id: currentUser?.role !== 'admin' ? currentUser?.school_id || '' : ''
         }));
       }
     } catch (err) {}
@@ -227,6 +227,10 @@ export default function StudentForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isAdmin && !formData.school_id) {
+      showToast('Please select a target school allocation.', 'error');
+      return;
+    }
     setLoading(true);
 
     // Build submission data matching nested schemas
@@ -457,8 +461,10 @@ export default function StudentForm() {
                     <select
                       value={formData.school_id}
                       onChange={(e) => handleChange('school_id', e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl bg-white/50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 text-slate-800 dark:text-white"
+                      className="w-full px-4 py-2.5 rounded-xl bg-white/50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 text-slate-800 dark:text-white font-semibold"
+                      required
                     >
+                      <option value="">-- Choose Target School --</option>
                       {schools.map(s => (
                         <option key={s.id} value={s.id}>{s.school_name}</option>
                       ))}

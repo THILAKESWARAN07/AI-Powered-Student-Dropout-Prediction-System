@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
+import { useAuth } from '../context/AuthContext';
 import GlassCard from '../components/common/GlassCard';
 import { FileText, Download, Printer, Filter, Loader2, Info } from 'lucide-react';
 
 export default function Reports() {
+  const { user } = useAuth();
   const [loading, setLoading] = useState(true);
   const [schools, setSchools] = useState([]);
   const [reportType, setReportType] = useState('summary'); // summary, student, school, class
   
   // Filters
-  const [schoolId, setSchoolId] = useState('');
+  const [schoolId, setSchoolId] = useState(user?.role !== 'admin' ? user?.school_id || '' : '');
   const [className, setClassName] = useState('');
   const [section, setSection] = useState('');
   const [riskLevel, setRiskLevel] = useState('');
@@ -141,16 +143,18 @@ export default function Reports() {
             <option value="class">Classroom Report</option>
           </select>
 
-          <select
-            value={schoolId}
-            onChange={(e) => setSchoolId(e.target.value)}
-            className="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs text-slate-700 dark:text-white focus:ring-2 focus:ring-primary/50 focus:outline-none"
-          >
-            <option value="">All Schools</option>
-            {schools.map(s => (
-              <option key={s.id} value={s.id}>{s.school_name}</option>
-            ))}
-          </select>
+          {user?.role === 'admin' && (
+            <select
+              value={schoolId}
+              onChange={(e) => setSchoolId(e.target.value)}
+              className="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs text-slate-700 dark:text-white focus:ring-2 focus:ring-primary/50 focus:outline-none"
+            >
+              <option value="">All Schools</option>
+              {schools.map(s => (
+                <option key={s.id} value={s.id}>{s.school_name}</option>
+              ))}
+            </select>
+          )}
 
           <select
             value={className}

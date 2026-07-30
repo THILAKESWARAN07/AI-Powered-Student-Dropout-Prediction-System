@@ -110,7 +110,7 @@ export default function ImportWizard() {
       const res = await api.get('/schools');
       setSchools(res.data);
       if (res.data.length > 0) {
-        setTargetSchool(currentUser?.school_id || res.data[0].id);
+        setTargetSchool(currentUser?.role !== 'admin' ? currentUser?.school_id || '' : '');
       }
     } catch (err) {}
   };
@@ -174,7 +174,11 @@ export default function ImportWizard() {
   };
 
   const handleRunImport = async () => {
-    if (!selectedFile || !targetSchool) return;
+    if (!selectedFile) return;
+    if (!targetSchool) {
+      showToast('Please select a target school before running the import.', 'error');
+      return;
+    }
 
     // Check if required fields are mapped
     const mappedDbKeys = Object.values(mappings);
@@ -359,8 +363,9 @@ export default function ImportWizard() {
                 value={targetSchool}
                 onChange={(e) => setTargetSchool(e.target.value)}
                 disabled={!isAdmin}
-                className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-60"
+                className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-60 font-semibold"
               >
+                {isAdmin && <option value="">-- Choose Target School --</option>}
                 {schools.map(s => (
                   <option key={s.id} value={s.id}>{s.school_name}</option>
                 ))}

@@ -24,7 +24,7 @@ export default function Dashboard() {
   const [recent, setRecent] = useState([]);
 
   // Filter values
-  const [schoolId, setSchoolId] = useState('');
+  const [schoolId, setSchoolId] = useState(user?.role !== 'admin' ? user?.school_id || '' : '');
   const [className, setClassName] = useState('');
   const [section, setSection] = useState('');
   const [gender, setGender] = useState('');
@@ -193,19 +193,21 @@ export default function Dashboard() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3.5">
-          <div>
-            <label className="text-[10px] font-bold text-slate-400 block mb-1">Target School</label>
-            <select
-              value={schoolId}
-              onChange={(e) => setSchoolId(e.target.value)}
-              className="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs focus:outline-none focus:ring-2 focus:ring-primary/50 text-slate-700 dark:text-white"
-            >
-              <option value="">All Schools</option>
-              {schools.map(s => (
-                <option key={s.id} value={s.id}>{s.school_name}</option>
-              ))}
-            </select>
-          </div>
+          {user?.role === 'admin' && (
+            <div>
+              <label className="text-[10px] font-bold text-slate-400 block mb-1">Target School</label>
+              <select
+                value={schoolId}
+                onChange={(e) => setSchoolId(e.target.value)}
+                className="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs focus:outline-none focus:ring-2 focus:ring-primary/50 text-slate-700 dark:text-white"
+              >
+                <option value="">All Schools</option>
+                {schools.map(s => (
+                  <option key={s.id} value={s.id}>{s.school_name}</option>
+                ))}
+              </select>
+            </div>
+          )}
 
           <div>
             <label className="text-[10px] font-bold text-slate-400 block mb-1">Class</label>

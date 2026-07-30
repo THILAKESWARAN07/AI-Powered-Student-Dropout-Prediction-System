@@ -25,6 +25,25 @@ def predict_student_risk(
     Analyzes academics, attendance, behavior, family metrics, and returns risk assessment,
     explainable AI reasons, and recommendation actions. Persists prediction history.
     """
+    if current_user.role in ["teacher", "deo"]:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Teachers and DEOs are not authorized to trigger prediction executions."
+        )
+
+    student = db.query(Student).filter(Student.id == student_id, Student.is_deleted == False).first()
+    if not student:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Student not found."
+        )
+
+    if current_user.role == "headmaster" and current_user.school_id != student.school_id:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Headmasters can only generate predictions for their own school's students."
+        )
+
     try:
         result = prediction_service.predict_student(db, student_id)
         return result
@@ -50,6 +69,23 @@ def predict_batch_risk(
     Triggers batch predictions for a list of student database IDs.
     Excludes failed records dynamically to ensure completion of the request.
     """
+    if current_user.role in ["teacher", "deo"]:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Teachers and DEOs are not authorized to trigger batch prediction tasks."
+        )
+
+    if current_user.role == "headmaster":
+        non_school_count = db.query(Student).filter(
+            Student.id.in_(payload.student_ids),
+            Student.school_id != current_user.school_id
+        ).count()
+        if non_school_count > 0:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Headmasters can only run batch predictions for their own school's students."
+            )
+
     try:
         results = prediction_service.predict_batch(db, payload.student_ids)
         return {"results": results}
@@ -70,13 +106,19 @@ def get_prediction_history(
     Retrieves the prediction history logs for a specific student, ordered by timestamp.
     """
     # Verify student exists first
-    student = db.query(Student).filter(Student.id == student_id).first()
+    student = db.query(Student).filter(Student.id == student_id, Student.is_deleted == False).first()
     if not student:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Student record not found."
         )
         
+    if current_user.role in ["headmaster", "teacher"] and current_user.school_id != student.school_id:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="You do not have access to view prediction history for this student."
+        )
+
     history = db.query(StudentPrediction).filter(
         StudentPrediction.student_id == student_id
     ).order_by(StudentPrediction.predicted_at.desc()).all()

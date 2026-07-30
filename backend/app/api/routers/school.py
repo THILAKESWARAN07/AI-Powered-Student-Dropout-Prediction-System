@@ -51,11 +51,10 @@ def create_school(
 
 @router.get("/", response_model=List[SchoolResponse])
 def list_schools(
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    db: Session = Depends(get_db)
 ):
     """
-    List all schools. Available to all authenticated users.
+    List all schools. Available publicly to allow signup selection dropdown loading.
     """
     return db.query(School).order_by(School.id.desc()).all()
 
@@ -75,6 +74,11 @@ def get_school(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="School not found."
         )
+    if current_user.role != "admin" and current_user.school_id != school_id:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Access denied. You can only view details of your assigned school."
+        )
     return school
 
 
@@ -89,7 +93,6 @@ def update_school(
     """
     Update school details.
     Only Admin can update any school.
-    Headmaster can only update their own assigned school.
     """
     school = db.query(School).filter(School.id == school_id).first()
     if not school:
@@ -98,14 +101,11 @@ def update_school(
             detail="School not found."
         )
 
-    # Verify authorization
-    is_admin = current_user.role == "admin"
-    is_assigned_headmaster = current_user.role == "headmaster" and current_user.school_id == school_id
-
-    if not (is_admin or is_assigned_headmaster):
+    # Verify authorization (only admin can edit)
+    if current_user.role != "admin":
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="You do not have privilege to modify this school."
+            detail="Only administrators can modify school details."
         )
 
     # Apply updates

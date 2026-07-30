@@ -5,10 +5,14 @@ import {
 } from 'lucide-react';
 import api from '../services/api';
 import { useToast } from '../context/ToastContext';
+import { useAuth } from '../context/AuthContext';
 import GlassCard from '../components/common/GlassCard';
 
 export default function RiskAnalysis() {
   const { showToast } = useToast();
+  const { user } = useAuth();
+  const isTeacher = user?.role === 'teacher';
+
   const [students, setStudents] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedStudentId, setSelectedStudentId] = useState('');
@@ -171,22 +175,24 @@ export default function RiskAnalysis() {
                   </div>
                 </div>
 
-                <button
-                  onClick={handleRunAnalysis}
-                  disabled={loading}
-                  className="w-full mt-4 bg-primary text-white font-bold text-sm py-2.5 rounded-xl hover:bg-primary/90 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
-                >
-                  {loading ? (
-                    <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
-                      Running AI Engine...
-                    </>
-                  ) : (
-                    <>
-                      <Brain className="h-4 w-4" /> Analyze Dropout Risk
-                    </>
-                  )}
-                </button>
+                {!isTeacher && (
+                  <button
+                    onClick={handleRunAnalysis}
+                    disabled={loading}
+                    className="w-full mt-4 bg-primary text-white font-bold text-sm py-2.5 rounded-xl hover:bg-primary/90 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+                  >
+                    {loading ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                        Running AI Engine...
+                      </>
+                    ) : (
+                      <>
+                        <Brain className="h-4 w-4" /> Analyze Dropout Risk
+                      </>
+                    )}
+                  </button>
+                )}
               </div>
             )}
           </GlassCard>

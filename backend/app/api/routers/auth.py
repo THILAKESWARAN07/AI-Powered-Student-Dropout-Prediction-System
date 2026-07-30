@@ -70,8 +70,6 @@ def register(
 ):
     """
     Register a new user.
-    Only active Admins can assign roles other than 'teacher' or allocate users to schools.
-    Anonymous registration defaults to role 'teacher' and school_id None.
     """
     # Check if email is already taken
     email_normalized = user_in.email.lower().strip() if user_in.email else ""
@@ -82,34 +80,56 @@ def register(
             detail="The email is already registered."
         )
 
-    # Determine role and school assignment permissions
-    assigned_role = "teacher"
-    assigned_school_id = None
+    is_admin = current_user is not None and current_user.role == "admin"
+    assigned_role = user_in.role or "teacher"
+    assigned_school_id = user_in.school_id
 
-    if current_user and current_user.role == "admin":
-        assigned_role = user_in.role or "teacher"
-        assigned_school_id = user_in.school_id
-    else:
-        # Prevent non-admins from assigning elevated roles
-        if user_in.role and user_in.role != "teacher":
-            raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
-                detail="Only administrators can assign user roles."
-            )
-        # Prevent non-admins from setting school directly at signup
-        if user_in.school_id is not None:
-            raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
-                detail="Only administrators can assign schools to users."
-            )
+    # Enforce role boundaries
+    if assigned_role not in ["admin", "headmaster", "teacher"]:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid role. Supported roles are Admin, Headmaster, and Teacher."
+        )
 
-    # Verify school existence if assigned
-    if assigned_school_id:
+    # Only existing Admin can register an Admin user
+    if assigned_role == "admin" and not is_admin:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Only administrators can create Admin accounts."
+        )
+
+    # Headmasters and Teachers must be assigned to a school
+    if assigned_role in ["headmaster", "teacher"]:
+        if not assigned_school_id:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="School selection is mandatory for Headmasters and Teachers."
+            )
+        # Verify school existence
         school = db.query(School).filter(School.id == assigned_school_id).first()
         if not school:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail="Assigned school not found."
+                detail="Selected school not found."
+            )
+    else:  # admin
+        if assigned_school_id is not None:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Admin accounts cannot be assigned to a school."
+            )
+
+    # Enforce One Headmaster per School validation
+    if assigned_role == "headmaster":
+        existing_hm = db.query(User).filter(
+            User.school_id == assigned_school_id,
+            User.role == "headmaster",
+            User.is_active == True
+        ).first()
+        if existing_hm:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="This school already has an assigned Headmaster. Please contact the administrator."
             )
 
     # Create new user
@@ -125,6 +145,7 @@ def register(
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
+
 
     # Log action
     client_ip = request.client.host if request.client else None

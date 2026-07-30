@@ -124,7 +124,7 @@ export default function StudentDetails() {
   const isHeadmaster = currentUser?.role === 'headmaster';
   const isTeacher = currentUser?.role === 'teacher';
   const canMutate = isAdmin || isHeadmaster;
-  const canEdit = isAdmin || isHeadmaster || isTeacher;
+  const canEdit = isAdmin || isHeadmaster;
 
   const fetchStudent = async () => {
     setLoading(true);

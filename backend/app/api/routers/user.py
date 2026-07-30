@@ -160,6 +160,21 @@ def update_user_profile(
                 detail="School not found."
             )
 
+    # Enforce One Headmaster per School validation on school update
+    new_school_id = update_data.get("school_id")
+    if new_school_id and new_school_id != user.school_id and user.role == "headmaster":
+        existing_hm = db.query(User).filter(
+            User.school_id == new_school_id,
+            User.role == "headmaster",
+            User.id != user.id,
+            User.is_active == True
+        ).first()
+        if existing_hm:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="The target school already has an assigned Headmaster."
+            )
+
     for field, value in update_data.items():
         setattr(user, field, value)
 
@@ -203,6 +218,25 @@ def update_user_role(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Administrators cannot demote themselves."
         )
+
+    # Enforce One Headmaster per School validation on role update
+    if role_in.role == "headmaster" and user.role != "headmaster":
+        if not user.school_id:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="User must be assigned to a school before becoming a Headmaster."
+            )
+        existing_hm = db.query(User).filter(
+            User.school_id == user.school_id,
+            User.role == "headmaster",
+            User.id != user.id,
+            User.is_active == True
+        ).first()
+        if existing_hm:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="This school already has an assigned Headmaster. Please contact the administrator."
+            )
 
     old_role = user.role
     user.role = role_in.role

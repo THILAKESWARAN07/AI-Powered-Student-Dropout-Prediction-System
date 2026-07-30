@@ -1,4 +1,4 @@
-from sqlalchemy import String, Integer, Boolean, DateTime, ForeignKey
+from sqlalchemy import String, Integer, Boolean, DateTime, ForeignKey, Index, text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from datetime import datetime, timezone
 from app.db.base_class import Base
@@ -26,3 +26,12 @@ class User(Base):
 
     # Establish relationship to School
     school = relationship("School", backref="users")
+
+    __table_args__ = (
+        Index(
+            "uq_headmaster_per_school",
+            "school_id",
+            unique=True,
+            postgresql_where=text("role = 'headmaster' AND is_active = true")
+        ),
+    )
