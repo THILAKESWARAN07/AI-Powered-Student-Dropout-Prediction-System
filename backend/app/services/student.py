@@ -12,6 +12,7 @@ from app.models.student import (
 )
 from app.models.school import School
 from app.schemas.student import ImportSummaryReport, ImportErrorDetail
+from app.core.logging import logger
 
 
 def parse_csv_or_excel_headers(file_content: bytes, filename: str) -> Tuple[List[str], List[Dict[str, Any]], int]:
@@ -505,6 +506,15 @@ def import_mapped_records(
             rows_raw.append(row_data)
 
     total_records = len(rows_raw)
+
+    logger.info("=" * 60)
+    logger.info(f"Rows parsed: {total_records}")
+
+    if rows_raw:
+        logger.info(f"First Student_ID: {rows_raw[0].get('Student_ID')}")
+        logger.info(f"Last Student_ID : {rows_raw[-1].get('Student_ID')}")
+
+    logger.info("=" * 60)
 
     # 1.1 Automatic column detection if mapping is empty
     expected_db_cols = [

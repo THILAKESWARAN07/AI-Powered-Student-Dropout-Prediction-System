@@ -823,6 +823,10 @@ def run_import_file(
         else:
             file_content = file.file.read()
             filename = file.filename
+            logger.info("=" * 60)
+            logger.info(f"Uploaded filename: {filename}")
+            logger.info(f"Uploaded file size: {len(file_content)} bytes")
+            logger.info("=" * 60)
 
         report = import_mapped_records(
             db=db,
