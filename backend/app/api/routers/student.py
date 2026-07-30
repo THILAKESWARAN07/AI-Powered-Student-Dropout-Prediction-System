@@ -711,6 +711,7 @@ def preview_import_file(
     Upload CSV or Excel, reading columns and preview rows for map UI.
     Falls back to loading the sample dataset if no file is uploaded.
     """
+    logger.warning("########## NEW PREVIEW ENDPOINT EXECUTED ##########")
     if current_user.role == "deo":
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
@@ -763,6 +764,7 @@ def run_import_file(
     Commit mappings and imports dataset records directly to normalized sub-tables.
     Falls back to loading the sample dataset if no file is uploaded.
     """
+    logger.warning("########## NEW RUN ENDPOINT EXECUTED ##########")
     try:
         if current_user.role not in ["admin", "headmaster"]:
             raise HTTPException(

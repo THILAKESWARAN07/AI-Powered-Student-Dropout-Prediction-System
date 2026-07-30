@@ -48,6 +48,8 @@ def parse_csv_or_excel_headers(file_content: bytes, filename: str) -> Tuple[List
     else:
         # Load CSV
         text_content = file_content.decode('utf-8', errors='ignore')
+        logger.info(f"CSV newline count: {text_content.count(chr(10))}")
+        logger.info(f"CSV length: {len(text_content)} characters")
         reader = csv.reader(io.StringIO(text_content))
         
         header_row = next(reader, None)
