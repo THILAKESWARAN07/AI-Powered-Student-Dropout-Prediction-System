@@ -736,11 +736,12 @@ def preview_import_file(
     else:
         file_content = file.file.read()
         filename = file.filename
+        newline_count = file_content.count(b"\n")
         logger.warning("=" * 60)
         logger.warning(f"FILENAME: {filename}")
         logger.warning(f"UPLOADFILE.filename: {file.filename if file else 'None'}")
         logger.warning(f"FILE SIZE (bytes): {len(file_content)}")
-        logger.warning(f"NEWLINES: {file_content.count(b'\n')}")
+        logger.warning(f"NEWLINES: {newline_count}")
         logger.warning("=" * 60)
 
     headers, preview_rows, total_rows = parse_csv_or_excel_headers(file_content, filename)
@@ -831,11 +832,12 @@ def run_import_file(
         else:
             file_content = file.file.read()
             filename = file.filename
+            newline_count = file_content.count(b"\n")
             logger.warning("=" * 60)
             logger.warning(f"FILENAME: {filename}")
             logger.warning(f"UPLOADFILE.filename: {file.filename if file else 'None'}")
             logger.warning(f"FILE SIZE (bytes): {len(file_content)}")
-            logger.warning(f"NEWLINES: {file_content.count(b'\n')}")
+            logger.warning(f"NEWLINES: {newline_count}")
             logger.warning("=" * 60)
 
         report = import_mapped_records(
