@@ -735,6 +735,11 @@ def preview_import_file(
     else:
         file_content = file.file.read()
         filename = file.filename
+        logger.info("=" * 60)
+        logger.info(f"PREVIEW FILENAME: {file.filename}")
+        logger.info(f"PREVIEW FILE SIZE: {len(file_content)} bytes")
+        logger.info(file_content[:500].decode("utf-8", errors="ignore"))
+        logger.info("=" * 60)
 
     headers, preview_rows, total_rows = parse_csv_or_excel_headers(file_content, filename)
     
@@ -824,9 +829,9 @@ def run_import_file(
             file_content = file.file.read()
             filename = file.filename
             logger.info("=" * 60)
-            logger.info(f"FILENAME: {filename}")
-            logger.info(f"FILE SIZE: {len(file_content)} bytes")
-            logger.info(f"FIRST 200 BYTES:\n{file_content[:200].decode('utf-8', errors='ignore')}")
+            logger.info(f"RUN FILENAME: {file.filename}")
+            logger.info(f"RUN FILE SIZE: {len(file_content)} bytes")
+            logger.info(file_content[:500].decode("utf-8", errors="ignore"))
             logger.info("=" * 60)
 
         report = import_mapped_records(
