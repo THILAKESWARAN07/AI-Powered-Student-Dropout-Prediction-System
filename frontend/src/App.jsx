@@ -33,8 +33,8 @@ export default function App() {
   return (
     <ThemeProvider>
       <ToastProvider>
-        <AuthProvider>
-          <BrowserRouter>
+        <BrowserRouter>
+          <AuthProvider>
             <Routes>
               {/* Public Website Pages */}
               <Route path="/" element={<MainLayout />}>
@@ -83,8 +83,8 @@ export default function App() {
               {/* 404 handler */}
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
-          </BrowserRouter>
-        </AuthProvider>
+          </AuthProvider>
+        </BrowserRouter>
       </ToastProvider>
     </ThemeProvider>
   );
