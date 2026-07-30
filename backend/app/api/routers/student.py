@@ -711,7 +711,6 @@ def preview_import_file(
     Upload CSV or Excel, reading columns and preview rows for map UI.
     Falls back to loading the sample dataset if no file is uploaded.
     """
-    logger.warning("########## NEW PREVIEW ENDPOINT EXECUTED ##########")
     if current_user.role == "deo":
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
@@ -736,13 +735,6 @@ def preview_import_file(
     else:
         file_content = file.file.read()
         filename = file.filename
-        newline_count = file_content.count(b"\n")
-        logger.warning("=" * 60)
-        logger.warning(f"FILENAME: {filename}")
-        logger.warning(f"UPLOADFILE.filename: {file.filename if file else 'None'}")
-        logger.warning(f"FILE SIZE (bytes): {len(file_content)}")
-        logger.warning(f"NEWLINES: {newline_count}")
-        logger.warning("=" * 60)
 
     headers, preview_rows, total_rows = parse_csv_or_excel_headers(file_content, filename)
     
@@ -766,7 +758,6 @@ def run_import_file(
     Commit mappings and imports dataset records directly to normalized sub-tables.
     Falls back to loading the sample dataset if no file is uploaded.
     """
-    logger.warning("########## NEW RUN ENDPOINT EXECUTED ##########")
     try:
         if current_user.role not in ["admin", "headmaster"]:
             raise HTTPException(
@@ -832,13 +823,6 @@ def run_import_file(
         else:
             file_content = file.file.read()
             filename = file.filename
-            newline_count = file_content.count(b"\n")
-            logger.warning("=" * 60)
-            logger.warning(f"FILENAME: {filename}")
-            logger.warning(f"UPLOADFILE.filename: {file.filename if file else 'None'}")
-            logger.warning(f"FILE SIZE (bytes): {len(file_content)}")
-            logger.warning(f"NEWLINES: {newline_count}")
-            logger.warning("=" * 60)
 
         report = import_mapped_records(
             db=db,
