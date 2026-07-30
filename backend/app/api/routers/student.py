@@ -824,8 +824,8 @@ def run_import_file(
             file_content = file.file.read()
             filename = file.filename
             logger.info("=" * 60)
-            logger.info(f"Uploaded filename: {filename}")
-            logger.info(f"Uploaded file size: {len(file_content)} bytes")
+            logger.info(f"IMPORT FILE: {filename}")
+            logger.info(f"FILE SIZE: {len(file_content)} bytes")
             logger.info("=" * 60)
 
         report = import_mapped_records(

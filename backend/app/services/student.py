@@ -508,11 +508,11 @@ def import_mapped_records(
     total_records = len(rows_raw)
 
     logger.info("=" * 60)
-    logger.info(f"Rows parsed: {total_records}")
+    logger.info(f"TOTAL ROWS PARSED: {len(rows_raw)}")
 
     if rows_raw:
-        logger.info(f"First Student_ID: {rows_raw[0].get('Student_ID')}")
-        logger.info(f"Last Student_ID : {rows_raw[-1].get('Student_ID')}")
+        logger.info(f"FIRST STUDENT: {rows_raw[0].get('Student_ID')}")
+        logger.info(f"LAST STUDENT : {rows_raw[-1].get('Student_ID')}")
 
     logger.info("=" * 60)
 
