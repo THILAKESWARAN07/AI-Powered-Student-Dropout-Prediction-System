@@ -4,7 +4,7 @@ import { useToast } from '../context/ToastContext';
 import GlassCard from '../components/common/GlassCard';
 import { 
   Users, Search, SlidersHorizontal, Edit, Trash2, Eye, Loader2,
-  ChevronLeft, ChevronRight, UserPlus, Upload, Download, Trash, RefreshCw, X
+  ChevronLeft, ChevronRight, UserPlus, Upload, Download, Trash, RefreshCw, X, AlertTriangle
 } from 'lucide-react';
 import api from '../services/api';
 import { Link, useNavigate } from 'react-router-dom';
@@ -136,16 +136,40 @@ export default function StudentList() {
     }
   };
 
-  const handleDelete = async (id, studentId) => {
-    if (!window.confirm(`Are you sure you want to delete student "${studentId}"?`)) {
-      return;
-    }
+  // Delete student modal states
+  const [studentToDelete, setStudentToDelete] = useState(null);
+  const [deletingStudent, setDeletingStudent] = useState(false);
+  const [showBulkDeleteConfirm, setShowBulkDeleteConfirm] = useState(false);
+
+  const executeStudentDelete = async () => {
+    if (!studentToDelete) return;
+    setDeletingStudent(true);
     try {
-      await api.delete(`/students/${id}`);
-      showToast('Student record deleted successfully', 'success');
-      fetchStudents();
+      await api.delete(`/students/${studentToDelete.id}`);
+      // Optimistically remove student from local state list
+      setStudents(prev => prev.filter(s => s.id !== studentToDelete.id));
+      showToast('✅ Student deleted successfully.', 'success');
+      setStudentToDelete(null);
     } catch (err) {
-      showToast(err.response?.data?.detail || 'Deletion failed', 'error');
+      showToast(err.response?.data?.detail || 'Unable to delete student. Please try again.', 'error');
+    } finally {
+      setDeletingStudent(false);
+    }
+  };
+
+  const executeBulkDelete = async () => {
+    setBulkSubmitting(true);
+    try {
+      await api.post('/students/bulk-delete', { student_ids: selectedIds });
+      // Optimistically remove student from local state list
+      setStudents(prev => prev.filter(s => !selectedIds.includes(s.id)));
+      setSelectedIds([]);
+      showToast('✅ Selected student records permanently deleted.', 'success');
+      setShowBulkDeleteConfirm(false);
+    } catch (err) {
+      showToast(err.response?.data?.detail || 'Bulk deletion failed', 'error');
+    } finally {
+      setBulkSubmitting(false);
     }
   };
 
@@ -154,12 +178,7 @@ export default function StudentList() {
     if (selectedIds.length === 0) return;
     setBulkSubmitting(true);
     try {
-      if (bulkAction === 'delete') {
-        if (window.confirm(`Are you sure you want to delete ${selectedIds.length} selected student records?`)) {
-          await api.post('/students/bulk-delete', { student_ids: selectedIds });
-          showToast('Selected student records deleted', 'success');
-        }
-      } else if (bulkAction === 'update') {
+      if (bulkAction === 'update') {
         await api.post('/students/bulk-status-update', {
           student_ids: selectedIds,
           Class: bulkClass || undefined,
@@ -503,20 +522,20 @@ export default function StudentList() {
           </span>
           <div className="flex items-center gap-2">
             {canMutate && (
-              <>
-                <button
-                  onClick={() => { setBulkAction('update'); setShowBulkModal(true); }}
-                  className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 px-3.5 py-2 rounded-xl text-xs font-bold text-slate-800 dark:text-white transition-all"
-                >
-                  Bulk Edit details
-                </button>
-                <button
-                  onClick={() => { setBulkAction('delete'); handleBulkExecute(); }}
-                  className="bg-red-500 hover:bg-red-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all active:scale-[0.98]"
-                >
-                  <Trash className="h-4 w-4" /> Bulk Delete
-                </button>
-              </>
+              <button
+                onClick={() => { setBulkAction('update'); setShowBulkModal(true); }}
+                className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 px-3.5 py-2 rounded-xl text-xs font-bold text-slate-800 dark:text-white transition-all"
+              >
+                Bulk Edit details
+              </button>
+            )}
+            {isAdmin && (
+              <button
+                onClick={() => setShowBulkDeleteConfirm(true)}
+                className="bg-red-500 hover:bg-red-650 text-white px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all active:scale-[0.98]"
+              >
+                <Trash className="h-4 w-4" /> Delete Selected
+              </button>
             )}
             <button
               onClick={() => handleExport('csv')}
@@ -622,13 +641,14 @@ export default function StudentList() {
                           <Edit className="h-4 w-4" />
                         </Link>
                       )}
-                      {canMutate && (
+                      {isAdmin && (
                         <button
-                          onClick={() => handleDelete(student.id, student.student_id)}
-                          className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-red-500/10 hover:text-red-500 text-slate-400 transition-colors"
-                          title="Delete Student"
+                          onClick={() => setStudentToDelete(student)}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold border border-red-500/30 text-red-650 hover:bg-red-500/10 dark:text-red-400 dark:border-red-500/20 rounded-xl hover:border-red-500/50 transition-all active:scale-[0.98] shadow-sm"
+                          title="Permanently Delete Student"
                         >
-                          <Trash2 className="h-4 w-4" />
+                          <Trash2 className="h-3.5 w-3.5" />
+                          Delete
                         </button>
                       )}
                     </div>
@@ -755,6 +775,108 @@ export default function StudentList() {
               >
                 {bulkSubmitting && <Loader2 className="h-4 w-4 animate-spin" />}
                 Apply Updates
+              </button>
+            </div>
+          </GlassCard>
+        </div>
+      )}
+
+      {/* PERMANENT STUDENT DELETE CONFIRMATION MODAL */}
+      {studentToDelete && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/60 backdrop-blur-sm overflow-y-auto">
+          <GlassCard className="max-w-md w-full border-white/40 dark:border-white/5 p-8 relative animate-in zoom-in-95 duration-200" hoverEffect={false}>
+            <button
+              onClick={() => setStudentToDelete(null)}
+              className="absolute top-5 right-5 p-2 rounded-xl text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
+              disabled={deletingStudent}
+            >
+              <X className="h-5 w-5" />
+            </button>
+
+            <div className="bg-red-500/10 text-red-500 p-3 rounded-2xl mb-4 w-fit border border-red-500/20">
+              <AlertTriangle className="h-6 w-6 text-red-500 animate-pulse" />
+            </div>
+
+            <h2 className="text-xl font-bold text-slate-850 dark:text-white mb-3">
+              Delete Student
+            </h2>
+            <p className="text-sm text-slate-655 dark:text-slate-350 leading-relaxed mb-6">
+              Are you sure you want to permanently delete student <strong className="text-slate-900 dark:text-white">{studentToDelete.full_name}</strong> <span className="text-slate-500">(ID: {studentToDelete.student_id})</span>? This action cannot be undone.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-3">
+              <button
+                type="button"
+                onClick={() => setStudentToDelete(null)}
+                disabled={deletingStudent}
+                className="flex-1 px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 font-bold text-sm hover:bg-slate-50 dark:hover:bg-slate-900 transition-all active:scale-[0.98] disabled:opacity-50"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={executeStudentDelete}
+                disabled={deletingStudent}
+                className="flex-1 bg-red-655 hover:bg-red-700 text-white py-3 px-4 rounded-xl font-bold text-sm shadow-lg shadow-red-500/20 flex items-center justify-center gap-2 transition-all active:scale-[0.98] disabled:opacity-75"
+              >
+                {deletingStudent ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" /> Deleting...
+                  </>
+                ) : (
+                  'Delete Permanently'
+                )}
+              </button>
+            </div>
+          </GlassCard>
+        </div>
+      )}
+
+      {/* PERMANENT BULK DELETE CONFIRMATION MODAL */}
+      {showBulkDeleteConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/60 backdrop-blur-sm overflow-y-auto">
+          <GlassCard className="max-w-md w-full border-white/40 dark:border-white/5 p-8 relative animate-in zoom-in-95 duration-200" hoverEffect={false}>
+            <button
+              onClick={() => setShowBulkDeleteConfirm(false)}
+              className="absolute top-5 right-5 p-2 rounded-xl text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
+              disabled={bulkSubmitting}
+            >
+              <X className="h-5 w-5" />
+            </button>
+
+            <div className="bg-red-500/10 text-red-500 p-3 rounded-2xl mb-4 w-fit border border-red-500/20">
+              <AlertTriangle className="h-6 w-6 text-red-500 animate-pulse" />
+            </div>
+
+            <h2 className="text-xl font-bold text-slate-850 dark:text-white mb-3 text-left">
+              Delete Selected Students
+            </h2>
+            <p className="text-sm text-slate-655 dark:text-slate-350 leading-relaxed mb-6 text-left">
+              Are you sure you want to permanently delete the <strong className="text-red-500">{selectedIds.length}</strong> selected student records? This action cannot be undone and will clean up all academic, prediction, and child dependencies.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-3">
+              <button
+                type="button"
+                onClick={() => setShowBulkDeleteConfirm(false)}
+                disabled={bulkSubmitting}
+                className="flex-1 px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 font-bold text-sm hover:bg-slate-50 dark:hover:bg-slate-900 transition-all active:scale-[0.98] disabled:opacity-50"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={executeBulkDelete}
+                disabled={bulkSubmitting}
+                className="flex-1 bg-red-655 hover:bg-red-700 text-white py-3 px-4 rounded-xl font-bold text-sm shadow-lg shadow-red-500/20 flex items-center justify-center gap-2 transition-all active:scale-[0.98] disabled:opacity-75"
+              >
+                {bulkSubmitting ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" /> Deleting...
+                  </>
+                ) : (
+                  'Delete Permanently'
+                )}
               </button>
             </div>
           </GlassCard>

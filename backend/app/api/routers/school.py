@@ -6,6 +6,7 @@ from app.api.dependencies.db import get_db
 from app.api.dependencies.auth import get_current_user, RoleChecker
 from app.models.user import User
 from app.models.school import School
+from app.models.student import Student
 from app.schemas.school import SchoolCreate, SchoolUpdate, SchoolResponse
 from app.services.activity_log import log_activity
 
@@ -137,7 +138,8 @@ def delete_school(
     current_user: User = Depends(RoleChecker(["admin"]))
 ):
     """
-    Delete a school. Admin only.
+    Permanently delete a school. Admin only.
+    Enforces dependency validation: cannot delete if school contains users or students.
     """
     school = db.query(School).filter(School.id == school_id).first()
     if not school:
@@ -146,18 +148,27 @@ def delete_school(
             detail="School not found."
         )
 
+    # Option B: Dependency Validation Check
+    has_users = db.query(User).filter(User.school_id == school_id).first() is not None
+    has_students = db.query(Student).filter(Student.school_id == school_id).first() is not None
+    if has_users or has_students:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="This school contains users or students. Remove them before deleting the school."
+        )
+
     school_name = school.school_name
     db.delete(school)
     db.commit()
 
-    # Log action
+    # Log action to audit logs
     client_ip = request.client.host if request.client else None
     log_activity(
         db=db,
         user_id=current_user.id,
-        action="school_delete",
-        description=f"Deleted school {school_name} (ID: {school_id})",
+        action="Deleted School",
+        description=f"Admin {current_user.full_name} permanently deleted school {school_name} (ID: {school_id})",
         ip_address=client_ip
     )
 
-    return {"detail": f"School '{school_name}' deleted successfully."}
+    return {"message": "School deleted successfully."}

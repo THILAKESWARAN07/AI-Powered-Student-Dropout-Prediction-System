@@ -82,20 +82,23 @@ export default function UserManagement() {
     }
   };
 
-  const handleDelete = async (userId, email) => {
-    if (userId === currentUser.id) {
-      showToast('You cannot delete your own account', 'error');
-      return;
-    }
-    if (!window.confirm(`Are you sure you want to delete user "${email}"? This action cannot be undone.`)) {
-      return;
-    }
+  // Delete user modal states
+  const [userToDelete, setUserToDelete] = useState(null);
+  const [deleting, setDeleting] = useState(false);
+
+  const executeDelete = async () => {
+    if (!userToDelete) return;
+    setDeleting(true);
     try {
-      await api.delete(`/users/${userId}`);
-      showToast('User deleted successfully', 'success');
-      fetchUsers();
+      await api.delete(`/users/${userToDelete.id}`);
+      // Optimistically remove user from local state list
+      setUsersList(prev => prev.filter(u => u.id !== userToDelete.id));
+      showToast('✅ User deleted successfully.', 'success');
+      setUserToDelete(null);
     } catch (err) {
-      showToast(err.response?.data?.detail || 'Failed to delete user', 'error');
+      showToast(err.response?.data?.detail || 'Unable to delete user. Please try again.', 'error');
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -203,22 +206,24 @@ export default function UserManagement() {
                   </td>
                   {isAdmin && (
                     <td className="px-6 py-4 text-right">
-                      <div className="flex justify-end gap-1">
+                      <div className="flex justify-end items-center gap-3">
                         <button
                           onClick={() => openEditModal(userRow)}
-                          className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-primary/10 hover:text-primary text-slate-400 transition-colors"
+                          className="p-2 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-primary/10 hover:text-primary text-slate-400 transition-colors"
                           title="Assign Role/School"
                         >
                           <Edit className="h-4 w-4" />
                         </button>
-                        <button
-                          onClick={() => handleDelete(userRow.id, userRow.email)}
-                          disabled={userRow.id === currentUser.id}
-                          className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-red-500/10 hover:text-red-500 text-slate-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                          title="Delete User"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </button>
+                        {userRow.role !== 'admin' && (
+                          <button
+                            onClick={() => setUserToDelete(userRow)}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold border border-red-500/30 text-red-650 hover:bg-red-500/10 dark:text-red-400 dark:border-red-500/20 rounded-xl hover:border-red-500/50 transition-all active:scale-[0.98] shadow-sm"
+                            title="Delete User"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                            Delete
+                          </button>
+                        )}
                       </div>
                     </td>
                   )}
@@ -293,6 +298,57 @@ export default function UserManagement() {
                 Apply Configuration
               </button>
             </form>
+          </GlassCard>
+        </div>
+      )}
+
+      {/* PERMANENT DELETE CONFIRMATION MODAL */}
+      {userToDelete && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/60 backdrop-blur-sm overflow-y-auto">
+          <GlassCard className="max-w-md w-full border-white/40 dark:border-white/5 p-8 relative animate-in zoom-in-95 duration-200" hoverEffect={false}>
+            <button
+              onClick={() => setUserToDelete(null)}
+              className="absolute top-5 right-5 p-2 rounded-xl text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
+              disabled={deleting}
+            >
+              <X className="h-5 w-5" />
+            </button>
+
+            <div className="bg-red-500/10 text-red-500 p-3 rounded-2xl mb-4 w-fit border border-red-500/20">
+              <AlertTriangle className="h-6 w-6 text-red-500 animate-pulse" />
+            </div>
+
+            <h2 className="text-xl font-bold text-slate-850 dark:text-white mb-3">
+              Delete User
+            </h2>
+            <p className="text-sm text-slate-600 dark:text-slate-350 leading-relaxed mb-6">
+              Are you sure you want to permanently delete <strong className="text-slate-900 dark:text-white">{userToDelete.full_name}</strong> <span className="text-slate-500">({userToDelete.email})</span>? This action cannot be undone.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-3">
+              <button
+                type="button"
+                onClick={() => setUserToDelete(null)}
+                disabled={deleting}
+                className="flex-1 px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 font-bold text-sm hover:bg-slate-50 dark:hover:bg-slate-900 transition-all active:scale-[0.98] disabled:opacity-50"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={executeDelete}
+                disabled={deleting}
+                className="flex-1 bg-red-655 hover:bg-red-700 text-white py-3 px-4 rounded-xl font-bold text-sm shadow-lg shadow-red-500/20 flex items-center justify-center gap-2 transition-all active:scale-[0.98] disabled:opacity-75"
+              >
+                {deleting ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" /> Deleting...
+                  </>
+                ) : (
+                  'Delete Permanently'
+                )}
+              </button>
+            </div>
           </GlassCard>
         </div>
       )}

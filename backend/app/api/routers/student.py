@@ -381,88 +381,73 @@ def update_student(
     return student
 
 
-@router.delete("/{id}")
+@router.delete("/{id}", status_code=status.HTTP_200_OK)
 def delete_student(
     id: int,
     request: Request,
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(RoleChecker(["admin"])),
     db: Session = Depends(get_db)
 ):
     """
-    Soft-delete a student record.
-    Admin / Headmaster only.
+    Permanently delete a student and all related child records. Admin only.
     """
-    if current_user.role not in ["admin", "headmaster"]:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Only Admins and Headmasters can delete student records."
-        )
-
-    student = db.query(Student).filter(Student.id == id, Student.is_deleted == False).first()
+    student = db.query(Student).filter(Student.id == id).first()
     if not student:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Student not found."
         )
-    check_student_scope(current_user, student)
 
-    # Soft delete
-    student.is_deleted = True
+    student_id = student.student_id
+    student_name = student.full_name
+    school_name = student.school.school_name if student.school else f"School (ID: {student.school_id})"
+
+    db.delete(student)
     db.commit()
 
-    # Log action
+    # Log action to audit logs
     client_ip = request.client.host if request.client else None
     log_activity(
         db=db,
         user_id=current_user.id,
-        action="student_deleted",
-        description=f"Soft deleted student {student.student_id}",
+        action="Deleted Student",
+        description=f"Admin {current_user.full_name} permanently deleted student {student_name} (ID: {student_id}) from {school_name}",
         ip_address=client_ip
     )
 
-    return {"detail": "Student record soft deleted successfully."}
+    return {"message": "Student deleted successfully."}
 
 
 @router.post("/bulk-delete")
 def bulk_delete_students(
     req_body: BulkDeleteRequest,
     request: Request,
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(RoleChecker(["admin"])),
     db: Session = Depends(get_db)
 ):
     """
-    Bulk soft-delete student records.
-    Admin / Headmaster only.
+    Bulk permanently delete student records and their child dependencies. Admin only.
     """
-    if current_user.role not in ["admin", "headmaster"]:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Permissions restricted to Admins and Headmasters."
-        )
-
-    query = db.query(Student).filter(Student.id.in_(req_body.student_ids), Student.is_deleted == False)
-    if current_user.role == "headmaster":
-        query = query.filter(Student.school_id == current_user.school_id)
-
-    students = query.all()
+    students = db.query(Student).filter(Student.id.in_(req_body.student_ids)).all()
     if not students:
-        return {"detail": "No records matched the criteria."}
+        return {"message": "No student records found to delete."}
 
+    deleted_count = len(students)
     for s in students:
-        s.is_deleted = True
+        db.delete(s)
     db.commit()
 
-    # Log action
+    # Log action to audit logs
     client_ip = request.client.host if request.client else None
     log_activity(
         db=db,
         user_id=current_user.id,
-        action="student_deleted_bulk",
-        description=f"Bulk soft deleted {len(students)} student records",
+        action="Deleted Student",
+        description=f"Admin {current_user.full_name} permanently deleted {deleted_count} student records in bulk",
         ip_address=client_ip
     )
 
-    return {"detail": f"Successfully soft deleted {len(students)} students."}
+    return {"message": f"Successfully deleted {deleted_count} student records."}
 
 
 @router.post("/bulk-status-update")

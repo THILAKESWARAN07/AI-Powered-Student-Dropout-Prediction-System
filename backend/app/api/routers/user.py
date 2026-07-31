@@ -264,7 +264,7 @@ def delete_user(
     current_user: User = Depends(RoleChecker(["admin"]))
 ):
     """
-    Delete a user. Admin only.
+    Permanently delete a user from the system. Admin only.
     """
     user = db.query(User).filter(User.id == user_id).first()
     if not user:
@@ -273,24 +273,35 @@ def delete_user(
             detail="User not found."
         )
 
+    # Prevent self-deletion
     if user.id == current_user.id:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Administrators cannot delete their own account."
+            detail="You cannot delete your own administrator account."
         )
 
+    # Prevent deleting the last administrator
+    if user.role == "admin":
+        admin_count = db.query(User).filter(User.role == "admin").count()
+        if admin_count <= 1:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="You cannot delete the last remaining administrator account."
+            )
+
     user_email = user.email
+    user_name = user.full_name
     db.delete(user)
     db.commit()
 
-    # Log action
+    # Log action to audit logs
     client_ip = request.client.host if request.client else None
     log_activity(
         db=db,
         user_id=current_user.id,
-        action="profile_update",
-        description=f"Deleted user account {user_email} (ID: {user_id})",
+        action="Deleted User",
+        description=f"Admin {current_user.full_name} permanently deleted user {user_name} ({user_email})",
         ip_address=client_ip
     )
 
-    return {"detail": f"User '{user_email}' deleted successfully."}
+    return {"message": "User deleted successfully."}

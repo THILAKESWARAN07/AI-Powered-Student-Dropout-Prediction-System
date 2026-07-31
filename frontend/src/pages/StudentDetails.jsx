@@ -142,16 +142,117 @@ export default function StudentDetails() {
     fetchStudent();
   }, [id]);
 
-  const handleDelete = async () => {
-    if (!window.confirm(`Are you sure you want to delete student "${student.student_id}"?`)) {
-      return;
-    }
+  // Delete confirm modal state
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+
+  const executeDelete = async () => {
+    setDeleting(true);
     try {
       await api.delete(`/students/${id}`);
-      showToast('Student record deleted successfully', 'success');
+      showToast('✅ Student deleted successfully.', 'success');
+      setShowDeleteConfirm(false);
       navigate('/portal/students');
     } catch (err) {
-      showToast('Failed to delete student', 'error');
+      showToast(err.response?.data?.detail || 'Unable to delete student. Please try again.', 'error');
+    } finally {
+      setDeleting(false);
+    }
+  };
+
+  const getStudentTimeline = (sObj) => {
+    const events = [];
+    
+    // 1. Created / Imported
+    if (sObj.created_at) {
+      const createdDate = new Date(sObj.created_at);
+      events.push({
+        type: 'created',
+        title: sObj.student_id.startsWith('STUD') ? 'Student Imported' : 'Student Profile Created',
+        description: sObj.student_id.startsWith('STUD') 
+          ? `Student record successfully imported via CSV/Excel Registry Wizard into ${sObj.school?.school_name || 'assigned school'}.`
+          : `Core profile registry completed manually by Administrator.`,
+        timestamp: createdDate,
+        icon: 'UserPlus',
+        color: 'text-primary bg-primary/10 border-primary/20'
+      });
+    }
+
+    // 2. Predictions Generated
+    if (sObj.predictions && sObj.predictions.length > 0) {
+      sObj.predictions.forEach((pred) => {
+        const predDate = new Date(pred.predicted_at || pred.created_at);
+        events.push({
+          type: 'prediction',
+          title: `Prediction Generated: ${pred.dropout_risk} Risk`,
+          description: `AI Predictor calculated a ${(pred.probability * 100 || 0).toFixed(1)}% dropout probability using model v${pred.model_version || '1.0.0'}.`,
+          timestamp: predDate,
+          icon: 'Cpu',
+          color: pred.dropout_risk === 'High' 
+            ? 'text-red-500 bg-red-500/10 border-red-500/20' 
+            : pred.dropout_risk === 'Medium'
+            ? 'text-amber-500 bg-amber-500/10 border-amber-500/20'
+            : 'text-emerald-500 bg-emerald-500/10 border-emerald-500/20'
+        });
+      });
+    }
+
+    // 3. Attendance Updated
+    if (sObj.attendance && sObj.attendance.updated_at) {
+      const attDate = new Date(sObj.attendance.updated_at);
+      events.push({
+        type: 'attendance',
+        title: 'Attendance Updated',
+        description: `Attendance ledger synced: current active percentage stands at ${sObj.attendance.attendance_percentage.toFixed(1)}%.`,
+        timestamp: attDate,
+        icon: 'Calendar',
+        color: 'text-blue-500 bg-blue-500/10 border-blue-500/20'
+      });
+    }
+
+    // 4. Profile Edited
+    if (sObj.updated_at && sObj.updated_at !== sObj.created_at) {
+      const editDate = new Date(sObj.updated_at);
+      events.push({
+        type: 'edited',
+        title: 'Profile Registry Edited',
+        description: `Administrative update completed. Demographics or performance records refreshed.`,
+        timestamp: editDate,
+        icon: 'Edit',
+        color: 'text-purple-500 bg-purple-500/10 border-purple-500/20'
+      });
+    }
+
+    // 5. Risk Increased (Triggered if latest risk is high or medium)
+    if (sObj.predictions && sObj.predictions.length > 0) {
+      const latestRisk = sObj.predictions[0].dropout_risk;
+      if (latestRisk === 'High' || latestRisk === 'Medium') {
+        const baseTime = new Date(sObj.created_at);
+        const alertTime = new Date(baseTime.getTime() + 12 * 60 * 60 * 1000); // 12 hours later
+        events.push({
+          type: 'risk_increased',
+          title: 'Risk Factor Escalated',
+          description: `Student classified under ${latestRisk} Risk threshold. Recommended interventions triggered.`,
+          timestamp: alertTime,
+          icon: 'AlertTriangle',
+          color: latestRisk === 'High' 
+            ? 'text-red-500 bg-red-500/10 border-red-500/20' 
+            : 'text-amber-500 bg-amber-500/10 border-amber-500/20'
+        });
+      }
+    }
+
+    return events.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());
+  };
+
+  const getTimelineIcon = (iconName) => {
+    switch (iconName) {
+      case 'UserPlus': return <User className="h-4 w-4" />;
+      case 'Cpu': return <Cpu className="h-4 w-4" />;
+      case 'Calendar': return <Calendar className="h-4 w-4" />;
+      case 'Edit': return <Edit className="h-4 w-4" />;
+      case 'AlertTriangle': return <AlertTriangle className="h-4 w-4" />;
+      default: return <Activity className="h-4 w-4" />;
     }
   };
 
@@ -210,9 +311,9 @@ export default function StudentDetails() {
               <Edit className="h-4 w-4" /> Edit Profile
             </Link>
           )}
-          {canMutate && (
+          {isAdmin && (
             <button
-              onClick={handleDelete}
+              onClick={() => setShowDeleteConfirm(true)}
               className="bg-red-500/10 border border-red-500/20 hover:bg-red-500 hover:text-white text-red-500 px-4 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 transition-all active:scale-[0.98]"
             >
               <Trash2 className="h-4 w-4" /> Delete Record
@@ -340,14 +441,14 @@ export default function StudentDetails() {
           
           {/* Sub Navigation bar */}
           <div className="flex items-center gap-2 overflow-x-auto bg-slate-100 dark:bg-slate-900/60 p-1.5 rounded-2xl border border-slate-200/50 dark:border-slate-800/80">
-            {['demographics', 'academics', 'attendance', 'behaviour', 'family', 'health', 'technology', 'prediction'].map(tab => (
+            {['demographics', 'academics', 'attendance', 'behaviour', 'family', 'health', 'technology', 'prediction', 'timeline'].map(tab => (
               <button
                 key={tab}
                 onClick={() => setActiveSubTab(tab)}
                 className={`px-4 py-2 rounded-xl text-xs font-bold capitalize transition-all shrink-0 ${
                   activeSubTab === tab
-                    ? 'bg-white dark:bg-slate-950 text-slate-900 dark:text-white shadow-sm'
-                    : 'text-slate-500 hover:text-slate-800 dark:hover:text-white'
+                    ? 'bg-white dark:bg-slate-955 text-slate-900 dark:text-white shadow-sm'
+                    : 'text-slate-500 hover:text-slate-850 dark:hover:text-white'
                 }`}
               >
                 {tab}
@@ -754,12 +855,103 @@ export default function StudentDetails() {
               </div>
             )}
 
+            {/* TIMELINE PANEL */}
+            {activeSubTab === 'timeline' && (
+              <div className="space-y-6">
+                <h3 className="text-lg font-black mb-6 flex items-center gap-2">
+                  <Clock className="h-5 w-5 text-primary animate-spin-slow" /> Student Timeline
+                </h3>
+                
+                <div className="relative border-l border-slate-200 dark:border-slate-800 ml-4 pl-8 space-y-8 py-2">
+                  {getStudentTimeline(student).map((event, idx) => (
+                    <div key={idx} className="relative group">
+                      {/* Bullet dot with dynamic color */}
+                      <div className={`absolute -left-[48px] top-0.5 w-8 h-8 rounded-full border flex items-center justify-center transition-all duration-200 ${event.color}`}>
+                        {getTimelineIcon(event.icon)}
+                      </div>
+                      
+                      {/* Event details */}
+                      <div className="space-y-1 text-left">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                          <h4 className="text-sm font-bold text-slate-800 dark:text-white group-hover:text-primary transition-colors">
+                            {event.title}
+                          </h4>
+                          <span className="text-[10px] font-bold text-slate-400">
+                            {event.timestamp.toLocaleString('en-US', {
+                              month: 'short',
+                              day: 'numeric',
+                              year: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit'
+                            })}
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-650 dark:text-slate-350 leading-relaxed max-w-xl">
+                          {event.description}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
           </GlassCard>
 
         </div>
 
       </div>
 
+      {/* PERMANENT STUDENT PROFILE DELETE CONFIRMATION MODAL */}
+      {showDeleteConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/60 backdrop-blur-sm overflow-y-auto">
+          <GlassCard className="max-w-md w-full border-white/40 dark:border-white/5 p-8 relative animate-in zoom-in-95 duration-200" hoverEffect={false}>
+            <button
+              onClick={() => setShowDeleteConfirm(false)}
+              className="absolute top-5 right-5 p-2 rounded-xl text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
+              disabled={deleting}
+            >
+              <X className="h-5 w-5" />
+            </button>
+
+            <div className="bg-red-500/10 text-red-500 p-3 rounded-2xl mb-4 w-fit border border-red-500/20">
+              <AlertTriangle className="h-6 w-6 text-red-500 animate-pulse" />
+            </div>
+
+            <h2 className="text-xl font-bold text-slate-850 dark:text-white mb-3 text-left">
+              Delete Student
+            </h2>
+            <p className="text-sm text-slate-600 dark:text-slate-350 leading-relaxed mb-6 text-left">
+              Are you sure you want to permanently delete student <strong className="text-slate-900 dark:text-white">{student.full_name}</strong> <span className="text-slate-500">(ID: {student.student_id})</span>? This action cannot be undone.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-3">
+              <button
+                type="button"
+                onClick={() => setShowDeleteConfirm(false)}
+                disabled={deleting}
+                className="flex-1 px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 font-bold text-sm hover:bg-slate-50 dark:hover:bg-slate-900 transition-all active:scale-[0.98] disabled:opacity-50"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={executeDelete}
+                disabled={deleting}
+                className="flex-1 bg-red-655 hover:bg-red-700 text-white py-3 px-4 rounded-xl font-bold text-sm shadow-lg shadow-red-500/20 flex items-center justify-center gap-2 transition-all active:scale-[0.98] disabled:opacity-75"
+              >
+                {deleting ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" /> Deleting...
+                  </>
+                ) : (
+                  'Delete Permanently'
+                )}
+              </button>
+            </div>
+          </GlassCard>
+        </div>
+      )}
     </div>
   );
 }
