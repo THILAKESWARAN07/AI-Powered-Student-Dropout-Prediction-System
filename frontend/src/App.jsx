@@ -30,6 +30,7 @@ import XaiDashboard from './pages/XaiDashboard';
 import NotFoundPage from './pages/NotFoundPage';
 
 export default function App() {
+
   return (
     <ThemeProvider>
       <ToastProvider>

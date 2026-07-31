@@ -24,3 +24,11 @@ def health_check(db: Session = Depends(get_db)):
         "database": db_status,
         "version": "1.0.0"
     }
+
+
+@router.get("/ping")
+@router.post("/ping")
+def ping_check():
+    """Lightweight database-less ping to wake up the server on frontend load (supports GET & POST)."""
+    return {"status": "ok"}
+

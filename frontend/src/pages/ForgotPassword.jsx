@@ -90,7 +90,7 @@ export default function ForgotPassword() {
               If the email <strong>{email}</strong> is registered in our portal, a password reset link has been dispatched.
             </p>
             <div className="bg-slate-100 dark:bg-slate-900/60 p-4 rounded-xl border border-slate-200/50 dark:border-slate-800/80 text-[10px] text-slate-400 font-medium">
-              Note: For local development testing, copy the generated password reset link directly from the backend server stdout terminal log.
+              Note: For local development testing, copy the generated password reset link directly from the terminal log.
             </div>
           </div>
         )}

@@ -3,11 +3,19 @@ import { useLocation, Link } from 'react-router-dom';
 import { Loader2, Server, AlertTriangle, RefreshCw, ArrowLeft } from 'lucide-react';
 import api from '../services/api';
 import { useToast } from './ToastContext';
+import LoadingOverlay from '../components/common/LoadingOverlay';
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    const cached = localStorage.getItem('cached_user');
+    try {
+      return cached ? JSON.parse(cached) : null;
+    } catch {
+      return null;
+    }
+  });
   const [loading, setLoading] = useState(true);
   const [backendReady, setBackendReady] = useState(false);
   const [wakingBackend, setWakingBackend] = useState(false);
@@ -18,11 +26,22 @@ export function AuthProvider({ children }) {
   const fetchCurrentUser = async () => {
     try {
       const res = await api.get('/auth/me');
-      setUser(res.data);
+      let userData = res.data;
+      if (userData.school_id) {
+        try {
+          const schoolRes = await api.get(`/schools/${userData.school_id}`);
+          userData = { ...userData, school_name: schoolRes.data.school_name };
+        } catch (schoolErr) {
+          console.error("Failed to fetch user's school name:", schoolErr);
+        }
+      }
+      setUser(userData);
+      localStorage.setItem('cached_user', JSON.stringify(userData));
     } catch (err) {
       setUser(null);
       localStorage.removeItem('token');
       localStorage.removeItem('refresh_token');
+      localStorage.removeItem('cached_user');
     } finally {
       setLoading(false);
     }
@@ -108,6 +127,7 @@ export function AuthProvider({ children }) {
               setUser(null);
               localStorage.removeItem('token');
               localStorage.removeItem('refresh_token');
+              localStorage.removeItem('cached_user');
               delete api.defaults.headers.common['Authorization'];
               const publicPaths = ['/login', '/register', '/forgot-password', '/reset-password', '/'];
               const isPublicPath = publicPaths.some(path => {
@@ -165,15 +185,20 @@ export function AuthProvider({ children }) {
       setUser(null);
       localStorage.removeItem('token');
       localStorage.removeItem('refresh_token');
+      localStorage.removeItem('cached_user');
       delete api.defaults.headers.common['Authorization'];
       showToast('Logged out successfully', 'success');
     }
   };
 
-  const isLandingPage = location.pathname === '/';
+  const publicPaths = ['/login', '/register', '/forgot-password', '/reset-password', '/'];
+  const isPublicPath = publicPaths.some(path => {
+    if (path === '/') return location.pathname === '/';
+    return location.pathname === path || location.pathname.startsWith(path + '/');
+  });
 
-  // If backend is not ready and user is not on the landing page, block and show status
-  if (!isLandingPage) {
+  // If backend is not ready and user is not on a public path, block and show status
+  if (!isPublicPath) {
     if (backendError) {
       return (
         <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white px-6 py-12">
@@ -186,7 +211,7 @@ export function AuthProvider({ children }) {
             </div>
             <h1 className="text-xl font-bold tracking-tight mb-2">Connection Error</h1>
             <p className="text-slate-500 dark:text-slate-400 text-sm mb-6 leading-relaxed">
-              We are unable to connect to the DropGuard server. The server might be offline or undergoing maintenance.
+              We are unable to connect to the DropGuard system. The workspace might be undergoing maintenance.
             </p>
             
             <button
@@ -214,28 +239,7 @@ export function AuthProvider({ children }) {
     }
 
     if (wakingBackend && !backendReady) {
-      return (
-        <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white px-6 py-12">
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-mesh pointer-events-none -z-10" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-primary/10 rounded-full blur-[100px] pointer-events-none -z-10" />
-
-          <div className="glass-card max-w-md w-full border border-white/20 dark:border-white/5 p-8 rounded-2xl shadow-2xl flex flex-col items-center text-center">
-            <div className="bg-primary/10 text-primary p-4 rounded-2xl mb-4 animate-pulse">
-              <Server className="h-8 w-8 text-primary" />
-            </div>
-            <h1 className="text-xl font-bold tracking-tight mb-2">Waking Up Server</h1>
-            <p className="text-slate-500 dark:text-slate-400 text-sm mb-6 leading-relaxed">
-              To minimize hosting costs, our demonstration backend goes to sleep during periods of inactivity. 
-              Please wait up to 30 seconds while it initializes.
-            </p>
-            
-            <div className="flex items-center gap-2 mt-4 text-primary">
-              <Loader2 className="h-5 w-5 animate-spin" />
-              <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">Initializing connection...</span>
-            </div>
-          </div>
-        </div>
-      );
+      return <LoadingOverlay />;
     }
   }
 

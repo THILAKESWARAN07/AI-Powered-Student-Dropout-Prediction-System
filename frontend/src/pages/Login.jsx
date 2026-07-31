@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, GraduationCap, Loader2, ArrowLeft, Mail, Lock, Brain } from 'lucide-react';
+import { AnimatePresence } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import GlassCard from '../components/common/GlassCard';
+import LoadingOverlay from '../components/common/LoadingOverlay';
 
 export default function Login() {
   const { login } = useAuth();
@@ -13,6 +15,7 @@ export default function Login() {
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [loginSuccess, setLoginSuccess] = useState(false);
   const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
@@ -24,14 +27,27 @@ export default function Login() {
     setError('');
     setLoading(true);
     const success = await login(email, password);
-    setLoading(false);
     if (success) {
-      navigate('/portal/dashboard');
+      setLoginSuccess(true);
+    } else {
+      setLoading(false);
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white px-6 py-12">
+      <AnimatePresence>
+        {(loading || loginSuccess) && (
+          <LoadingOverlay 
+            isComplete={loginSuccess} 
+            onTransitionComplete={() => {
+              setLoading(false);
+              setLoginSuccess(false);
+              navigate('/portal/dashboard');
+            }} 
+          />
+        )}
+      </AnimatePresence>
       <div className="absolute top-0 left-0 w-full h-full bg-gradient-mesh pointer-events-none -z-10" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-primary/10 rounded-full blur-[100px] pointer-events-none -z-10" />
 
