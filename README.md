@@ -20,6 +20,21 @@
 
 ---
 
+## 🚀 Live Demo
+
+Experience DropGuard live using the deployed application or explore the backend APIs through the interactive documentation.
+
+| Resource | Link |
+|----------|------|
+| 🌐 Live Application | [https://ai-powered-student-dropout-predicti.vercel.app](https://ai-powered-student-dropout-predicti.vercel.app) |
+| ⚙️ Backend API | [https://dropguard-backend.onrender.com](https://dropguard-backend.onrender.com) |
+| 📖 Swagger API Documentation | [https://dropguard-backend.onrender.com/docs](https://dropguard-backend.onrender.com/docs) |
+| 📚 ReDoc API Documentation | [https://dropguard-backend.onrender.com/redoc](https://dropguard-backend.onrender.com/redoc) |
+
+> **Note:** The backend is deployed on Render's free plan. If the application has been inactive for some time, the first request may take approximately **30–60 seconds** while the backend service starts. Subsequent requests will respond normally.
+
+---
+
 ## 📌 Overview
 
 **DropGuard** is a multi-role web application designed to help educational institutions combat student attrition. By combining advanced Machine Learning algorithms with multi-dimensional student profiling, DropGuard proactively identifies students at risk of dropping out *before* they disengage.
