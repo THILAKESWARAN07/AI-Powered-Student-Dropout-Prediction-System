@@ -1,4 +1,4 @@
-# DropGuard 🛡️ — AI-Powered Student Dropout Prediction System
+# DropGuard 🛡️ — AI-Powered Student Dropout Prediction System...
 
 <div align="center">
   
