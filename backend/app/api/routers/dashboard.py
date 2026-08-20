@@ -188,8 +188,8 @@ def get_summary(
         
         from app.services import model_loader
         metrics = model_loader.get_model_metrics() or {}
-        model_accuracy = metrics.get("accuracy", 0.9205) * 100
-        roc_auc = metrics.get("roc_auc", 0.9535) * 100
+        model_accuracy = metrics.get("accuracy", 0.8532) * 100
+        roc_auc = metrics.get("roc_auc", 0.9593) * 100
         
         logger.info(
             f"[DASHBOARD SUMMARY] "
@@ -416,6 +416,7 @@ def get_model(
 ):
     try:
         from app.services import model_loader
+        import numpy as np
         
         metrics = model_loader.get_model_metrics() or {}
         features = model_loader.get_feature_columns() or []
@@ -431,16 +432,19 @@ def get_model(
         preprocessor = model.named_steps['preprocessor']
         
         feature_names = preprocessor.get_feature_names_out()
-        importances = classifier.feature_importances_
         
+        # Calculate feature importances as mean absolute coefficients across classes
+        if classifier.coef_.ndim > 1:
+            importances = np.abs(classifier.coef_).mean(axis=0)
+        else:
+            importances = np.abs(classifier.coef_)
+            
         categorical_features = [
-            "Gender", "Section", "Medium_of_Instruction", "Community", "Classroom_Participation", 
-            "Teacher_Feedback", "Parents_Education", "Parents_Occupation", "Single_Parent", "Guardian_Support",
-            "Transport_Mode", "Chronic_Illness", "Nutrition_Status", "Vision_Problems", "Mental_Health_Risk",
-            "Disability_Status", "Internet_Access", "Smartphone_Access", "Computer_Access", 
-            "Electricity_Availability", "School_Type", "Teacher_Student_Ratio", "Midday_Meal_Beneficiary",
-            "Participation_in_Extracurricular", "Library_Usage", "Financial_Difficulty", "Child_Labour_Risk",
-            "Frequent_Migration", "Family_Issues", "Academic_Backlogs", "Low_Motivation", "Bullying_Experience"
+            "Gender", "Attendance_Classification", "Mother_Education", "Father_Education",
+            "Family_Support", "School_Support", "Internet_Access", "Health_Status",
+            "Family_Income", "Financial_Difficulty", "Homework_Completion", "Low_Motivation",
+            "Mental_Health_Risk", "Child_Labour_Risk", "Computer_Access", "Smartphone_Access",
+            "Electricity_Availability"
         ]
         
         raw_importances = {}
@@ -449,17 +453,24 @@ def get_model(
                 raw_name = name[5:]
             elif name.startswith("cat__"):
                 raw_name = None
+                s = name[5:]
                 for cat_feat in categorical_features:
-                    if name.startswith(f"cat__{cat_feat}_"):
+                    if s.startswith(cat_feat + "_"):
                         raw_name = cat_feat
                         break
                 if not raw_name:
-                    raw_name = name[5:].split("_")[0]
+                    raw_name = s.split("_")[0]
             else:
                 raw_name = name
                 
             raw_importances[raw_name] = raw_importances.get(raw_name, 0.0) + float(imp)
             
+        # Scale raw importances to sum to 100%
+        total_imp = sum(raw_importances.values())
+        if total_imp > 0:
+            for k in raw_importances:
+                raw_importances[k] = (raw_importances[k] / total_imp) * 100.0
+                
         feature_importance_list = []
         for feat in features:
             imp = raw_importances.get(feat, 0.0)
@@ -473,16 +484,16 @@ def get_model(
         feature_importance_list = sorted(feature_importance_list, key=lambda x: x["importance"], reverse=True)
         
         return {
-            "model_name": "CatBoost Dropout Prediction Pipeline",
-            "algorithm": "CatBoost Classifier",
+            "model_name": "DropGuard Logistic Regression v2",
+            "algorithm": "Tuned Logistic Regression",
             "features_count": len(features),
-            "accuracy": metrics.get("accuracy", 0.9205),
-            "precision": metrics.get("precision", 0.9260),
-            "recall": metrics.get("recall", 0.9140),
-            "f1_score": metrics.get("f1_score", 0.9200),
-            "roc_auc": metrics.get("roc_auc", 0.9535),
-            "training_dataset_size": 20000,
-            "prediction_version": "v1.0.0",
+            "accuracy": metrics.get("accuracy", 0.8532),
+            "precision": metrics.get("precision", 0.8569),
+            "recall": metrics.get("recall", 0.8532),
+            "f1_score": metrics.get("f1_score", 0.8507),
+            "roc_auc": metrics.get("roc_auc", 0.9593),
+            "training_dataset_size": 647,
+            "prediction_version": "v2.0.0",
             "feature_importance": feature_importance_list
         }
     except Exception as e:

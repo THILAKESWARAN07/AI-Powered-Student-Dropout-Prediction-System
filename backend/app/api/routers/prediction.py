@@ -21,7 +21,7 @@ def predict_student_risk(
     db: Session = Depends(get_db)
 ):
     """
-    Triggers the real CatBoost ML prediction pipeline for a single student.
+    Triggers the real Tuned Logistic Regression ML prediction pipeline for a single student.
     Analyzes academics, attendance, behavior, family metrics, and returns risk assessment,
     explainable AI reasons, and recommendation actions. Persists prediction history.
     """
@@ -212,7 +212,7 @@ def get_model_information(
 ):
     """
     Returns performance metrics (accuracy, precision, recall, f1, roc-auc)
-    and feature schema details of the active CatBoost classifier.
+    and feature schema details of the active Tuned Logistic Regression classifier.
     """
     metrics = model_loader.get_model_metrics()
     features = model_loader.get_feature_columns()
@@ -224,8 +224,8 @@ def get_model_information(
         )
         
     return {
-        "model_name": "CatBoost Dropout Prediction Pipeline",
-        "algorithm": "CatBoost Classifier",
+        "model_name": "DropGuard Logistic Regression v2",
+        "algorithm": "Tuned Logistic Regression",
         "features_count": len(features),
         "accuracy": metrics.get("accuracy", 0.0),
         "precision": metrics.get("precision", 0.0),
@@ -233,3 +233,8 @@ def get_model_information(
         "f1_score": metrics.get("f1_score", 0.0),
         "roc_auc": metrics.get("roc_auc", 0.0)
     }
+
+
+
+
+

@@ -181,7 +181,7 @@ export default function XaiDashboard() {
 
         <GlassCard className="p-6 text-center border-white/20 dark:border-white/5" hoverEffect={false}>
           <span className="text-[10px] font-bold text-slate-400 block uppercase tracking-wider mb-1">Model Accuracy</span>
-          <span className="text-3xl font-black text-emerald-400">92.05%</span>
+          <span className="text-3xl font-black text-emerald-400">85.32%</span>
           <p className="text-[10px] text-slate-400 mt-2">Trained on Balanced Dataset</p>
         </GlassCard>
       </div>

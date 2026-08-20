@@ -843,9 +843,11 @@ export default function StudentDetails() {
                               </span>
                             </td>
                             <td className="px-4 py-3 font-semibold text-slate-650 dark:text-slate-350">
-                              {p.dropout_status === 'Yes' ? 'Dropout' : 'Enrolled'}
+                              {p.dropout_status === 'Yes' ? 'Dropout' : (p.dropout_status === 'At_Risk' ? 'At Risk' : 'Enrolled')}
                             </td>
-                            <td className="px-4 py-3 text-slate-450 font-mono">v1.0.0 (Baseline CatBoost)</td>
+                            <td className="px-4 py-3 text-slate-450 font-mono">
+                              {p.model_version === '2.0.0' ? 'v2.0.0 (Logistic Regression)' : 'v1.0.0 (Baseline CatBoost)'}
+                            </td>
                           </tr>
                         ))}
                       </tbody>

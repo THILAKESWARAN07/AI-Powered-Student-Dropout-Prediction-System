@@ -19,7 +19,6 @@ email-validator==2.3.0
 numpy==2.2.6
 pandas==2.3.3
 scikit-learn==1.6.1
-catboost==1.2.10
 joblib==1.5.3
 
 openpyxl==3.1.5

@@ -48,7 +48,7 @@ export default function ModelInfo() {
         </div>
         <div>
           <h1 className="text-3xl font-extrabold tracking-tight">Model Information & Parameters</h1>
-          <p className="text-sm text-slate-500">Deep-dive into the trained CatBoost dropout classifier's metrics, configuration and weight importances.</p>
+          <p className="text-sm text-slate-500">Deep-dive into the trained Tuned Logistic Regression dropout classifier's metrics, configuration and weight importances.</p>
         </div>
       </div>
 
@@ -105,7 +105,7 @@ export default function ModelInfo() {
       {/* Feature Importance Data */}
       <GlassCard className="p-8" hoverEffect={false}>
         <div className="mb-6">
-          <h2 className="text-xl font-bold">CatBoost Feature Importance Weights</h2>
+          <h2 className="text-xl font-bold">Tuned Logistic Regression Feature Importance Weights</h2>
           <p className="text-xs text-slate-500">Weight breakdown illustrating the model's reliance on raw student categories when issuing dropout predictions.</p>
         </div>
 
@@ -116,7 +116,7 @@ export default function ModelInfo() {
                 <th className="px-6 py-3.5">Rank</th>
                 <th className="px-6 py-3.5">Feature Column</th>
                 <th className="px-6 py-3.5">Variable Label</th>
-                <th className="px-6 py-3.5">CatBoost Weight (%)</th>
+                <th className="px-6 py-3.5">Model Weight (%)</th>
                 <th className="px-6 py-3.5">Importance Contribution Bar</th>
               </tr>
             </thead>

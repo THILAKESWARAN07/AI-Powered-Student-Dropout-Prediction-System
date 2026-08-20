@@ -1,0 +1,648 @@
+Gender,Age,Previous_Year_Percentage,Current_Year_Percentage,Overall_Percentage,Number_of_Failures,Number_of_Absences,Attendance_Percentage,Attendance_Classification,Mother_Education,Father_Education,Family_Support,School_Support,Internet_Access,Health_Status,Family_Income,Financial_Difficulty,Homework_Completion,Low_Motivation,Mental_Health_Risk,Child_Labour_Risk,Computer_Access,Smartphone_Access,Electricity_Availability,Dropout_Status
+F,17.0,0.0,90.0,45.0,0,63,71.36,Moderate,College,College,no,yes,no,Average,High,No,Poor,No,No,No,Yes,Yes,Yes,Yes
+F,16.0,45.0,55.0,50.0,0,54,75.45,Moderate,Primary,Primary,yes,no,yes,Average,Low,Yes,Average,No,No,No,Yes,No,Yes,At_Risk
+F,15.0,60.0,65.0,62.5,0,13,94.09,Good,Primary,Primary,no,yes,yes,Average,Low,Yes,Good,No,No,No,Yes,No,Yes,At_Risk
+F,15.0,70.0,70.0,70.0,0,6,97.27,Excellent,College,Middle School,yes,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,15.0,55.0,65.0,60.0,0,5,97.73,Excellent,High School,High School,yes,no,no,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,60.0,60.0,60.0,0,6,97.27,Excellent,College,High School,yes,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,65.0,60.0,62.5,0,28,87.27,Good,Middle School,Middle School,no,no,yes,Average,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+F,16.0,50.0,65.0,57.5,0,17,92.27,Good,College,College,yes,yes,no,Very Poor,High,No,Average,No,Yes,No,Yes,Yes,Yes,No
+M,15.0,75.0,80.0,77.5,0,2,99.09,Excellent,High School,Middle School,yes,no,yes,Very Poor,Medium,No,Good,No,Yes,No,Yes,Yes,Yes,No
+M,15.0,60.0,60.0,60.0,0,5,97.73,Excellent,High School,College,yes,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,15.0,70.0,70.0,70.0,0,4,98.18,Excellent,College,College,yes,no,yes,Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,15.0,50.0,60.0,55.0,0,29,86.82,Good,Middle School,Primary,yes,no,yes,Good,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+M,15.0,60.0,65.0,62.5,0,6,97.27,Excellent,College,College,yes,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,60.0,60.0,60.0,0,10,95.45,Excellent,College,High School,yes,no,yes,Average,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,70.0,70.0,70.0,0,8,96.36,Excellent,Middle School,Middle School,yes,no,yes,Average,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+F,15.0,85.0,85.0,85.0,0,9,95.91,Excellent,College,College,yes,no,yes,Poor,High,No,Excellent,No,Yes,No,Yes,Yes,Yes,No
+F,15.0,65.0,65.0,65.0,0,3,98.64,Excellent,College,College,yes,no,yes,Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,15.0,65.0,70.0,67.5,0,7,96.82,Excellent,High School,High School,yes,yes,no,Good,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,16.0,45.0,45.0,45.0,3,113,48.64,Poor,High School,Middle School,yes,no,yes,Excellent,Medium,No,Poor,No,No,No,Yes,Yes,Yes,Yes
+M,15.0,60.0,60.0,60.0,0,5,97.73,Excellent,College,High School,no,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,60.0,65.0,62.5,0,21,90.45,Good,College,High School,no,no,yes,Very Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,At_Risk
+M,15.0,55.0,60.0,57.5,0,2,99.09,Excellent,College,College,yes,no,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+M,15.0,60.0,65.0,62.5,0,5,97.73,Excellent,College,Middle School,no,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,50.0,50.0,50.0,0,33,85.0,Good,Middle School,Middle School,yes,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,15.0,50.0,55.0,52.5,0,4,98.18,Excellent,Middle School,College,yes,yes,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,15.0,50.0,55.0,52.5,0,26,88.18,Good,Middle School,Middle School,yes,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+M,15.0,55.0,60.0,57.5,0,1,99.55,Excellent,Middle School,Middle School,yes,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+M,15.0,55.0,55.0,55.0,0,13,94.09,Good,College,Middle School,no,no,yes,Very Poor,High,No,Average,No,Yes,No,Yes,Yes,Yes,No
+M,15.0,60.0,60.0,60.0,0,9,95.91,Excellent,High School,College,yes,yes,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,60.0,55.0,57.5,0,2,99.09,Excellent,College,College,yes,no,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+M,15.0,50.0,55.0,52.5,0,2,99.09,Excellent,College,College,yes,no,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+M,15.0,75.0,75.0,75.0,0,7,96.82,Excellent,College,College,yes,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,65.0,70.0,67.5,0,7,96.82,Excellent,College,High School,yes,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,65.0,60.0,62.5,0,0,100.0,Excellent,High School,High School,no,no,yes,Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,No
+M,15.0,60.0,60.0,60.0,0,2,99.09,Excellent,High School,Middle School,yes,no,yes,Excellent,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+F,15.0,55.0,55.0,55.0,0,65,70.45,Moderate,Middle School,High School,yes,no,no,Excellent,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,At_Risk
+M,15.0,70.0,70.0,70.0,0,8,96.36,Excellent,College,High School,yes,no,yes,Good,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,65.0,65.0,65.0,0,10,95.45,Excellent,College,College,yes,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,15.0,55.0,60.0,57.5,0,6,97.27,Excellent,High School,College,yes,yes,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,15.0,70.0,65.0,67.5,0,12,94.55,Good,Middle School,Middle School,yes,yes,no,Poor,Medium,Yes,Good,No,Yes,No,Yes,Yes,Yes,At_Risk
+F,15.0,55.0,55.0,55.0,0,23,89.55,Good,Middle School,Middle School,yes,no,yes,Average,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+M,15.0,50.0,55.0,52.5,0,1,99.55,Excellent,College,College,yes,no,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+M,15.0,70.0,75.0,72.5,0,9,95.91,Excellent,College,College,yes,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,45.0,50.0,47.5,0,15,93.18,Good,Middle School,Middle School,yes,yes,yes,Very Poor,Medium,No,Average,No,Yes,No,Yes,Yes,Yes,No
+F,15.0,50.0,55.0,52.5,1,18,91.82,Good,Middle School,Middle School,no,yes,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+F,15.0,50.0,55.0,52.5,0,5,97.73,Excellent,College,High School,yes,yes,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,15.0,65.0,60.0,62.5,0,7,96.82,Excellent,High School,High School,yes,no,yes,Average,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,85.0,85.0,85.0,0,4,98.18,Excellent,College,High School,no,no,yes,Poor,High,No,Excellent,No,Yes,No,Yes,Yes,Yes,No
+M,15.0,55.0,60.0,57.5,0,28,87.27,Good,College,Middle School,yes,no,no,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,15.0,65.0,60.0,62.5,0,10,95.45,Excellent,College,College,yes,yes,yes,Average,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,15.0,70.0,65.0,67.5,0,4,98.18,Excellent,Middle School,Middle School,yes,no,yes,Good,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+F,15.0,80.0,70.0,75.0,0,11,95.0,Excellent,College,Middle School,yes,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,50.0,45.0,47.5,0,24,89.09,Good,College,Middle School,no,no,no,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,15.0,65.0,60.0,62.5,0,9,95.91,Excellent,College,College,yes,yes,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,15.0,65.0,60.0,62.5,0,23,89.55,Good,High School,High School,no,no,yes,Very Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,15.0,60.0,65.0,62.5,0,18,91.82,Good,Middle School,Primary,no,no,yes,Poor,Medium,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,15.0,75.0,70.0,72.5,0,5,97.73,Excellent,College,High School,yes,no,yes,Very Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,No
+M,15.0,75.0,75.0,75.0,0,7,96.82,Excellent,College,College,yes,no,no,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,70.0,65.0,67.5,0,5,97.73,Excellent,Primary,Middle School,yes,yes,yes,Excellent,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+F,15.0,80.0,75.0,77.5,0,9,95.91,Excellent,College,Middle School,yes,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,15.0,85.0,80.0,82.5,0,9,95.91,Excellent,College,College,yes,no,no,Good,High,No,Excellent,No,No,No,Yes,Yes,Yes,No
+F,15.0,50.0,50.0,50.0,0,56,74.55,Moderate,Primary,Primary,yes,yes,yes,Excellent,Low,Yes,Average,No,No,No,Yes,No,Yes,At_Risk
+F,15.0,65.0,65.0,65.0,0,31,85.91,Good,Primary,Middle School,no,yes,yes,Very Poor,Medium,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,15.0,70.0,65.0,67.5,0,10,95.45,Excellent,College,High School,yes,yes,yes,Good,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,15.0,65.0,60.0,62.5,0,30,86.36,Good,College,High School,no,yes,yes,Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,15.0,80.0,75.0,77.5,0,2,99.09,Excellent,College,High School,yes,no,yes,Very Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,No
+M,15.0,55.0,60.0,57.5,0,1,99.55,Excellent,College,College,yes,no,yes,Average,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,15.0,50.0,45.0,47.5,0,26,88.18,Good,High School,Primary,yes,yes,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+F,15.0,55.0,50.0,52.5,0,28,87.27,Good,Middle School,Middle School,yes,yes,yes,Good,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+F,15.0,75.0,75.0,75.0,0,8,96.36,Excellent,High School,Primary,yes,no,yes,Average,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,65.0,55.0,60.0,0,4,98.18,Excellent,High School,Primary,yes,no,yes,Excellent,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,55.0,45.0,50.0,0,19,91.36,Good,College,Middle School,no,no,yes,Average,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,15.0,65.0,55.0,60.0,0,17,92.27,Good,Primary,Primary,yes,yes,yes,Excellent,Low,Yes,Good,No,No,No,Yes,No,Yes,At_Risk
+M,15.0,65.0,65.0,65.0,0,60,72.73,Moderate,High School,Primary,no,no,no,Excellent,Medium,Yes,Good,No,No,No,Yes,Yes,Yes,At_Risk
+F,15.0,55.0,55.0,55.0,0,7,96.82,Excellent,High School,High School,yes,yes,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+M,15.0,55.0,55.0,55.0,0,32,85.45,Good,College,High School,yes,no,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+M,15.0,60.0,55.0,57.5,0,12,94.55,Good,College,No Education,no,no,yes,Very Poor,Medium,No,Average,No,Yes,No,Yes,Yes,Yes,At_Risk
+F,15.0,65.0,65.0,65.0,0,2,99.09,Excellent,Middle School,Middle School,no,no,yes,Average,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+M,16.0,45.0,45.0,45.0,3,121,45.0,Poor,Middle School,Primary,yes,yes,yes,Average,Medium,No,Poor,No,No,No,Yes,Yes,Yes,Yes
+F,15.0,60.0,55.0,57.5,0,6,97.27,Excellent,High School,College,yes,no,yes,Average,High,No,Average,No,No,No,Yes,Yes,Yes,No
+M,15.0,55.0,55.0,55.0,0,0,100.0,Excellent,Middle School,High School,yes,yes,yes,Average,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+M,15.0,50.0,45.0,47.5,0,19,91.36,Good,Middle School,High School,no,yes,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,15.0,60.0,55.0,57.5,0,24,89.09,Good,High School,Middle School,yes,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+M,15.0,65.0,60.0,62.5,0,2,99.09,Excellent,Middle School,Middle School,no,no,yes,Good,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+F,15.0,65.0,60.0,62.5,0,18,91.82,Good,Primary,Primary,yes,no,yes,Good,Low,Yes,Good,No,No,No,Yes,No,Yes,No
+F,15.0,60.0,55.0,57.5,0,33,85.0,Good,College,College,no,no,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,15.0,65.0,55.0,60.0,0,53,75.91,Moderate,Middle School,Middle School,yes,no,no,Poor,Medium,Yes,Good,No,Yes,No,Yes,Yes,Yes,At_Risk
+F,15.0,75.0,75.0,75.0,0,3,98.64,Excellent,College,Middle School,yes,no,yes,Very Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,No
+M,15.0,60.0,50.0,55.0,0,24,89.09,Good,Middle School,Middle School,no,no,yes,Average,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+M,15.0,45.0,45.0,45.0,0,22,90.0,Good,College,College,yes,no,no,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,15.0,45.0,55.0,50.0,0,32,85.45,Good,High School,High School,yes,no,yes,Good,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,15.0,70.0,65.0,67.5,0,27,87.73,Good,College,High School,no,no,yes,Very Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,At_Risk
+F,15.0,60.0,65.0,62.5,0,12,94.55,Good,High School,Primary,yes,yes,no,Poor,Medium,Yes,Good,No,Yes,No,Yes,Yes,Yes,At_Risk
+F,15.0,65.0,70.0,67.5,0,3,98.64,Excellent,College,Middle School,yes,no,yes,Very Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,No
+M,15.0,55.0,60.0,57.5,0,32,85.45,Good,Middle School,Middle School,yes,no,yes,Good,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+F,15.0,65.0,65.0,65.0,0,14,93.64,Good,Primary,Primary,yes,yes,yes,Very Poor,Low,Yes,Good,No,Yes,No,Yes,No,Yes,At_Risk
+M,15.0,45.0,55.0,50.0,0,2,99.09,Excellent,College,High School,yes,yes,yes,Good,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,15.0,65.0,60.0,62.5,0,17,92.27,Good,Middle School,Primary,yes,no,no,Excellent,Medium,Yes,Good,No,No,No,Yes,Yes,Yes,At_Risk
+F,15.0,60.0,65.0,62.5,0,25,88.64,Good,College,College,no,no,yes,Very Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,15.0,60.0,65.0,62.5,0,9,95.91,Excellent,College,High School,yes,yes,yes,Average,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,45.0,45.0,45.0,0,3,98.64,Excellent,College,College,yes,yes,yes,Good,High,No,Average,No,No,No,Yes,Yes,Yes,No
+M,15.0,80.0,80.0,80.0,0,10,95.45,Excellent,College,College,yes,no,yes,Good,High,No,Excellent,No,No,No,Yes,Yes,Yes,No
+M,15.0,60.0,65.0,62.5,0,8,96.36,Excellent,College,College,yes,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,15.0,55.0,50.0,52.5,0,20,90.91,Good,High School,Middle School,yes,yes,yes,Poor,Medium,No,Average,No,Yes,No,Yes,Yes,Yes,No
+M,15.0,80.0,80.0,80.0,0,7,96.82,Excellent,High School,College,yes,no,yes,Very Poor,High,No,Excellent,No,Yes,No,Yes,Yes,Yes,No
+F,15.0,50.0,50.0,50.0,0,21,90.45,Good,High School,High School,no,yes,no,Good,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,15.0,50.0,50.0,50.0,0,24,89.09,Good,Middle School,Middle School,yes,yes,yes,Average,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+M,15.0,65.0,70.0,67.5,0,10,95.45,Excellent,High School,High School,yes,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,60.0,50.0,55.0,0,19,91.36,Good,College,College,yes,no,yes,Very Poor,High,No,Average,No,Yes,No,Yes,Yes,Yes,At_Risk
+F,15.0,75.0,75.0,75.0,0,9,95.91,Excellent,College,College,yes,no,yes,Good,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,65.0,70.0,67.5,0,10,95.45,Excellent,College,College,no,no,yes,Good,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,15.0,55.0,55.0,55.0,0,24,89.09,Good,High School,High School,yes,yes,yes,Poor,High,No,Average,No,Yes,No,Yes,Yes,Yes,No
+F,15.0,40.0,50.0,45.0,1,66,70.0,Moderate,Middle School,Middle School,no,yes,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+M,15.0,90.0,85.0,87.5,0,8,96.36,Excellent,College,Middle School,no,no,yes,Average,High,No,Excellent,No,No,No,Yes,Yes,Yes,No
+M,15.0,50.0,45.0,47.5,0,19,91.36,Good,Middle School,Primary,no,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+M,15.0,80.0,70.0,75.0,0,10,95.45,Excellent,College,College,yes,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,80.0,75.0,77.5,0,3,98.64,Excellent,College,College,yes,no,no,Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,No
+M,15.0,70.0,70.0,70.0,0,7,96.82,Excellent,High School,High School,no,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,16.0,60.0,55.0,57.5,1,12,94.55,Good,Primary,High School,yes,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+M,15.0,70.0,65.0,67.5,0,5,97.73,Excellent,High School,College,no,no,yes,Good,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,15.0,70.0,70.0,70.0,0,22,90.0,Good,Primary,Middle School,no,no,yes,Very Poor,Medium,No,Good,No,Yes,No,Yes,Yes,Yes,No
+M,15.0,70.0,65.0,67.5,0,7,96.82,Excellent,Middle School,Middle School,yes,no,yes,Excellent,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+F,15.0,70.0,60.0,65.0,0,5,97.73,Excellent,Middle School,College,yes,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,60.0,65.0,62.5,0,9,95.91,Excellent,College,College,yes,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,15.0,60.0,55.0,57.5,0,19,91.36,Good,Middle School,Middle School,no,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+M,15.0,45.0,45.0,45.0,0,15,93.18,Good,High School,College,no,yes,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,15.0,50.0,55.0,52.5,0,22,90.0,Good,High School,College,no,yes,yes,Very Poor,High,No,Average,No,Yes,No,Yes,Yes,Yes,At_Risk
+F,18.0,45.0,50.0,47.5,2,85,61.36,Poor,No Education,Primary,yes,no,no,Excellent,Low,Yes,Poor,No,No,No,No,No,Yes,Yes
+M,15.0,70.0,70.0,70.0,0,6,97.27,Excellent,College,College,no,no,yes,Good,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,65.0,60.0,62.5,0,30,86.36,Good,Middle School,High School,yes,no,yes,Very Poor,Medium,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,15.0,50.0,55.0,52.5,0,5,97.73,Excellent,High School,College,yes,no,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,17.0,50.0,45.0,47.5,3,110,50.0,Poor,Middle School,Primary,yes,no,yes,Excellent,Medium,No,Poor,No,No,No,Yes,Yes,Yes,Yes
+F,16.0,55.0,50.0,52.5,0,30,86.36,Good,Middle School,Primary,yes,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+F,15.0,55.0,60.0,57.5,0,53,75.91,Moderate,Primary,Primary,yes,no,yes,Good,Low,Yes,Average,No,No,No,Yes,No,Yes,At_Risk
+F,16.0,65.0,60.0,62.5,0,5,97.73,Excellent,Middle School,Middle School,yes,no,yes,Excellent,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+F,15.0,75.0,65.0,70.0,0,4,98.18,Excellent,High School,College,no,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,45.0,45.0,45.0,0,34,84.55,Moderate,Middle School,Primary,no,no,no,Poor,Medium,Yes,Average,No,Yes,No,Yes,Yes,Yes,Yes
+F,15.0,65.0,55.0,60.0,1,40,81.82,Moderate,Middle School,Middle School,no,no,no,Excellent,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,At_Risk
+M,15.0,60.0,55.0,57.5,0,24,89.09,Good,High School,College,yes,no,no,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,15.0,65.0,70.0,67.5,0,11,95.0,Excellent,College,College,yes,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,16.0,50.0,45.0,47.5,0,18,91.82,Good,High School,College,no,no,no,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,15.0,70.0,65.0,67.5,0,55,75.0,Moderate,Primary,Primary,yes,no,no,Average,Low,Yes,Good,No,No,No,No,No,Yes,At_Risk
+M,17.0,55.0,55.0,55.0,0,29,86.82,Good,High School,Primary,no,no,yes,Good,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+F,17.0,60.0,55.0,57.5,0,29,86.82,Good,High School,Middle School,yes,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+F,15.0,60.0,55.0,57.5,0,101,54.09,Poor,Primary,Primary,yes,no,no,Very Poor,Low,Yes,Average,No,Yes,No,No,No,Yes,Yes
+F,15.0,45.0,45.0,45.0,0,28,87.27,Good,High School,High School,yes,no,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+M,15.0,50.0,50.0,50.0,2,78,64.55,Poor,Primary,Primary,no,no,no,Excellent,Low,Yes,Poor,No,No,No,No,No,Yes,Yes
+F,15.0,65.0,70.0,67.5,0,8,96.36,Excellent,College,College,no,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,15.0,42.35,47.65,45.0,1,85,61.36,Poor,Primary,Primary,no,no,yes,Very Poor,Low,Yes,Average,No,Yes,No,Yes,No,Yes,Yes
+M,15.0,45.0,55.0,50.0,0,0,100.0,Excellent,College,High School,yes,yes,yes,Average,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,15.0,45.0,40.0,42.5,0,57,74.09,Moderate,High School,High School,no,no,no,Very Poor,High,No,Average,No,Yes,No,Yes,Yes,Yes,At_Risk
+M,15.0,75.0,65.0,70.0,0,7,96.82,Excellent,College,College,yes,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,60.0,55.0,57.5,0,20,90.91,Good,Middle School,Middle School,yes,no,yes,Poor,Medium,No,Average,No,Yes,No,Yes,Yes,Yes,At_Risk
+F,15.0,65.0,65.0,65.0,0,7,96.82,Excellent,College,College,yes,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,15.0,50.0,55.0,52.5,0,120,45.45,Poor,Primary,Primary,no,no,yes,Very Poor,Low,Yes,Average,No,Yes,No,Yes,No,Yes,Yes
+M,16.0,45.0,35.0,40.0,0,25,88.64,Good,Middle School,Primary,yes,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,15.0,60.0,60.0,60.0,0,63,71.36,Moderate,Primary,Primary,yes,no,yes,Excellent,Low,Yes,Good,No,No,No,Yes,No,Yes,At_Risk
+F,15.0,55.0,50.0,52.5,0,26,88.18,Good,Middle School,Primary,yes,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,15.0,55.0,55.0,55.0,1,20,90.91,Good,High School,Middle School,yes,no,yes,Average,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,15.0,65.0,60.0,62.5,0,4,98.18,Excellent,Primary,Middle School,yes,no,yes,Excellent,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+F,15.0,55.0,55.0,55.0,0,39,82.27,Moderate,Primary,Middle School,no,no,no,Very Poor,Medium,Yes,Average,No,Yes,No,Yes,Yes,Yes,At_Risk
+M,15.0,45.0,45.0,45.0,0,26,88.18,Good,College,College,yes,no,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+M,15.0,60.0,55.0,57.5,0,17,92.27,Good,Middle School,Primary,no,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+M,17.0,55.0,45.0,50.0,2,91,58.64,Poor,Primary,Primary,no,no,yes,Good,Low,Yes,Poor,No,No,No,Yes,No,Yes,Yes
+M,15.0,45.0,50.0,47.5,1,117,46.82,Poor,Middle School,Primary,no,no,no,Excellent,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,Yes
+F,15.0,65.0,65.0,65.0,0,7,96.82,Excellent,High School,High School,yes,no,yes,Average,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,18.0,55.0,45.0,50.0,0,23,89.55,Good,High School,Middle School,yes,no,yes,Good,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+F,16.0,65.0,65.0,65.0,0,2,99.09,Excellent,College,College,yes,yes,no,Good,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,42.0,48.0,45.0,0,95,56.82,Poor,Middle School,High School,no,yes,no,Very Poor,Medium,Yes,Poor,No,Yes,No,Yes,Yes,Yes,Yes
+M,16.0,45.0,40.0,42.5,3,75,65.91,Poor,Primary,Middle School,no,no,no,Excellent,Medium,Yes,Poor,No,No,No,Yes,Yes,Yes,Yes
+F,17.0,55.0,50.0,52.5,3,73,66.82,Poor,Primary,Primary,yes,no,no,Good,Low,Yes,Poor,No,No,No,No,No,Yes,Yes
+M,15.0,60.0,50.0,55.0,0,57,74.09,Moderate,Middle School,Middle School,no,no,no,Average,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,At_Risk
+M,15.0,50.0,50.0,50.0,1,19,91.36,Good,High School,High School,yes,no,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+M,15.0,47.65,42.35,45.0,2,128,41.82,Poor,Primary,Middle School,no,no,yes,Excellent,Medium,No,Poor,No,No,No,Yes,Yes,Yes,Yes
+M,16.0,45.0,45.0,45.0,1,59,73.18,Moderate,Middle School,Primary,no,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+M,16.0,48.46,41.54,45.0,2,39,82.27,Moderate,High School,Middle School,yes,yes,yes,Average,Medium,No,Poor,No,No,No,Yes,Yes,Yes,At_Risk
+M,15.0,42.35,47.65,45.0,0,47,78.64,Moderate,Primary,Middle School,no,no,no,Excellent,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,Yes
+M,15.0,47.65,42.35,45.0,1,36,83.64,Moderate,Primary,High School,no,no,yes,Poor,Medium,No,Average,No,Yes,No,Yes,Yes,Yes,Yes
+M,16.0,45.0,45.0,45.0,0,132,40.0,Poor,Primary,Primary,no,no,no,Excellent,Low,Yes,Average,No,No,No,No,No,Yes,Yes
+M,16.0,48.0,42.0,45.0,3,70,68.18,Poor,High School,Middle School,yes,no,no,Poor,Medium,Yes,Poor,No,Yes,No,Yes,Yes,Yes,Yes
+M,15.0,45.0,50.0,47.5,0,16,92.73,Good,Middle School,Middle School,no,no,yes,Good,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+F,15.0,85.0,85.0,85.0,0,10,95.45,Excellent,College,Middle School,no,no,yes,Average,High,No,Excellent,No,No,No,Yes,Yes,Yes,No
+F,15.0,60.0,60.0,60.0,0,5,97.73,Excellent,Middle School,Middle School,yes,no,yes,Good,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+F,15.0,80.0,80.0,80.0,0,10,95.45,Excellent,College,College,yes,no,yes,Average,High,No,Excellent,No,No,No,Yes,Yes,Yes,No
+M,15.0,45.0,45.0,45.0,1,61,72.27,Moderate,High School,College,yes,no,yes,Poor,High,No,Average,No,Yes,No,Yes,Yes,Yes,At_Risk
+M,15.0,80.0,85.0,82.5,0,27,87.73,Good,Primary,No Education,yes,no,yes,Average,Low,Yes,Excellent,No,No,No,Yes,No,Yes,No
+M,16.0,55.0,45.0,50.0,0,29,86.82,Good,College,College,yes,no,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,15.0,70.0,65.0,67.5,0,3,98.64,Excellent,Primary,High School,no,no,yes,Average,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+F,15.0,70.0,70.0,70.0,0,10,95.45,Excellent,High School,High School,yes,no,yes,Good,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,16.0,50.0,55.0,52.5,0,1,99.55,Excellent,College,High School,no,no,yes,Good,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,15.0,65.0,60.0,62.5,0,3,98.64,Excellent,Middle School,Middle School,no,no,yes,Excellent,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+M,16.0,55.0,45.0,50.0,0,24,89.09,Good,High School,High School,no,no,yes,Good,High,No,Average,No,No,No,Yes,Yes,Yes,No
+M,15.0,50.0,45.0,47.5,0,28,87.27,Good,College,Middle School,yes,no,yes,Average,High,No,Average,No,No,No,Yes,Yes,Yes,No
+M,16.0,55.0,55.0,55.0,0,25,88.64,Good,College,High School,yes,no,yes,Poor,High,No,Average,No,Yes,No,Yes,Yes,Yes,No
+M,15.0,55.0,50.0,52.5,0,32,85.45,Good,College,High School,yes,no,yes,Average,High,No,Average,No,No,No,Yes,Yes,Yes,No
+M,15.0,55.0,60.0,57.5,0,27,87.73,Good,High School,High School,no,no,yes,Average,High,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,85.0,90.0,87.5,0,11,95.0,Excellent,Middle School,College,yes,no,no,Excellent,High,No,Excellent,No,No,No,Yes,Yes,Yes,No
+F,16.0,70.0,65.0,67.5,0,1,99.55,Excellent,High School,High School,yes,no,yes,Very Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,15.0,70.0,75.0,72.5,0,0,100.0,Excellent,High School,Middle School,yes,no,yes,Very Poor,Medium,No,Good,No,Yes,No,Yes,Yes,Yes,No
+M,16.0,55.0,65.0,60.0,0,8,96.36,Excellent,High School,High School,yes,no,yes,Good,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,50.0,45.0,47.5,0,19,91.36,Good,Primary,Middle School,yes,no,yes,Average,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+M,15.0,65.0,70.0,67.5,0,2,99.09,Excellent,Middle School,Primary,no,no,yes,Excellent,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+F,16.0,60.0,65.0,62.5,0,5,97.73,Excellent,High School,High School,yes,no,yes,Average,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,16.0,45.0,45.0,45.0,0,35,84.09,Moderate,Primary,Middle School,no,no,no,Average,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,15.0,60.0,60.0,60.0,0,26,88.18,Good,Middle School,High School,no,no,yes,Poor,Medium,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,16.0,60.0,55.0,57.5,0,62,71.82,Moderate,Primary,Primary,no,no,yes,Average,Low,Yes,Average,No,No,No,Yes,No,Yes,Yes
+M,16.0,50.0,55.0,52.5,0,20,90.91,Good,Primary,Middle School,no,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+M,15.0,55.0,50.0,52.5,0,32,85.45,Good,High School,High School,yes,no,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+M,15.0,65.0,60.0,62.5,0,2,99.09,Excellent,Middle School,High School,no,no,yes,Average,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+F,16.0,70.0,75.0,72.5,0,33,85.0,Good,Middle School,College,no,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,16.0,65.0,65.0,65.0,0,4,98.18,Excellent,College,College,no,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,50.0,55.0,52.5,0,29,86.82,Good,High School,High School,yes,no,yes,Average,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,16.0,70.0,75.0,72.5,1,13,94.09,Good,College,College,yes,no,yes,Poor,High,No,Average,No,Yes,No,Yes,Yes,Yes,At_Risk
+F,15.0,55.0,50.0,52.5,0,28,87.27,Good,College,College,yes,no,yes,Average,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,15.0,70.0,70.0,70.0,0,4,98.18,Excellent,College,High School,yes,no,yes,Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,15.0,55.0,60.0,57.5,0,60,72.73,Moderate,Middle School,High School,yes,yes,no,Good,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,70.0,75.0,72.5,0,49,77.73,Moderate,Primary,Primary,yes,no,no,Very Poor,Low,Yes,Good,No,Yes,No,No,No,Yes,At_Risk
+F,16.0,65.0,65.0,65.0,0,5,97.73,Excellent,Middle School,Middle School,yes,no,yes,Average,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+F,15.0,65.0,65.0,65.0,0,8,96.36,Excellent,Middle School,Middle School,yes,no,yes,Excellent,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+F,16.0,40.0,45.0,42.5,1,17,92.27,Good,High School,College,yes,no,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,15.0,55.0,55.0,55.0,0,20,90.91,Good,High School,Primary,yes,no,yes,Good,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,15.0,70.0,75.0,72.5,0,3,98.64,Excellent,College,High School,no,no,yes,Very Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,15.0,60.0,65.0,62.5,0,60,72.73,Moderate,Primary,Primary,yes,no,no,Excellent,Low,Yes,Good,No,No,No,No,No,Yes,At_Risk
+F,16.0,55.0,60.0,57.5,0,5,97.73,Excellent,College,High School,yes,no,yes,Good,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,18.0,60.0,60.0,60.0,0,6,97.27,Excellent,High School,High School,yes,no,yes,Average,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,16.0,65.0,60.0,62.5,0,6,97.27,Excellent,College,College,yes,no,yes,Average,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,15.0,65.0,65.0,65.0,0,6,97.27,Excellent,Middle School,Middle School,yes,yes,yes,Good,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+M,17.0,60.0,55.0,57.5,0,1,99.55,Excellent,Middle School,Middle School,yes,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+F,16.0,60.0,55.0,57.5,0,32,85.45,Good,College,College,yes,no,no,Average,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,16.0,70.0,80.0,75.0,0,25,88.64,Good,High School,Middle School,no,no,yes,Very Poor,Medium,No,Good,No,Yes,No,Yes,Yes,Yes,At_Risk
+F,16.0,55.0,45.0,50.0,0,14,93.64,Good,College,High School,no,no,yes,Very Poor,High,No,Average,No,Yes,No,Yes,Yes,Yes,At_Risk
+M,17.0,50.0,50.0,50.0,0,31,85.91,Good,High School,High School,yes,no,yes,Good,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,16.0,60.0,65.0,62.5,0,19,91.36,Good,Middle School,High School,yes,no,no,Average,Medium,Yes,Good,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,60.0,60.0,60.0,0,5,97.73,Excellent,Middle School,Middle School,yes,no,yes,Good,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+F,16.0,55.0,50.0,52.5,0,16,92.73,Good,Middle School,Primary,yes,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,60.0,60.0,60.0,0,43,80.45,Moderate,Primary,Primary,yes,no,no,Excellent,Low,Yes,Good,No,No,Yes,No,No,Yes,Yes
+F,15.0,65.0,65.0,65.0,0,6,97.27,Excellent,Middle School,High School,no,yes,yes,Average,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+M,17.0,50.0,45.0,47.5,3,112,49.09,Poor,Middle School,Middle School,yes,no,yes,Good,Medium,No,Poor,No,No,No,Yes,Yes,Yes,Yes
+F,15.0,75.0,80.0,77.5,0,10,95.45,Excellent,College,College,yes,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,17.0,45.0,45.0,45.0,0,12,94.55,Good,High School,Primary,no,no,yes,Good,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,85.0,90.0,87.5,0,10,95.45,Excellent,High School,Middle School,no,no,yes,Average,Medium,No,Excellent,No,No,No,Yes,Yes,Yes,No
+M,16.0,50.0,55.0,52.5,0,27,87.73,Good,Middle School,High School,yes,no,yes,Average,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+M,17.0,45.0,50.0,47.5,0,26,88.18,Good,Middle School,Primary,yes,yes,yes,Average,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,75.0,75.0,75.0,0,2,99.09,Excellent,Middle School,Primary,no,no,yes,Average,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+F,16.0,70.0,60.0,65.0,0,6,97.27,Excellent,College,High School,no,no,yes,Average,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,16.0,60.0,65.0,62.5,0,28,87.27,Good,Middle School,Middle School,yes,no,yes,Very Poor,Medium,No,Good,No,Yes,No,Yes,Yes,Yes,No
+M,16.0,65.0,65.0,65.0,0,5,97.73,Excellent,College,College,yes,yes,yes,Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,No
+M,15.0,65.0,65.0,65.0,0,3,98.64,Excellent,College,College,yes,no,yes,Very Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,No
+M,15.0,45.0,45.0,45.0,0,41,81.36,Moderate,Primary,Primary,yes,no,yes,Excellent,Low,Yes,Average,No,No,No,Yes,No,Yes,At_Risk
+M,15.0,60.0,60.0,60.0,0,19,91.36,Good,High School,Middle School,no,no,yes,Poor,Medium,No,Good,No,Yes,No,Yes,Yes,Yes,No
+M,16.0,80.0,80.0,80.0,0,8,96.36,Excellent,Middle School,Middle School,no,no,yes,Good,Medium,No,Excellent,No,No,No,Yes,Yes,Yes,No
+F,15.0,45.0,50.0,47.5,0,14,93.64,Good,Middle School,Primary,no,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,15.0,70.0,65.0,67.5,0,27,87.73,Good,College,Primary,no,no,yes,Excellent,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+F,17.0,50.0,50.0,50.0,1,15,93.18,Good,Middle School,College,yes,no,yes,Average,High,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,17.0,45.0,40.0,42.5,1,17,92.27,Good,Middle School,Middle School,yes,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,17.0,40.0,35.0,37.5,1,53,75.91,Moderate,High School,High School,no,no,yes,Average,High,No,Poor,No,No,No,Yes,Yes,Yes,Yes
+M,17.0,35.0,40.0,37.5,1,110,50.0,Poor,Middle School,Middle School,yes,no,yes,Very Poor,Medium,No,Poor,No,Yes,No,Yes,Yes,Yes,Yes
+M,16.0,50.0,40.0,45.0,0,0,100.0,Excellent,College,College,yes,no,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,16.0,70.0,70.0,70.0,0,15,93.18,Good,High School,Middle School,no,no,no,Average,Medium,Yes,Good,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,55.0,50.0,52.5,0,42,80.91,Moderate,Primary,Primary,yes,no,yes,Good,Low,Yes,Average,No,No,Yes,Yes,No,Yes,Yes
+F,15.0,60.0,55.0,57.5,0,28,87.27,Good,Primary,Middle School,no,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,65.0,65.0,65.0,0,13,94.09,Good,Middle School,Primary,no,no,no,Average,Medium,Yes,Good,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,45.0,45.0,45.0,1,22,90.0,Good,Primary,College,yes,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+M,17.0,40.0,35.0,37.5,0,46,79.09,Moderate,Middle School,Middle School,no,no,yes,Poor,Medium,No,Poor,No,Yes,No,Yes,Yes,Yes,Yes
+F,16.0,55.0,45.0,50.0,1,52,76.36,Moderate,Middle School,Middle School,yes,no,yes,Very Poor,Medium,No,Average,No,Yes,No,Yes,Yes,Yes,At_Risk
+F,16.0,75.0,70.0,72.5,0,20,90.91,Good,Primary,Primary,no,no,yes,Excellent,Low,Yes,Good,No,No,No,Yes,No,Yes,At_Risk
+F,16.0,75.0,70.0,72.5,0,4,98.18,Excellent,College,Middle School,yes,no,no,Good,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,16.0,75.0,75.0,75.0,0,9,95.91,Excellent,College,High School,no,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,16.0,60.0,60.0,60.0,0,6,97.27,Excellent,College,College,yes,no,yes,Good,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,70.0,70.0,70.0,0,5,97.73,Excellent,College,High School,no,no,yes,Average,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,70.0,75.0,72.5,0,4,98.18,Excellent,College,College,no,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,16.0,55.0,55.0,55.0,0,5,97.73,Excellent,College,College,yes,no,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+M,16.0,65.0,70.0,67.5,0,44,80.0,Moderate,Primary,Primary,no,no,yes,Very Poor,Low,Yes,Good,No,Yes,No,Yes,No,Yes,At_Risk
+F,16.0,55.0,55.0,55.0,0,0,100.0,Excellent,High School,High School,yes,no,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,16.0,50.0,45.0,47.5,0,132,40.0,Poor,Primary,Primary,no,yes,no,Good,Low,Yes,Average,No,No,Yes,No,No,Yes,Yes
+F,17.0,60.0,50.0,55.0,0,25,88.64,Good,Middle School,Primary,yes,no,yes,Average,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+M,15.0,75.0,80.0,77.5,0,5,97.73,Excellent,Middle School,Primary,no,no,yes,Good,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+F,16.0,55.0,50.0,52.5,0,40,81.82,Moderate,Primary,Primary,yes,no,no,Excellent,Low,Yes,Average,No,No,No,No,No,Yes,At_Risk
+M,16.0,45.0,60.0,52.5,0,62,71.82,Moderate,Middle School,High School,no,no,yes,Poor,Medium,No,Average,No,Yes,No,Yes,Yes,Yes,At_Risk
+M,19.0,35.0,40.0,37.5,3,77,65.0,Poor,High School,Primary,no,no,yes,Very Poor,Medium,No,Poor,No,Yes,No,Yes,Yes,Yes,Yes
+M,17.0,50.0,45.0,47.5,0,30,86.36,Good,High School,High School,yes,no,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+M,15.0,55.0,60.0,57.5,0,50,77.27,Moderate,No Education,Middle School,no,no,yes,Excellent,Low,Yes,Average,No,No,No,Yes,No,Yes,At_Risk
+M,17.0,42.0,48.0,45.0,0,54,75.45,Moderate,High School,Middle School,no,no,yes,Excellent,Medium,No,Poor,No,No,No,Yes,Yes,Yes,At_Risk
+M,15.0,45.0,55.0,50.0,1,14,93.64,Good,High School,High School,yes,yes,yes,Poor,High,No,Average,No,Yes,No,Yes,Yes,Yes,No
+M,17.0,42.0,48.0,45.0,2,109,50.45,Poor,Middle School,Primary,no,no,yes,Excellent,Medium,No,Poor,No,No,No,Yes,Yes,Yes,Yes
+M,15.0,70.0,65.0,67.5,0,18,91.82,Good,Middle School,Primary,no,no,no,Average,Medium,Yes,Good,No,No,No,Yes,Yes,Yes,No
+M,16.0,60.0,60.0,60.0,0,1,99.55,Excellent,Middle School,Primary,no,no,yes,Excellent,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+M,16.0,45.0,50.0,47.5,1,34,84.55,Moderate,Primary,Primary,yes,no,yes,Excellent,Low,Yes,Average,No,No,No,Yes,No,Yes,At_Risk
+F,17.0,60.0,60.0,60.0,0,4,98.18,Excellent,Middle School,Primary,yes,no,yes,Excellent,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+F,16.0,70.0,75.0,72.5,0,10,95.45,Excellent,College,Middle School,yes,no,yes,Good,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,18.0,50.0,50.0,50.0,0,27,87.73,Good,Middle School,Middle School,yes,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+M,17.0,55.0,50.0,52.5,1,13,94.09,Good,Middle School,Primary,no,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,55.0,60.0,57.5,0,3,98.64,Excellent,College,Middle School,yes,no,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,17.0,55.0,60.0,57.5,0,40,81.82,Moderate,Primary,Primary,yes,no,no,Average,Low,Yes,Average,No,No,No,No,No,Yes,At_Risk
+F,17.0,55.0,55.0,55.0,0,54,75.45,Moderate,Middle School,Middle School,no,yes,no,Excellent,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,At_Risk
+M,18.0,55.0,65.0,60.0,0,1,99.55,Excellent,College,High School,yes,no,yes,Very Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,No
+M,17.0,80.0,80.0,80.0,0,6,97.27,Excellent,Middle School,Primary,no,no,yes,Good,Medium,No,Excellent,No,No,No,Yes,Yes,Yes,No
+M,16.0,45.0,50.0,47.5,0,45,79.55,Moderate,Middle School,Middle School,no,no,no,Good,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,50.0,55.0,52.5,0,60,72.73,Moderate,Middle School,Middle School,no,no,yes,Poor,Medium,No,Average,No,Yes,No,Yes,Yes,Yes,Yes
+F,19.0,50.0,60.0,55.0,0,12,94.55,Good,Middle School,Primary,yes,no,yes,Poor,Medium,No,Average,No,Yes,No,Yes,Yes,Yes,At_Risk
+F,17.0,75.0,75.0,75.0,0,4,98.18,Excellent,College,High School,yes,no,yes,Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,No
+M,17.0,50.0,50.0,50.0,0,0,100.0,Excellent,College,High School,yes,no,yes,Average,High,No,Average,No,No,No,Yes,Yes,Yes,No
+M,17.0,50.0,55.0,52.5,0,44,80.0,Moderate,High School,Middle School,no,no,no,Average,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,75.0,60.0,67.5,0,2,99.09,Excellent,High School,High School,no,no,no,Good,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,17.0,55.0,60.0,57.5,0,28,87.27,Good,Middle School,Middle School,yes,no,yes,Average,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+M,16.0,45.0,45.0,45.0,0,14,93.64,Good,Middle School,Middle School,no,no,yes,Good,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+M,17.0,75.0,80.0,77.5,0,2,99.09,Excellent,High School,College,yes,no,yes,Very Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,No
+M,16.0,55.0,55.0,55.0,0,23,89.55,Good,High School,Primary,no,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,17.0,50.0,55.0,52.5,0,25,88.64,Good,College,College,no,no,yes,Good,High,No,Average,No,No,No,Yes,Yes,Yes,No
+M,17.0,50.0,60.0,55.0,0,1,99.55,Excellent,College,Middle School,yes,no,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,17.0,40.0,45.0,42.5,0,21,90.45,Good,Middle School,Primary,yes,no,yes,Average,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,18.0,55.0,60.0,57.5,0,31,85.91,Good,High School,High School,yes,no,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,17.0,80.0,80.0,80.0,0,4,98.18,Excellent,Middle School,High School,yes,no,yes,Poor,Medium,No,Excellent,No,Yes,No,Yes,Yes,Yes,No
+F,17.0,65.0,65.0,65.0,0,56,74.55,Moderate,Primary,Primary,yes,no,no,Average,Low,Yes,Good,No,No,No,No,No,Yes,At_Risk
+M,16.0,80.0,85.0,82.5,0,13,94.09,Good,Primary,Middle School,yes,no,no,Very Poor,Medium,Yes,Excellent,No,Yes,No,Yes,Yes,Yes,No
+F,17.0,70.0,70.0,70.0,0,31,85.91,Good,Middle School,Primary,yes,no,yes,Very Poor,Medium,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,16.0,75.0,80.0,77.5,0,3,98.64,Excellent,Middle School,College,yes,no,yes,Very Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,16.0,60.0,60.0,60.0,0,6,97.27,Excellent,Middle School,Middle School,yes,yes,yes,Excellent,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+F,17.0,60.0,45.0,52.5,0,18,91.82,Good,High School,Middle School,no,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+M,17.0,55.0,60.0,57.5,0,28,87.27,Good,College,College,no,no,yes,Average,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,17.0,70.0,60.0,65.0,1,30,86.36,Good,College,College,yes,yes,yes,Good,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,16.0,65.0,75.0,70.0,0,28,87.27,Good,Middle School,Middle School,yes,no,yes,Very Poor,Medium,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,18.0,47.65,42.35,45.0,1,18,91.82,Good,High School,Middle School,yes,yes,yes,Average,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+M,17.0,50.0,50.0,50.0,0,60,72.73,Moderate,College,High School,no,no,yes,Very Poor,High,No,Average,No,Yes,No,Yes,Yes,Yes,At_Risk
+M,17.0,50.0,50.0,50.0,0,23,89.55,Good,Primary,Middle School,no,no,yes,Good,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+M,16.0,55.0,55.0,55.0,0,25,88.64,Good,College,Primary,no,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+M,16.0,65.0,65.0,65.0,0,33,85.0,Good,High School,Middle School,no,no,yes,Average,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+F,17.0,85.0,85.0,85.0,0,16,92.73,Good,Primary,Primary,yes,no,no,Average,Low,Yes,Excellent,No,No,No,No,No,Yes,At_Risk
+F,17.0,60.0,65.0,62.5,0,13,94.09,Good,Primary,Primary,no,yes,yes,Good,Low,Yes,Good,No,No,No,Yes,No,Yes,At_Risk
+F,16.0,60.0,60.0,60.0,0,3,98.64,Excellent,Middle School,Middle School,yes,no,yes,Excellent,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+F,17.0,60.0,65.0,62.5,0,0,100.0,Excellent,Middle School,Primary,no,no,yes,Excellent,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+M,16.0,60.0,60.0,60.0,0,13,94.09,Good,Primary,Primary,no,no,yes,Good,Low,Yes,Good,No,No,No,Yes,No,Yes,At_Risk
+F,17.0,90.0,90.0,90.0,0,7,96.82,Excellent,Middle School,Middle School,yes,no,yes,Poor,Medium,No,Excellent,No,Yes,No,Yes,Yes,Yes,No
+F,16.0,65.0,65.0,65.0,0,17,92.27,Good,Primary,Primary,yes,no,yes,Average,Low,Yes,Good,No,No,No,Yes,No,Yes,No
+M,17.0,70.0,75.0,72.5,0,23,89.55,Good,Middle School,Primary,no,no,yes,Poor,Medium,No,Good,No,Yes,No,Yes,Yes,Yes,No
+M,17.0,85.0,85.0,85.0,0,9,95.91,Excellent,College,College,yes,no,yes,Poor,High,No,Excellent,No,Yes,No,Yes,Yes,Yes,No
+M,17.0,75.0,80.0,77.5,0,10,95.45,Excellent,College,Middle School,yes,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,16.0,85.0,90.0,87.5,0,11,95.0,Excellent,College,High School,yes,no,yes,Average,High,No,Excellent,No,No,No,Yes,Yes,Yes,No
+F,16.0,90.0,95.0,92.5,0,3,98.64,Excellent,High School,Primary,yes,no,no,Average,Medium,Yes,Excellent,No,No,No,Yes,Yes,Yes,No
+M,17.0,70.0,75.0,72.5,0,8,96.36,Excellent,High School,Middle School,yes,no,yes,Good,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+M,16.0,70.0,75.0,72.5,0,9,95.91,Excellent,High School,High School,yes,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,18.0,70.0,65.0,67.5,0,2,99.09,Excellent,College,College,yes,no,yes,Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,17.0,65.0,70.0,67.5,0,2,99.09,Excellent,College,High School,yes,no,yes,Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,17.0,80.0,85.0,82.5,0,11,95.0,Excellent,College,High School,yes,no,yes,Average,High,No,Excellent,No,No,No,Yes,Yes,Yes,No
+M,17.0,90.0,90.0,90.0,0,10,95.45,Excellent,College,College,yes,no,yes,Very Poor,High,No,Excellent,No,Yes,No,Yes,Yes,Yes,No
+F,17.0,70.0,75.0,72.5,0,9,95.91,Excellent,College,College,yes,no,yes,Good,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,16.0,60.0,65.0,62.5,0,6,97.27,Excellent,College,College,no,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,16.0,45.0,45.0,45.0,0,23,89.55,Good,College,College,yes,no,yes,Excellent,High,No,Poor,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,80.0,80.0,80.0,0,10,95.45,Excellent,College,Middle School,yes,no,yes,Average,High,No,Excellent,No,No,No,Yes,Yes,Yes,No
+F,16.0,90.0,90.0,90.0,0,11,95.0,Excellent,High School,Middle School,yes,no,yes,Excellent,Medium,No,Excellent,No,No,No,Yes,Yes,Yes,No
+M,18.0,45.0,50.0,47.5,1,58,73.64,Moderate,Middle School,Primary,no,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,Yes
+M,19.0,70.0,75.0,72.5,2,94,57.27,Poor,High School,Middle School,no,no,no,Excellent,Medium,Yes,Poor,No,No,No,Yes,Yes,Yes,At_Risk
+M,18.0,50.0,50.0,50.0,0,19,91.36,Good,High School,High School,no,no,no,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,17.0,50.0,50.0,50.0,0,64,70.91,Moderate,Primary,College,yes,yes,no,Excellent,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,17.0,60.0,60.0,60.0,0,24,89.09,Good,Middle School,Primary,yes,no,yes,Very Poor,Medium,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,16.0,55.0,60.0,57.5,0,26,88.18,Good,Middle School,High School,no,no,yes,Average,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+F,16.0,75.0,80.0,77.5,0,6,97.27,Excellent,College,College,no,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,17.0,70.0,75.0,72.5,0,9,95.91,Excellent,College,High School,yes,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,17.0,60.0,60.0,60.0,0,28,87.27,Good,College,High School,yes,no,yes,Very Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,16.0,75.0,75.0,75.0,0,10,95.45,Excellent,High School,College,yes,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,17.0,55.0,60.0,57.5,0,2,99.09,Excellent,High School,High School,yes,no,yes,Average,High,No,Average,No,No,No,Yes,Yes,Yes,No
+M,18.0,55.0,50.0,52.5,0,14,93.64,Good,College,Middle School,yes,no,yes,Very Poor,High,No,Average,No,Yes,No,Yes,Yes,Yes,At_Risk
+F,17.0,60.0,55.0,57.5,0,1,99.55,Excellent,College,College,yes,no,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,17.0,55.0,60.0,57.5,0,20,90.91,Good,High School,College,yes,no,yes,Very Poor,High,No,Average,No,Yes,No,Yes,Yes,Yes,At_Risk
+F,16.0,70.0,75.0,72.5,0,6,97.27,Excellent,College,College,no,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,16.0,75.0,70.0,72.5,0,10,95.45,Excellent,College,High School,yes,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,16.0,60.0,60.0,60.0,0,7,96.82,Excellent,High School,High School,yes,yes,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,16.0,55.0,60.0,57.5,0,12,94.55,Good,Middle School,Primary,no,no,yes,Poor,Medium,No,Average,No,Yes,No,Yes,Yes,Yes,At_Risk
+M,17.0,42.35,47.65,45.0,0,27,87.73,Good,College,College,yes,no,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,18.0,50.0,50.0,50.0,0,110,50.0,Poor,Primary,Primary,no,no,no,Excellent,Low,Yes,Average,No,No,Yes,No,No,Yes,Yes
+F,18.0,45.0,45.0,45.0,2,98,55.45,Poor,Primary,Primary,yes,no,yes,Good,Low,Yes,Poor,No,No,No,Yes,No,Yes,Yes
+F,17.0,50.0,50.0,50.0,0,24,89.09,Good,Middle School,Middle School,yes,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+F,16.0,70.0,65.0,67.5,0,14,93.64,Good,Middle School,Middle School,yes,no,no,Average,Medium,Yes,Good,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,55.0,55.0,55.0,0,23,89.55,Good,Middle School,Middle School,yes,no,yes,Average,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,85.0,90.0,87.5,0,7,96.82,Excellent,High School,Primary,yes,no,yes,Excellent,Medium,No,Excellent,No,No,No,Yes,Yes,Yes,No
+F,16.0,70.0,70.0,70.0,0,58,73.64,Moderate,No Education,Middle School,no,no,yes,Poor,Low,Yes,Good,No,Yes,No,Yes,No,Yes,At_Risk
+F,17.0,70.0,70.0,70.0,0,48,78.18,Moderate,Primary,Primary,no,no,yes,Poor,Low,Yes,Good,No,Yes,No,Yes,No,Yes,At_Risk
+M,17.0,65.0,70.0,67.5,0,4,98.18,Excellent,College,College,no,no,yes,Average,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,16.0,85.0,90.0,87.5,0,8,96.36,Excellent,High School,High School,no,no,yes,Excellent,High,No,Excellent,No,No,No,Yes,Yes,Yes,No
+M,16.0,55.0,50.0,52.5,0,30,86.36,Good,Middle School,Middle School,yes,no,yes,Good,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+F,16.0,65.0,60.0,62.5,0,8,96.36,Excellent,College,College,yes,no,yes,Good,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,16.0,75.0,70.0,72.5,0,9,95.91,Excellent,College,College,yes,no,yes,Good,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,16.0,55.0,60.0,57.5,0,5,97.73,Excellent,High School,High School,yes,no,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+M,17.0,55.0,55.0,55.0,0,31,85.91,Good,Middle School,Middle School,yes,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+M,18.0,55.0,50.0,52.5,0,62,71.82,Moderate,High School,Middle School,yes,no,no,Excellent,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,17.0,50.0,45.0,47.5,0,127,42.27,Poor,Middle School,Middle School,no,no,no,Poor,Medium,Yes,Average,No,Yes,No,Yes,Yes,Yes,Yes
+F,16.0,75.0,75.0,75.0,0,9,95.91,Excellent,Middle School,College,yes,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,17.0,75.0,70.0,72.5,0,0,100.0,Excellent,Middle School,Middle School,no,no,yes,Excellent,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+F,17.0,50.0,55.0,52.5,0,23,89.55,Good,High School,High School,no,no,yes,Good,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,17.0,50.0,45.0,47.5,0,63,71.36,Moderate,Middle School,Middle School,no,no,yes,Poor,Medium,No,Average,No,Yes,No,Yes,Yes,Yes,At_Risk
+F,17.0,70.0,65.0,67.5,0,16,92.73,Good,Middle School,Middle School,no,no,no,Good,Medium,Yes,Good,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,55.0,65.0,60.0,0,3,98.64,Excellent,High School,College,no,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,16.0,60.0,65.0,62.5,0,1,99.55,Excellent,High School,Middle School,yes,no,yes,Poor,Medium,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,17.0,70.0,70.0,70.0,0,32,85.45,Good,High School,High School,yes,no,yes,Very Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,16.0,70.0,70.0,70.0,0,27,87.73,Good,High School,Middle School,yes,no,yes,Poor,Medium,No,Good,No,Yes,No,Yes,Yes,Yes,No
+M,17.0,60.0,60.0,60.0,0,1,99.55,Excellent,College,College,yes,no,yes,Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,No
+M,17.0,80.0,80.0,80.0,0,11,95.0,Excellent,High School,College,no,no,yes,Excellent,High,No,Excellent,No,No,No,Yes,Yes,Yes,No
+F,16.0,50.0,60.0,55.0,0,23,89.55,Good,Middle School,Middle School,yes,no,yes,Good,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,17.0,55.0,60.0,57.5,0,28,87.27,Good,Middle School,High School,yes,no,yes,Average,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,17.0,70.0,80.0,75.0,0,25,88.64,Good,High School,Middle School,no,no,yes,Very Poor,Medium,No,Good,No,Yes,No,Yes,Yes,Yes,At_Risk
+M,17.0,75.0,70.0,72.5,0,9,95.91,Excellent,College,High School,no,no,yes,Good,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,17.0,70.0,65.0,67.5,0,9,95.91,Excellent,College,High School,yes,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,16.0,60.0,75.0,67.5,0,31,85.91,Good,Middle School,Primary,yes,no,yes,Very Poor,Medium,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,16.0,60.0,80.0,70.0,0,6,97.27,Excellent,Middle School,Primary,yes,no,yes,Good,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+F,18.0,50.0,55.0,52.5,1,12,94.55,Good,Middle School,High School,no,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,50.0,65.0,57.5,1,12,94.55,Good,High School,Primary,yes,no,yes,Average,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+F,19.0,45.0,60.0,52.5,2,51,76.82,Moderate,College,College,no,no,yes,Excellent,High,No,Poor,No,No,No,Yes,Yes,Yes,Yes
+M,17.0,45.0,55.0,50.0,0,25,88.64,Good,Middle School,Middle School,yes,no,yes,Average,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+M,17.0,65.0,70.0,67.5,0,31,85.91,Good,High School,College,no,no,yes,Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,16.0,65.0,85.0,75.0,0,6,97.27,Excellent,Middle School,Middle School,yes,no,yes,Good,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+M,16.0,60.0,75.0,67.5,0,6,97.27,Excellent,College,College,yes,no,yes,Good,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,17.0,70.0,85.0,77.5,0,10,95.45,Excellent,College,Middle School,yes,no,yes,Average,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,19.0,45.0,50.0,47.5,2,81,63.18,Poor,Primary,Primary,yes,no,yes,Good,Low,Yes,Poor,No,No,Yes,Yes,No,Yes,Yes
+F,19.0,55.0,75.0,65.0,0,59,73.18,Moderate,Primary,Primary,no,no,yes,Average,Low,Yes,Good,No,No,No,Yes,No,Yes,At_Risk
+F,18.0,45.0,50.0,47.5,1,15,93.18,Good,College,College,yes,no,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+M,16.0,80.0,90.0,85.0,0,11,95.0,Excellent,High School,Middle School,yes,no,yes,Excellent,Medium,No,Excellent,No,No,No,Yes,Yes,Yes,No
+F,17.0,70.0,85.0,77.5,0,31,85.91,Good,High School,Middle School,yes,no,yes,Poor,Medium,No,Good,No,Yes,No,Yes,Yes,Yes,No
+M,17.0,65.0,70.0,67.5,0,3,98.64,Excellent,Middle School,High School,no,no,yes,Good,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+M,18.0,35.0,55.0,45.0,0,16,92.73,Good,Middle School,Primary,no,no,yes,Good,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,17.0,70.0,85.0,77.5,0,7,96.82,Excellent,Middle School,Middle School,yes,no,yes,Good,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+F,19.0,40.0,50.0,45.0,1,111,49.55,Poor,Primary,No Education,no,yes,yes,Excellent,Low,Yes,Average,No,No,No,Yes,No,Yes,Yes
+F,17.0,50.0,65.0,57.5,0,65,70.45,Moderate,High School,Middle School,yes,no,yes,Very Poor,Medium,No,Average,No,Yes,No,Yes,Yes,Yes,At_Risk
+F,15.0,50.0,55.0,52.5,0,27,87.73,Good,Primary,High School,yes,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+F,15.0,60.0,60.0,60.0,0,3,98.64,Excellent,Middle School,Middle School,yes,no,yes,Excellent,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+F,15.0,50.0,50.0,50.0,1,78,64.55,Poor,Primary,Primary,yes,no,no,Poor,Low,Yes,Average,No,Yes,No,No,No,Yes,Yes
+F,15.0,50.0,50.0,50.0,0,27,87.73,Good,High School,High School,yes,no,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,15.0,80.0,85.0,82.5,0,32,85.45,Good,Middle School,High School,no,no,no,Excellent,Medium,Yes,Excellent,No,No,No,Yes,Yes,Yes,No
+F,15.0,38.57,51.43,45.0,0,92,58.18,Poor,Middle School,Primary,no,no,no,Very Poor,Medium,Yes,Poor,No,Yes,No,Yes,Yes,Yes,Yes
+M,15.0,50.0,55.0,52.5,0,12,94.55,Good,College,College,yes,no,no,Poor,High,No,Average,No,Yes,No,Yes,Yes,Yes,At_Risk
+M,15.0,50.0,55.0,52.5,0,32,85.45,Good,Primary,Middle School,no,yes,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+F,16.0,50.0,50.0,50.0,1,40,81.82,Moderate,High School,Middle School,no,no,no,Excellent,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,45.0,45.0,45.0,1,34,84.55,Moderate,Primary,Primary,yes,no,yes,Excellent,Low,Yes,Poor,No,No,No,Yes,No,Yes,Yes
+F,15.0,65.0,70.0,67.5,0,6,97.27,Excellent,College,College,no,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,15.0,50.0,45.0,47.5,0,118,46.36,Poor,Middle School,Middle School,no,no,no,Very Poor,Medium,Yes,Average,No,Yes,No,Yes,Yes,Yes,Yes
+F,15.0,50.0,50.0,50.0,0,48,78.18,Moderate,Primary,Primary,yes,no,yes,Good,Low,Yes,Average,No,No,No,Yes,No,Yes,Yes
+F,15.0,41.54,48.46,45.0,1,84,61.82,Poor,Primary,Primary,yes,no,yes,Poor,Low,Yes,Poor,No,Yes,No,Yes,No,Yes,Yes
+F,15.0,60.0,55.0,57.5,0,97,55.91,Poor,No Education,Middle School,yes,no,no,Poor,Low,Yes,Average,No,Yes,No,No,No,Yes,Yes
+F,16.0,50.0,55.0,52.5,0,33,85.0,Good,Middle School,High School,yes,no,yes,Average,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+F,15.0,70.0,80.0,75.0,0,9,95.91,Excellent,High School,High School,no,no,yes,Good,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,90.0,0.0,45.0,0,104,52.73,Poor,Primary,Primary,yes,no,no,Average,Low,Yes,Poor,No,No,No,No,No,Yes,Yes
+M,16.0,42.35,47.65,45.0,0,43,80.45,Moderate,Primary,Primary,no,no,yes,Excellent,Low,Yes,Average,No,No,No,Yes,No,Yes,At_Risk
+M,15.0,60.0,65.0,62.5,0,29,86.82,Good,College,Primary,yes,no,yes,Poor,Medium,No,Good,No,Yes,No,Yes,Yes,Yes,No
+M,15.0,39.38,50.62,45.0,0,17,92.27,Good,College,Primary,yes,no,yes,Poor,Medium,No,Average,No,Yes,No,Yes,Yes,Yes,At_Risk
+M,15.0,45.0,50.0,47.5,0,18,91.82,Good,High School,College,no,no,no,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+M,15.0,39.38,50.62,45.0,0,44,80.0,Moderate,Primary,Primary,yes,no,no,Good,Low,Yes,Average,No,No,No,No,No,Yes,Yes
+M,15.0,55.0,55.0,55.0,0,33,85.0,Good,High School,High School,yes,no,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+M,16.0,40.0,50.0,45.0,0,41,81.36,Moderate,Middle School,Primary,no,no,no,Average,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,Yes
+F,15.0,80.0,80.0,80.0,0,11,95.0,Excellent,College,College,no,no,yes,Good,High,No,Excellent,No,No,No,Yes,Yes,Yes,No
+F,15.0,55.0,65.0,60.0,0,54,75.45,Moderate,Primary,Middle School,no,no,no,Very Poor,Medium,Yes,Good,No,Yes,No,Yes,Yes,Yes,Yes
+F,15.0,75.0,75.0,75.0,0,3,98.64,Excellent,Middle School,High School,yes,no,yes,Very Poor,Medium,No,Good,No,Yes,No,Yes,Yes,Yes,No
+M,15.0,50.0,55.0,52.5,0,47,78.64,Moderate,Primary,Middle School,no,no,no,Excellent,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,15.0,45.0,50.0,47.5,0,18,91.82,Good,Middle School,Middle School,yes,no,yes,Good,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+F,15.0,50.0,40.0,45.0,1,46,79.09,Moderate,Primary,Middle School,yes,no,no,Good,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,Yes
+F,15.0,47.65,42.35,45.0,1,34,84.55,Moderate,Primary,Middle School,yes,no,no,Good,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,15.0,45.0,50.0,47.5,0,19,91.36,Good,Middle School,Primary,yes,yes,yes,Poor,Medium,No,Average,No,Yes,No,Yes,Yes,Yes,No
+F,15.0,65.0,70.0,67.5,0,49,77.73,Moderate,Primary,Primary,yes,no,no,Poor,Low,Yes,Good,No,Yes,No,No,No,Yes,At_Risk
+M,16.0,50.0,55.0,52.5,0,29,86.82,Good,Primary,Middle School,yes,no,yes,Average,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,15.0,65.0,50.0,57.5,0,47,78.64,Moderate,Primary,Primary,yes,no,yes,Very Poor,Low,Yes,Average,No,Yes,No,Yes,No,Yes,At_Risk
+F,15.0,50.0,45.0,47.5,0,46,79.09,Moderate,Primary,Primary,yes,yes,no,Excellent,Low,Yes,Average,No,No,No,No,No,Yes,At_Risk
+F,15.0,55.0,50.0,52.5,0,44,80.0,Moderate,Primary,Primary,yes,no,yes,Poor,Low,Yes,Average,No,Yes,No,Yes,No,Yes,At_Risk
+F,15.0,65.0,60.0,62.5,0,39,82.27,Moderate,Primary,Primary,no,no,yes,Poor,Low,Yes,Good,No,Yes,No,Yes,No,Yes,At_Risk
+F,15.0,70.0,55.0,62.5,0,22,90.0,Good,Middle School,Middle School,yes,yes,no,Excellent,Medium,Yes,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,55.0,55.0,55.0,0,35,84.09,Moderate,Primary,Primary,no,no,no,Excellent,Low,Yes,Average,No,No,No,No,No,Yes,At_Risk
+F,17.0,47.65,42.35,45.0,1,12,94.55,Good,Primary,Middle School,yes,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+M,15.0,50.0,45.0,47.5,0,55,75.0,Moderate,High School,Primary,yes,no,no,Good,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,15.0,70.0,65.0,67.5,0,32,85.45,Good,Middle School,Middle School,yes,no,yes,Poor,Medium,No,Good,No,Yes,No,Yes,Yes,Yes,No
+M,15.0,65.0,60.0,62.5,0,65,70.45,Moderate,Middle School,Middle School,no,no,no,Good,Medium,Yes,Good,No,No,No,Yes,Yes,Yes,At_Risk
+M,16.0,65.0,60.0,62.5,0,4,98.18,Excellent,College,College,yes,no,no,Average,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,15.0,65.0,60.0,62.5,0,2,99.09,Excellent,High School,High School,yes,no,yes,Very Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,16.0,60.0,55.0,57.5,1,49,77.73,Moderate,Middle School,Middle School,yes,no,no,Excellent,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,70.0,70.0,70.0,0,22,90.0,Good,Middle School,Middle School,yes,no,no,Good,Medium,Yes,Good,No,No,No,Yes,Yes,Yes,At_Risk
+M,16.0,50.0,40.0,45.0,0,32,85.45,Good,Middle School,Primary,yes,no,yes,Good,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+M,15.0,50.0,55.0,52.5,0,0,100.0,Excellent,Primary,High School,yes,no,yes,Average,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+F,15.0,60.0,65.0,62.5,0,14,93.64,Good,Middle School,Middle School,yes,no,no,Good,Medium,Yes,Good,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,50.0,40.0,45.0,0,15,93.18,Good,Middle School,Primary,yes,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+M,15.0,60.0,50.0,55.0,0,2,99.09,Excellent,High School,High School,yes,no,yes,Average,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,16.0,45.0,45.0,45.0,3,67,69.55,Poor,Primary,Primary,yes,yes,no,Very Poor,Low,Yes,Poor,No,Yes,No,No,No,Yes,Yes
+F,16.0,45.0,45.0,45.0,0,51,76.82,Moderate,Middle School,Middle School,yes,no,no,Excellent,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,18.0,45.0,45.0,45.0,1,126,42.73,Poor,Middle School,High School,no,no,yes,Poor,Medium,No,Average,No,Yes,No,Yes,Yes,Yes,Yes
+F,16.0,45.0,50.0,47.5,0,47,78.64,Moderate,Middle School,Primary,yes,no,no,Average,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,15.0,45.0,50.0,47.5,0,41,81.36,Moderate,Primary,Primary,yes,no,no,Good,Low,Yes,Average,No,No,No,No,No,Yes,Yes
+F,16.0,45.0,50.0,47.5,0,14,93.64,Good,Middle School,Middle School,yes,no,yes,Very Poor,Medium,No,Average,No,Yes,No,Yes,Yes,Yes,At_Risk
+F,16.0,45.0,45.0,45.0,0,123,44.09,Poor,Middle School,Middle School,yes,no,no,Very Poor,Medium,Yes,Poor,No,Yes,No,Yes,Yes,Yes,Yes
+F,16.0,55.0,50.0,52.5,0,24,89.09,Good,Middle School,Middle School,yes,no,yes,Good,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,45.0,50.0,47.5,1,15,93.18,Good,Middle School,Middle School,yes,no,yes,Average,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,17.0,39.38,50.62,45.0,2,87,60.45,Poor,High School,Middle School,yes,no,no,Poor,Medium,Yes,Poor,No,Yes,No,Yes,Yes,Yes,Yes
+F,18.0,39.38,50.62,45.0,1,96,56.36,Poor,Primary,Primary,no,no,no,Average,Low,Yes,Average,No,No,No,No,No,Yes,Yes
+M,17.0,42.35,47.65,45.0,1,37,83.18,Moderate,Primary,Primary,no,no,yes,Good,Low,Yes,Average,No,No,No,Yes,No,Yes,Yes
+F,17.0,45.0,55.0,50.0,1,94,57.27,Poor,Primary,Primary,no,no,yes,Poor,Low,Yes,Average,No,Yes,No,Yes,No,Yes,Yes
+F,18.0,35.0,40.0,37.5,1,74,66.36,Poor,Primary,Primary,yes,no,yes,Very Poor,Low,Yes,Poor,No,Yes,Yes,Yes,No,No,Yes
+F,16.0,40.0,50.0,45.0,0,43,80.45,Moderate,Middle School,Middle School,no,no,no,Average,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,45.0,45.0,45.0,0,100,54.55,Poor,No Education,Primary,no,no,no,Excellent,Low,Yes,Average,No,No,No,No,No,Yes,Yes
+F,16.0,42.35,47.65,45.0,0,16,92.73,Good,Primary,Middle School,no,no,yes,Average,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,70.0,65.0,67.5,0,7,96.82,Excellent,High School,High School,no,no,yes,Good,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,16.0,70.0,70.0,70.0,0,13,94.09,Good,Primary,Primary,yes,no,yes,Good,Low,Yes,Good,No,No,No,Yes,No,Yes,No
+M,16.0,50.0,55.0,52.5,1,13,94.09,Good,High School,High School,yes,no,no,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,70.0,65.0,67.5,0,1,99.55,Excellent,Middle School,Primary,yes,no,yes,Very Poor,Medium,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,16.0,85.0,80.0,82.5,0,0,100.0,Excellent,Middle School,Middle School,yes,no,no,Excellent,Medium,Yes,Excellent,No,No,No,Yes,Yes,Yes,No
+M,16.0,30.0,35.0,32.5,1,34,84.55,Moderate,Primary,Middle School,yes,no,yes,Very Poor,Medium,No,Poor,No,Yes,No,Yes,Yes,Yes,At_Risk
+M,16.0,70.0,60.0,65.0,0,7,96.82,Excellent,College,High School,no,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,16.0,50.0,40.0,45.0,1,34,84.55,Moderate,Middle School,Middle School,yes,no,no,Average,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,Yes
+F,16.0,70.0,70.0,70.0,0,15,93.18,Good,Primary,Primary,yes,yes,yes,Excellent,Low,Yes,Good,No,No,No,Yes,No,Yes,No
+F,18.0,60.0,65.0,62.5,0,25,88.64,Good,Middle School,Middle School,no,no,yes,Very Poor,Medium,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,16.0,55.0,55.0,55.0,0,54,75.45,Moderate,Primary,Primary,yes,no,yes,Excellent,Low,Yes,Average,No,No,No,Yes,No,Yes,At_Risk
+F,19.0,55.0,45.0,50.0,1,16,92.73,Good,High School,High School,no,no,yes,Average,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,16.0,55.0,55.0,55.0,0,43,80.45,Moderate,Primary,Primary,yes,no,no,Average,Low,Yes,Average,No,No,No,No,No,Yes,At_Risk
+M,16.0,50.0,45.0,47.5,1,14,93.64,Good,Middle School,Middle School,yes,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+F,16.0,80.0,85.0,82.5,0,66,70.0,Moderate,Primary,Primary,yes,no,no,Very Poor,Low,Yes,Excellent,No,Yes,No,No,No,Yes,At_Risk
+F,16.0,75.0,85.0,80.0,0,18,91.82,Good,Middle School,Middle School,yes,no,no,Very Poor,Medium,Yes,Excellent,No,Yes,No,Yes,Yes,Yes,At_Risk
+F,16.0,55.0,45.0,50.0,0,51,76.82,Moderate,Primary,No Education,no,no,yes,Good,Low,Yes,Average,No,No,No,Yes,No,Yes,At_Risk
+F,17.0,45.0,45.0,45.0,1,98,55.45,Poor,Primary,Primary,yes,no,yes,Excellent,Low,Yes,Poor,No,No,No,Yes,No,Yes,Yes
+F,16.0,51.43,38.57,45.0,0,42,80.91,Moderate,High School,Primary,no,no,yes,Very Poor,Medium,No,Poor,No,Yes,No,Yes,Yes,Yes,At_Risk
+F,16.0,48.46,41.54,45.0,0,63,71.36,Moderate,High School,Middle School,no,no,yes,Average,Medium,No,Poor,No,No,No,Yes,Yes,Yes,At_Risk
+F,17.0,47.65,42.35,45.0,0,36,83.64,Moderate,Primary,Primary,no,yes,no,Average,Low,Yes,Average,No,No,No,No,No,Yes,At_Risk
+F,16.0,70.0,80.0,75.0,0,2,99.09,Excellent,College,College,no,no,yes,Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,16.0,70.0,70.0,70.0,0,21,90.45,Good,Primary,Middle School,no,no,yes,Poor,Medium,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,17.0,55.38,34.62,45.0,1,43,80.45,Moderate,Middle School,College,yes,no,yes,Very Poor,High,No,Poor,No,Yes,No,Yes,Yes,Yes,At_Risk
+M,16.0,48.0,42.0,45.0,0,47,78.64,Moderate,Middle School,Primary,no,no,yes,Poor,Medium,No,Poor,No,Yes,No,Yes,Yes,Yes,At_Risk
+F,16.0,38.57,51.43,45.0,0,35,84.09,Moderate,Primary,Primary,yes,no,yes,Excellent,Low,Yes,Poor,No,No,No,Yes,No,Yes,At_Risk
+F,16.0,40.0,50.0,45.0,0,62,71.82,Moderate,Middle School,High School,yes,no,yes,Poor,Medium,No,Average,No,Yes,No,Yes,Yes,Yes,At_Risk
+F,16.0,45.0,45.0,45.0,0,1,99.55,Excellent,College,College,yes,no,yes,Average,High,No,Average,No,No,No,Yes,Yes,Yes,No
+M,17.0,40.91,49.09,45.0,0,16,92.73,Good,College,College,yes,no,yes,Excellent,High,No,Poor,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,39.38,50.62,45.0,0,12,94.55,Good,High School,College,yes,no,no,Poor,High,No,Average,No,Yes,No,Yes,Yes,Yes,No
+M,16.0,75.0,70.0,72.5,0,9,95.91,Excellent,College,College,yes,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,16.0,65.0,70.0,67.5,0,4,98.18,Excellent,College,Primary,no,no,yes,Excellent,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+M,16.0,50.0,45.0,47.5,0,55,75.0,Moderate,Middle School,Middle School,no,no,no,Average,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,Yes
+F,16.0,45.0,45.0,45.0,0,30,86.36,Good,Middle School,Middle School,yes,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,55.0,55.0,55.0,0,30,86.36,Good,College,College,yes,no,no,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+M,16.0,37.06,52.94,45.0,0,27,87.73,Good,High School,High School,yes,no,yes,Average,High,No,Average,No,No,No,Yes,Yes,Yes,No
+M,16.0,50.0,50.0,50.0,0,34,84.55,Moderate,Primary,Primary,no,no,yes,Very Poor,Low,Yes,Average,No,Yes,No,Yes,No,Yes,Yes
+M,16.0,50.62,39.38,45.0,0,16,92.73,Good,Middle School,Primary,no,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,70.0,75.0,72.5,0,6,97.27,Excellent,Middle School,Primary,no,no,yes,Average,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+M,16.0,55.0,60.0,57.5,0,2,99.09,Excellent,College,College,yes,no,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+M,15.0,45.0,55.0,50.0,0,60,72.73,Moderate,Primary,Middle School,yes,no,no,Excellent,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,At_Risk
+M,15.0,65.0,70.0,67.5,0,21,90.45,Good,Middle School,Middle School,yes,no,no,Excellent,Medium,Yes,Good,No,No,No,Yes,Yes,Yes,No
+M,15.0,60.0,65.0,62.5,0,1,99.55,Excellent,Middle School,Primary,no,no,yes,Excellent,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+F,16.0,55.0,55.0,55.0,0,66,70.0,Moderate,Middle School,Middle School,yes,no,no,Excellent,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,Yes
+F,16.0,45.0,50.0,47.5,0,14,93.64,Good,College,Primary,yes,no,yes,Very Poor,Medium,No,Average,No,Yes,No,Yes,Yes,Yes,At_Risk
+F,16.0,45.0,55.0,50.0,0,114,48.18,Poor,High School,Middle School,no,no,no,Very Poor,Medium,Yes,Average,No,Yes,No,Yes,Yes,Yes,Yes
+F,16.0,55.0,45.0,50.0,0,61,72.27,Moderate,Middle School,Middle School,no,yes,no,Excellent,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,50.0,55.0,52.5,0,30,86.36,Good,College,College,yes,no,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+M,16.0,45.0,45.0,45.0,3,132,40.0,Poor,College,College,no,no,yes,Excellent,High,No,Poor,No,No,No,Yes,Yes,Yes,Yes
+M,16.0,60.0,55.0,57.5,0,52,76.36,Moderate,Primary,High School,no,no,no,Excellent,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,Yes
+M,16.0,42.35,47.65,45.0,1,15,93.18,Good,High School,College,yes,no,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,16.0,65.0,75.0,70.0,0,11,95.0,Excellent,College,College,yes,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+M,16.0,50.0,55.0,52.5,0,12,94.55,Good,College,Primary,no,no,yes,Poor,Medium,No,Average,No,Yes,No,Yes,Yes,Yes,At_Risk
+F,16.0,55.0,50.0,52.5,0,44,80.0,Moderate,Primary,Primary,no,no,yes,Average,Low,Yes,Average,No,No,No,Yes,No,Yes,At_Risk
+F,16.0,85.0,90.0,87.5,0,11,95.0,Excellent,College,Middle School,yes,yes,yes,Excellent,High,No,Excellent,No,No,No,Yes,Yes,Yes,No
+M,16.0,60.0,65.0,62.5,0,5,97.73,Excellent,Middle School,Middle School,yes,no,yes,Excellent,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+M,16.0,65.0,70.0,67.5,0,0,100.0,Excellent,High School,Middle School,yes,no,yes,Very Poor,Medium,No,Good,No,Yes,No,Yes,Yes,Yes,No
+M,18.0,45.0,45.0,45.0,2,89,59.55,Poor,Primary,Primary,yes,no,yes,Good,Low,Yes,Poor,No,No,No,Yes,No,Yes,Yes
+M,16.0,55.0,55.0,55.0,0,35,84.09,Moderate,Primary,No Education,no,no,no,Excellent,Low,Yes,Average,No,No,No,No,No,Yes,At_Risk
+F,16.0,50.0,55.0,52.5,0,51,76.82,Moderate,Primary,Primary,yes,no,yes,Good,Low,Yes,Average,No,No,No,Yes,No,Yes,At_Risk
+F,16.0,65.0,70.0,67.5,0,7,96.82,Excellent,Primary,Middle School,yes,yes,yes,Average,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+M,16.0,45.0,50.0,47.5,0,45,79.55,Moderate,Primary,Middle School,no,no,no,Excellent,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,39.38,50.62,45.0,3,108,50.91,Poor,High School,Primary,yes,no,yes,Excellent,Medium,No,Poor,No,No,No,Yes,Yes,Yes,Yes
+M,16.0,40.0,65.0,52.5,0,54,75.45,Moderate,Middle School,Middle School,no,no,no,Excellent,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,At_Risk
+M,17.0,60.0,60.0,60.0,1,38,82.73,Moderate,Primary,No Education,yes,yes,no,Good,Low,Yes,Average,No,No,No,No,No,Yes,At_Risk
+M,16.0,50.0,45.0,47.5,0,38,82.73,Moderate,Primary,Primary,yes,no,yes,Poor,Low,Yes,Average,No,Yes,No,Yes,No,Yes,At_Risk
+M,17.0,50.0,45.0,47.5,0,41,81.36,Moderate,Primary,Primary,yes,no,no,Excellent,Low,Yes,Average,No,No,No,No,No,Yes,Yes
+F,16.0,55.0,65.0,60.0,0,50,77.27,Moderate,Middle School,Middle School,no,no,no,Very Poor,Medium,Yes,Good,No,Yes,No,Yes,Yes,Yes,Yes
+M,16.0,90.0,0.0,45.0,1,86,60.91,Poor,Middle School,Middle School,no,no,no,Excellent,Medium,Yes,Poor,No,No,No,Yes,Yes,Yes,Yes
+M,16.0,55.0,45.0,50.0,0,20,90.91,Good,High School,Middle School,no,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+M,16.0,50.0,50.0,50.0,0,50,77.27,Moderate,Primary,Primary,no,no,yes,Excellent,Low,Yes,Average,No,No,No,Yes,No,Yes,At_Risk
+M,17.0,50.62,39.38,45.0,1,123,44.09,Poor,Primary,Primary,yes,no,yes,Excellent,Low,Yes,Average,No,No,No,Yes,No,Yes,Yes
+M,17.0,90.0,0.0,45.0,1,45,79.55,Moderate,High School,Middle School,no,no,yes,Excellent,Medium,No,Poor,No,No,No,Yes,Yes,Yes,At_Risk
+M,18.0,31.76,58.24,45.0,3,76,65.45,Poor,High School,Middle School,no,no,no,Average,Medium,Yes,Poor,No,No,No,Yes,Yes,Yes,Yes
+M,17.0,30.0,60.0,45.0,2,52,76.36,Moderate,High School,High School,yes,no,yes,Average,High,No,Poor,No,No,No,Yes,Yes,Yes,Yes
+M,16.0,42.0,48.0,45.0,0,21,90.45,Good,Middle School,Middle School,yes,no,yes,Good,Medium,No,Poor,No,No,No,Yes,Yes,Yes,At_Risk
+M,18.0,42.35,47.65,45.0,3,96,56.36,Poor,Middle School,Primary,no,no,yes,Excellent,Medium,No,Poor,No,No,No,Yes,Yes,Yes,Yes
+F,16.0,45.0,45.0,45.0,2,75,65.91,Poor,High School,Middle School,yes,no,no,Very Poor,Medium,Yes,Poor,No,Yes,No,Yes,Yes,Yes,Yes
+F,16.0,39.38,50.62,45.0,0,120,45.45,Poor,Primary,Primary,yes,no,no,Excellent,Low,Yes,Average,No,No,No,No,No,Yes,Yes
+M,19.0,40.0,55.0,47.5,1,115,47.73,Poor,Primary,Primary,yes,no,yes,Good,Low,Yes,Average,No,No,Yes,Yes,No,Yes,Yes
+F,17.0,50.0,55.0,52.5,0,19,91.36,Good,College,High School,yes,no,yes,Poor,High,No,Average,No,Yes,No,Yes,Yes,Yes,At_Risk
+M,17.0,45.0,50.0,47.5,0,20,90.91,Good,High School,Middle School,yes,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+M,18.0,50.0,45.0,47.5,1,105,52.27,Poor,Primary,Primary,no,no,yes,Poor,Low,Yes,Average,No,Yes,No,Yes,No,Yes,Yes
+M,16.0,42.35,47.65,45.0,1,15,93.18,Good,High School,High School,yes,no,yes,Average,High,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+M,17.0,45.0,50.0,47.5,0,16,92.73,Good,Primary,High School,no,no,yes,Average,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+M,18.0,42.35,47.65,45.0,1,37,83.18,Moderate,Primary,Primary,yes,no,yes,Excellent,Low,Yes,Average,No,No,No,Yes,No,Yes,At_Risk
+F,17.0,38.57,51.43,45.0,2,79,64.09,Poor,Primary,Middle School,yes,no,no,Excellent,Medium,Yes,Poor,No,No,No,Yes,Yes,Yes,Yes
+F,18.0,38.57,51.43,45.0,0,103,53.18,Poor,Primary,Primary,yes,no,no,Excellent,Low,Yes,Poor,No,No,No,No,No,Yes,Yes
+F,17.0,51.43,38.57,45.0,1,46,79.09,Moderate,Middle School,Middle School,no,no,yes,Average,Medium,No,Poor,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,50.0,55.0,52.5,0,52,76.36,Moderate,No Education,No Education,yes,no,yes,Excellent,Low,Yes,Average,No,No,No,Yes,No,Yes,Yes
+F,16.0,48.0,42.0,45.0,0,123,44.09,Poor,High School,Primary,yes,no,no,Average,Medium,Yes,Poor,No,No,No,Yes,Yes,Yes,Yes
+F,16.0,45.0,45.0,45.0,0,1,99.55,Excellent,College,Middle School,yes,yes,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,17.0,48.46,41.54,45.0,1,54,75.45,Moderate,Middle School,Middle School,yes,no,yes,Good,Medium,No,Poor,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,40.0,50.0,45.0,0,55,75.0,Moderate,College,Primary,yes,no,no,Excellent,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,16.0,37.06,52.94,45.0,0,20,90.91,Good,Primary,Middle School,no,no,yes,Average,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,17.0,42.0,48.0,45.0,2,77,65.0,Poor,Primary,Primary,no,no,no,Excellent,Low,Yes,Poor,No,No,No,No,No,Yes,Yes
+F,17.0,60.0,65.0,62.5,0,24,89.09,Good,Middle School,Middle School,no,no,yes,Very Poor,Medium,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,16.0,55.0,60.0,57.5,0,2,99.09,Excellent,High School,High School,yes,no,yes,Good,High,No,Average,No,No,No,Yes,Yes,Yes,No
+F,17.0,60.0,65.0,62.5,0,2,99.09,Excellent,Primary,Middle School,no,no,yes,Good,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+F,17.0,90.0,90.0,90.0,0,6,97.27,Excellent,College,College,no,no,yes,Very Poor,High,No,Excellent,No,Yes,No,Yes,Yes,Yes,No
+M,17.0,85.0,85.0,85.0,0,10,95.45,Excellent,College,College,yes,no,yes,Excellent,High,No,Excellent,No,No,No,Yes,Yes,Yes,No
+F,16.0,85.0,90.0,87.5,0,11,95.0,Excellent,College,Middle School,yes,no,yes,Good,High,No,Excellent,No,No,No,Yes,Yes,Yes,No
+F,17.0,90.0,0.0,45.0,1,96,56.36,Poor,Middle School,Middle School,no,no,no,Good,Medium,Yes,Poor,No,No,No,Yes,Yes,Yes,Yes
+M,17.0,50.0,55.0,52.5,0,41,81.36,Moderate,Primary,Middle School,yes,no,no,Very Poor,Medium,Yes,Average,No,Yes,No,Yes,Yes,Yes,Yes
+M,17.0,60.0,65.0,62.5,0,3,98.64,Excellent,College,College,yes,no,yes,Very Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,No
+M,16.0,60.0,65.0,62.5,0,53,75.91,Moderate,Primary,Primary,no,no,no,Good,Low,Yes,Good,No,No,No,No,No,Yes,Yes
+F,17.0,45.0,45.0,45.0,0,59,73.18,Moderate,Middle School,Middle School,yes,no,yes,Poor,Medium,No,Average,No,Yes,No,Yes,Yes,Yes,At_Risk
+F,17.0,55.0,60.0,57.5,0,21,90.45,Good,Middle School,Middle School,no,no,yes,Average,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,17.0,90.0,0.0,45.0,0,13,94.09,Good,College,Middle School,no,no,yes,Excellent,High,No,Poor,No,No,No,Yes,Yes,Yes,No
+F,17.0,45.0,50.0,47.5,1,81,63.18,Poor,Primary,Primary,no,no,no,Poor,Low,Yes,Average,No,Yes,No,No,No,Yes,Yes
+F,18.0,90.0,0.0,45.0,1,78,64.55,Poor,Primary,Primary,no,no,no,Poor,Low,Yes,Poor,No,Yes,No,No,No,Yes,Yes
+F,16.0,90.0,90.0,90.0,0,11,95.0,Excellent,College,Middle School,no,no,yes,Excellent,High,No,Excellent,No,No,No,Yes,Yes,Yes,No
+F,16.0,55.0,55.0,55.0,0,58,73.64,Moderate,Middle School,Primary,no,no,yes,Poor,Medium,No,Average,No,Yes,No,Yes,Yes,Yes,At_Risk
+F,17.0,40.0,50.0,45.0,0,34,84.55,Moderate,Primary,Primary,no,no,no,Average,Low,Yes,Average,No,No,No,No,No,Yes,Yes
+F,17.0,55.0,55.0,55.0,0,66,70.0,Moderate,Primary,Middle School,yes,no,no,Good,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,18.0,90.0,0.0,45.0,3,67,69.55,Poor,Primary,Primary,yes,no,no,Very Poor,Low,Yes,Poor,No,Yes,No,No,No,Yes,Yes
+F,17.0,70.0,70.0,70.0,0,0,100.0,Excellent,Middle School,Middle School,no,no,yes,Good,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+M,17.0,50.0,55.0,52.5,1,61,72.27,Moderate,College,High School,yes,no,yes,Poor,High,No,Average,No,Yes,No,Yes,Yes,Yes,At_Risk
+F,17.0,50.0,50.0,50.0,0,25,88.64,Good,High School,High School,yes,no,no,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,17.0,60.0,60.0,60.0,0,7,96.82,Excellent,College,College,yes,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,17.0,75.0,70.0,72.5,0,21,90.45,Good,High School,Middle School,no,no,no,Excellent,Medium,Yes,Good,No,No,No,Yes,Yes,Yes,At_Risk
+M,17.0,70.0,65.0,67.5,0,55,75.0,Moderate,Primary,Primary,no,no,yes,Average,Low,Yes,Good,No,No,No,Yes,No,Yes,At_Risk
+F,17.0,95.0,85.0,90.0,0,28,87.27,Good,Primary,Primary,no,no,yes,Good,Low,Yes,Excellent,No,No,No,Yes,No,Yes,No
+F,17.0,80.0,75.0,77.5,0,18,91.82,Good,Primary,Middle School,no,no,no,Excellent,Medium,Yes,Good,No,No,No,Yes,Yes,Yes,No
+F,17.0,65.0,60.0,62.5,0,5,97.73,Excellent,High School,High School,yes,no,yes,Average,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,17.0,75.0,70.0,72.5,0,2,99.09,Excellent,College,College,yes,no,yes,Very Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,17.0,65.0,65.0,65.0,0,15,93.18,Good,Primary,Middle School,no,no,no,Average,Medium,Yes,Good,No,No,No,Yes,Yes,Yes,At_Risk
+M,17.0,40.0,50.0,45.0,0,59,73.18,Moderate,Primary,High School,yes,no,no,Average,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,At_Risk
+M,17.0,75.0,80.0,77.5,0,7,96.82,Excellent,College,College,no,no,yes,Excellent,High,No,Good,No,No,No,Yes,Yes,Yes,No
+F,17.0,45.0,45.0,45.0,1,83,62.27,Poor,Primary,Primary,yes,no,yes,Very Poor,Low,Yes,Average,No,Yes,No,Yes,No,Yes,Yes
+F,17.0,50.0,50.0,50.0,0,20,90.91,Good,Middle School,High School,yes,no,yes,Good,Medium,No,Average,No,No,No,Yes,Yes,Yes,No
+F,17.0,52.5,37.5,45.0,0,13,94.09,Good,College,College,yes,no,yes,Excellent,High,No,Poor,No,No,No,Yes,Yes,Yes,At_Risk
+M,17.0,45.0,50.0,47.5,0,27,87.73,Good,Primary,Middle School,yes,no,yes,Average,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,17.0,50.0,55.0,52.5,0,51,76.82,Moderate,Middle School,Middle School,no,no,no,Average,Medium,Yes,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,17.0,42.0,48.0,45.0,0,42,80.91,Moderate,Primary,Middle School,no,no,yes,Very Poor,Medium,No,Poor,No,Yes,No,Yes,Yes,Yes,At_Risk
+F,17.0,75.0,85.0,80.0,0,5,97.73,Excellent,College,College,no,no,yes,Very Poor,High,No,Excellent,No,Yes,No,Yes,Yes,Yes,No
+F,17.0,50.0,55.0,52.5,0,42,80.91,Moderate,Primary,Primary,no,no,yes,Good,Low,Yes,Average,No,No,No,Yes,No,Yes,Yes
+F,18.0,42.0,48.0,45.0,1,125,43.18,Poor,Primary,Primary,yes,no,yes,Average,Low,Yes,Poor,No,No,No,Yes,No,Yes,Yes
+F,17.0,65.0,70.0,67.5,0,25,88.64,Good,College,College,no,no,yes,Poor,High,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,17.0,80.0,80.0,80.0,0,5,97.73,Excellent,High School,High School,no,no,yes,Very Poor,High,No,Excellent,No,Yes,No,Yes,Yes,Yes,No
+F,17.0,42.35,47.65,45.0,0,12,94.55,Good,High School,Primary,yes,no,yes,Very Poor,Medium,No,Average,No,Yes,No,Yes,Yes,Yes,At_Risk
+M,17.0,85.0,90.0,87.5,0,8,96.36,Excellent,College,College,no,no,yes,Poor,High,No,Excellent,No,Yes,No,Yes,Yes,Yes,No
+M,18.0,45.0,45.0,45.0,0,12,94.55,Good,Middle School,Primary,no,no,yes,Excellent,Medium,No,Poor,No,No,No,Yes,Yes,Yes,No
+M,17.0,70.0,75.0,72.5,0,2,99.09,Excellent,Middle School,High School,no,no,yes,Average,Medium,No,Good,No,No,No,Yes,Yes,Yes,No
+M,18.0,34.62,55.38,45.0,1,77,65.0,Poor,Primary,Primary,no,no,no,Excellent,Low,Yes,Poor,No,No,No,No,No,Yes,Yes
+M,18.0,45.0,45.0,45.0,1,51,76.82,Moderate,College,Middle School,no,no,no,Average,High,No,Poor,No,No,No,Yes,Yes,Yes,At_Risk
+F,18.0,70.0,85.0,77.5,0,25,88.64,Good,Middle School,Middle School,no,no,no,Good,Medium,Yes,Good,No,No,No,Yes,Yes,Yes,At_Risk
+F,17.0,36.0,54.0,45.0,0,51,76.82,Moderate,College,High School,no,no,yes,Very Poor,High,No,Poor,No,Yes,No,Yes,Yes,Yes,At_Risk
+F,18.0,39.38,50.62,45.0,0,22,90.0,Good,College,College,yes,no,yes,Excellent,High,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,19.0,50.0,55.0,52.5,1,12,94.55,Good,Middle School,High School,no,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,At_Risk
+F,18.0,75.0,75.0,75.0,0,3,98.64,Excellent,High School,Primary,yes,no,yes,Very Poor,Medium,No,Good,No,Yes,No,Yes,Yes,Yes,No
+F,18.0,55.0,60.0,57.5,0,36,83.64,Moderate,Primary,Primary,no,no,no,Excellent,Low,Yes,Average,No,No,No,No,No,Yes,At_Risk
+M,17.0,50.0,50.0,50.0,0,66,70.0,Moderate,High School,Primary,no,no,yes,Poor,Medium,No,Average,No,Yes,No,Yes,Yes,Yes,At_Risk
+M,18.0,50.0,55.0,52.5,0,31,85.91,Good,High School,Middle School,no,no,yes,Excellent,Medium,No,Average,No,No,No,Yes,Yes,Yes,No

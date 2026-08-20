@@ -89,6 +89,89 @@ def validate_and_convert_row(
         val = row_data.get(dataset_col)
         model_fields[db_col] = str(val).strip() if val is not None else None
 
+    # PREPROCESSING / CONVERSIONS FOR NEW DATASET COMPATIBILITY
+    # Gender normalization
+    gender_raw = model_fields.get("gender")
+    if gender_raw:
+        gen_clean = str(gender_raw).strip().lower()
+        if gen_clean in ["male", "m"]:
+            model_fields["gender"] = "Male"
+        elif gen_clean in ["female", "f"]:
+            model_fields["gender"] = "Female"
+
+    # Family Income normalization (categorical -> float)
+    income_raw = model_fields.get("family_income")
+    if income_raw:
+        inc_clean = str(income_raw).strip().lower()
+        if inc_clean == "low":
+            model_fields["family_income"] = "25000.0"
+        elif inc_clean == "medium":
+            model_fields["family_income"] = "60000.0"
+        elif inc_clean == "high":
+            model_fields["family_income"] = "150000.0"
+
+    # Homework Completion normalization (categorical -> float)
+    hw_raw = model_fields.get("homework_completion")
+    if hw_raw:
+        hw_clean = str(hw_raw).strip().lower()
+        if hw_clean == "poor":
+            model_fields["homework_completion"] = "40.0"
+        elif hw_clean == "average":
+            model_fields["homework_completion"] = "65.0"
+        elif hw_clean == "good":
+            model_fields["homework_completion"] = "80.0"
+        elif hw_clean == "excellent":
+            model_fields["homework_completion"] = "95.0"
+
+    # Derive academic backlogs if missing
+    if not model_fields.get("academic_backlogs"):
+        failed_raw = model_fields.get("number_of_failed_subjects")
+        try:
+            failed_val = int(failed_raw) if failed_raw else 0
+        except ValueError:
+            failed_val = 0
+        model_fields["academic_backlogs"] = "Yes" if failed_val > 0 else "No"
+
+    # Derive dropout risk from dropout status if missing
+    status_raw = model_fields.get("dropout_status")
+    if not model_fields.get("dropout_risk") and status_raw:
+        status_clean = str(status_raw).strip()
+        if status_clean == "Yes":
+            model_fields["dropout_risk"] = "High"
+        elif status_clean == "At_Risk":
+            model_fields["dropout_risk"] = "Medium"
+        elif status_clean == "No":
+            model_fields["dropout_risk"] = "Low"
+        else:
+            model_fields["dropout_risk"] = "Low"
+
+    # Fallbacks for optional new dataset columns to support DB integrity
+    overall_raw = model_fields.get("overall_percentage") or "50.0"
+    hw_raw_float = model_fields.get("homework_completion") or "50.0"
+    
+    if not model_fields.get("unit_test_average"):
+        model_fields["unit_test_average"] = overall_raw
+    if not model_fields.get("quarterly_exam"):
+        model_fields["quarterly_exam"] = overall_raw
+    if not model_fields.get("half_yearly_exam"):
+        model_fields["half_yearly_exam"] = overall_raw
+    if not model_fields.get("annual_exam"):
+        model_fields["annual_exam"] = overall_raw
+    if not model_fields.get("mathematics_marks"):
+        model_fields["mathematics_marks"] = overall_raw
+    if not model_fields.get("science_marks"):
+        model_fields["science_marks"] = overall_raw
+    if not model_fields.get("english_marks"):
+        model_fields["english_marks"] = overall_raw
+    if not model_fields.get("social_science_marks"):
+        model_fields["social_science_marks"] = overall_raw
+    if not model_fields.get("regional_language_marks"):
+        model_fields["regional_language_marks"] = overall_raw
+    if not model_fields.get("assignment_submission_rate"):
+        model_fields["assignment_submission_rate"] = hw_raw_float
+    if not model_fields.get("home_study_hours"):
+        model_fields["home_study_hours"] = "3.0"
+
     # Helper function to extract float/int safely
     def get_float(field: str, label: str, required: bool = True, min_val: float = 0.0, max_val: float = 100.0) -> Optional[float]:
         val_str = model_fields.get(field)
@@ -353,8 +436,8 @@ def validate_and_convert_row(
     status = model_fields.get("dropout_status")
     if not status:
         errors.append("Dropout Status is required.")
-    elif status not in ["Yes", "No"]:
-        errors.append(f"Dropout Status ('{status}') must be 'Yes' or 'No'.")
+    elif status not in ["Yes", "No", "At_Risk"]:
+        errors.append(f"Dropout Status ('{status}') must be 'Yes', 'No', or 'At_Risk'.")
 
     if errors:
         return None, errors
@@ -548,6 +631,14 @@ def import_mapped_records(
                 mapping[header] = col
                 mapped_values.add(col)
                 break
+            elif norm_col == "numberoffailedsubjects" and norm_header == "numberoffailures":
+                mapping[header] = col
+                mapped_values.add(col)
+                break
+            elif norm_col == "consecutiveabsences" and norm_header == "numberofabsences":
+                mapping[header] = col
+                mapped_values.add(col)
+                break
             elif norm_col == norm_header:
                 mapping[header] = col
                 mapped_values.add(col)
@@ -561,14 +652,11 @@ def import_mapped_records(
         "class_name": "Class",
         "section": "Section",
         "previous_year_percentage": "Previous Year Percentage",
-        "unit_test_average": "Unit Test Average",
         "overall_percentage": "Overall Percentage",
         "number_of_failed_subjects": "Number of Failed Subjects",
         "attendance_percentage": "Attendance Percentage",
         "homework_completion": "Homework Completion",
-        "assignment_submission_rate": "Assignment Submission Rate",
-        "family_income": "Family Income",
-        "home_study_hours": "Home Study Hours"
+        "family_income": "Family Income"
     }
 
     mapped_db_cols = set(mapping.values())

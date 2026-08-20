@@ -106,7 +106,7 @@ export default function RiskAnalysis() {
             <Brain className="h-8 w-8 text-primary" /> Explainable AI Risk Analysis
           </h1>
           <p className="text-slate-500 font-medium text-sm mt-1">
-            Real-time dropout prediction and diagnostic explanations powered by our CatBoost model.
+            Real-time dropout prediction and diagnostic explanations powered by our Tuned Logistic Regression model.
           </p>
         </div>
       </div>

@@ -18,6 +18,7 @@ class PredictionResponse(BaseModel):
     probability: float
     confidence: float
     risk_level: str
+    probabilities: Dict[str, float]
     predicted_at: str
     top_features: List[FeatureExplanation]
     recommended_actions: List[str]

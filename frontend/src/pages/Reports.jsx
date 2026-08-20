@@ -246,7 +246,7 @@ export default function Reports() {
               <span className="font-bold text-slate-700 dark:text-slate-350 block border-b border-slate-100 dark:border-slate-800/80 pb-2">Academic Grade Performance Clusters</span>
               <div className="flex justify-between py-1">
                 <span>Model Target Accuracy:</span>
-                <span className="font-extrabold text-emerald-500">92.05%</span>
+                <span className="font-extrabold text-emerald-500">85.32%</span>
               </div>
               <div className="flex justify-between py-1">
                 <span>Medium Risk Threshold:</span>

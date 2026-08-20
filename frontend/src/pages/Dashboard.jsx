@@ -171,7 +171,7 @@ export default function Dashboard() {
               <span className="text-xs text-slate-400 font-bold uppercase tracking-wider block">AI Engine Status</span>
               <div className="flex items-center gap-2 mt-1 text-slate-800 dark:text-white">
                 <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-xs font-black">CatBoost 91.7% Accuracy</span>
+                <span className="text-xs font-black">Logistic Regression 85.32% Accuracy</span>
               </div>
             </div>
             <button
@@ -823,7 +823,7 @@ export default function Dashboard() {
               </div>
               <h3 className="text-lg font-black text-slate-800 dark:text-white">Run AI Risk Analysis</h3>
               <p className="text-xs font-semibold text-slate-500 dark:text-slate-450 leading-relaxed">
-                Analyze a student's record using our validated CatBoost machine learning pipeline. Get predictions on dropout risk and explore visual diagnostic explanations.
+                Analyze a student's record using our validated Tuned Logistic Regression machine learning pipeline. Get predictions on dropout risk and explore visual diagnostic explanations.
               </p>
             </div>
             

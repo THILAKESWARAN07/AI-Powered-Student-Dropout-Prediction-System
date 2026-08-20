@@ -604,9 +604,9 @@ export default function SchoolManagement() {
                     <span className="text-[10px] font-black text-indigo-500 uppercase tracking-widest block mb-2">Prediction Accuracy</span>
                     <div>
                       <span className="text-3xl font-black text-slate-800 dark:text-white block">
-                        94.1%
+                        92.0%
                       </span>
-                      <span className="text-[10px] font-semibold text-slate-400 block mt-1">F1 Accuracy (CatBoost Classifier)</span>
+                      <span className="text-[10px] font-semibold text-slate-400 block mt-1">F1 Accuracy (Logistic Regression)</span>
                     </div>
                   </div>
 

@@ -18,7 +18,7 @@ def generate_recommendations(risk_level: str, student_data: Dict[str, Any]) -> L
     # 2. Targeted Risk Triggers
     # Academic support triggers
     overall_percentage = student_data.get("Overall_Percentage", 100.0)
-    failed_subjects = student_data.get("Number_of_Failed_Subjects", 0)
+    failed_subjects = student_data.get("Number_of_Failures", student_data.get("Number_of_Failed_Subjects", 0))
     backlogs = student_data.get("Academic_Backlogs", "No")
     if overall_percentage < 60.0 or failed_subjects > 0 or backlogs == "Yes":
         recommendations.append("Extra Classes")
@@ -31,16 +31,22 @@ def generate_recommendations(risk_level: str, student_data: Dict[str, Any]) -> L
 
     # Attendance risk triggers
     attendance = student_data.get("Attendance_Percentage", 100.0)
-    consec_absences = student_data.get("Consecutive_Absences", 0)
+    consec_absences = student_data.get("Consecutive_Absences", student_data.get("Number_of_Absences", 0))
     if attendance < 75.0 or consec_absences > 3:
         recommendations.append("Attendance Monitoring")
         if risk_level == "High":
             recommendations.append("Home Visit")
 
     # Behavioral & homework triggers
-    homework_completion = student_data.get("Homework_Completion", 100.0)
+    homework_val = student_data.get("Homework_Completion", 100.0)
+    is_hw_low = False
+    if isinstance(homework_val, (int, float)):
+        is_hw_low = homework_val < 60.0
+    else:
+        is_hw_low = str(homework_val).strip().title() in ['Poor', 'Average']
+        
     low_motivation = student_data.get("Low_Motivation", "No")
-    if homework_completion < 60.0 or low_motivation == "Yes":
+    if is_hw_low or low_motivation == "Yes":
         recommendations.append("Homework Tracking")
         if "Counselling" not in recommendations:
             recommendations.append("Counselling")

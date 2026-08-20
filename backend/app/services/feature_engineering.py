@@ -6,11 +6,11 @@ from app.services import model_loader
 def prepare_student_features(student: Student) -> pd.DataFrame:
     """
     Extracts, validates, and engineers features from a Student ORM object
-    and its nested relationships into a single-row Pandas DataFrame.
+    and its nested relationships into a single-row Pandas DataFrame of 24 features.
     """
     feature_cols = model_loader.get_feature_columns()
     if not feature_cols:
-        raise ValueError("Feature columns list is not loaded from feature_columns.json.")
+        raise ValueError("Feature columns list is not loaded from feature_names.pkl.")
 
     academics = student.academics
     attendance = student.attendance
@@ -37,69 +37,134 @@ def prepare_student_features(student: Student) -> pd.DataFrame:
     if errors:
         raise ValueError(f"Feature engineering validation errors: {'; '.join(errors)}")
 
-    # 2. Extract feature mapping
+    # Helper mapping functions
+    def map_gender(val):
+        if not val:
+            return 'M'
+        val = str(val).lower()
+        if val in ['female', 'f']:
+            return 'F'
+        return 'M'
+
+    def map_attendance_classification(pct):
+        if pct >= 95.0:
+            return 'Excellent'
+        elif pct >= 85.0:
+            return 'Good'
+        elif pct >= 70.0:
+            return 'Moderate'
+        return 'Poor'
+
+    def map_education(val):
+        if not val:
+            return 'Primary'
+        val = str(val).lower()
+        if 'college' in val or 'graduate' in val or 'degree' in val or 'higher' in val or 'university' in val:
+            return 'College'
+        elif 'secondary' in val or 'high' in val:
+            return 'High School'
+        elif 'middle' in val or 'junior' in val:
+            return 'Middle School'
+        elif 'primary' in val:
+            return 'Primary'
+        elif 'illiterate' in val or 'no' in val or 'none' in val:
+            return 'No Education'
+        return 'Primary'
+
+    def map_yes_no_lower(val):
+        if not val:
+            return 'no'
+        val = str(val).lower()
+        if val in ['yes', 'y', 'true', '1']:
+            return 'yes'
+        return 'no'
+
+    def map_yes_no_title(val):
+        if not val:
+            return 'No'
+        val = str(val).lower()
+        if val in ['yes', 'y', 'true', '1']:
+            return 'Yes'
+        return 'No'
+
+    def map_health_status(nutrition):
+        if not nutrition:
+            return 'Average'
+        val = str(nutrition).title()
+        if val in ['Good', 'Average', 'Poor', 'Excellent', 'Very Poor']:
+            return val
+        return 'Average'
+
+    def map_family_income(income):
+        try:
+            val = float(income)
+            if val < 30000.0:
+                return 'Low'
+            elif val < 100000.0:
+                return 'Medium'
+            else:
+                return 'High'
+        except (ValueError, TypeError):
+            val_str = str(income).title()
+            if val_str in ['Low', 'Medium', 'High']:
+                return val_str
+            return 'Medium'
+
+    def map_homework_completion(hw):
+        try:
+            val = float(hw)
+            if val >= 90.0:
+                return 'Excellent'
+            elif val >= 75.0:
+                return 'Good'
+            elif val >= 50.0:
+                return 'Average'
+            else:
+                return 'Poor'
+        except (ValueError, TypeError):
+            val_str = str(hw).title()
+            if val_str in ['Excellent', 'Good', 'Average', 'Poor']:
+                return val_str
+            return 'Average'
+
+    def map_mental_health_risk(risk):
+        if not risk:
+            return 'No'
+        val = str(risk).lower()
+        if val in ['high', 'medium', 'yes', 'true', '1']:
+            return 'Yes'
+        return 'No'
+
+    # Extract raw data using exact feature names of the 24 features
+    att_pct = attendance.attendance_percentage
     raw_data = {
-        "Gender": student.gender,
-        "Age": student.age,
-        "Class": int(student.class_name) if student.class_name and student.class_name.isdigit() else student.class_name,
-        "Section": student.section,
-        "Medium_of_Instruction": student.medium_of_instruction,
-        "Community": student.community,
-        "Previous_Year_Percentage": academics.previous_year_percentage,
-        "Unit_Test_Average": academics.unit_test_average,
-        "Quarterly_Exam": academics.quarterly_exam,
-        "Half_Yearly_Exam": academics.half_yearly_exam,
-        "Annual_Exam": academics.annual_exam,
-        "Mathematics_Marks": academics.mathematics_marks,
-        "Science_Marks": academics.science_marks,
-        "English_Marks": academics.english_marks,
-        "Social_Science_Marks": academics.social_science_marks,
-        "Regional_Language_Marks": academics.regional_language_marks,
-        "Overall_Percentage": academics.overall_percentage,
-        "Number_of_Failed_Subjects": academics.number_of_failed_subjects,
-        "Attendance_Percentage": attendance.attendance_percentage,
-        "Consecutive_Absences": attendance.consecutive_absences,
-        "Leave_Days": attendance.leave_days,
-        "Late_Arrivals": attendance.late_arrivals,
-        "Homework_Completion": behaviour.homework_completion,
-        "Assignment_Submission_Rate": behaviour.assignment_submission_rate,
-        "Classroom_Participation": behaviour.classroom_participation,
-        "Discipline_Incidents": behaviour.discipline_incidents,
-        "Teacher_Feedback": behaviour.teacher_feedback,
-        "Family_Income": family.family_income,
-        "Parents_Education": family.parents_education,
-        "Parents_Occupation": family.parents_occupation,
-        "Single_Parent": family.single_parent,
-        "Number_of_Siblings": family.number_of_siblings,
-        "Guardian_Support": family.guardian_support,
-        "Home_Study_Hours": family.home_study_hours,
-        "Distance_to_School_km": student.distance_to_school_km,
-        "Transport_Mode": student.transport_mode,
-        "Travel_Time_min": student.travel_time_min,
-        "Chronic_Illness": health.chronic_illness,
-        "Nutrition_Status": health.nutrition_status,
-        "Vision_Problems": health.vision_problems,
-        "Mental_Health_Risk": health.mental_health_risk,
-        "Disability_Status": health.disability_status,
-        "Internet_Access": technology.internet_access,
-        "Smartphone_Access": technology.smartphone_access,
-        "Computer_Access": technology.computer_access,
-        "Electricity_Availability": technology.electricity_availability,
-        "School_Type": student.school_type,
-        "Teacher_Student_Ratio": student.teacher_student_ratio,
-        "Midday_Meal_Beneficiary": health.midday_meal_beneficiary,
-        "Participation_in_Extracurricular": behaviour.participation_in_extracurricular,
-        "Library_Usage": behaviour.library_usage,
-        "Financial_Difficulty": family.financial_difficulty,
-        "Child_Labour_Risk": family.child_labour_risk,
-        "Frequent_Migration": family.frequent_migration,
-        "Family_Issues": family.family_issues,
-        "Academic_Backlogs": academics.academic_backlogs,
-        "Low_Motivation": behaviour.low_motivation,
-        "Bullying_Experience": behaviour.bullying_experience
+        "Gender": map_gender(student.gender),
+        "Age": float(student.age),
+        "Previous_Year_Percentage": float(academics.previous_year_percentage),
+        "Current_Year_Percentage": float(academics.overall_percentage),
+        "Overall_Percentage": (float(academics.previous_year_percentage) + float(academics.overall_percentage)) / 2.0,
+        "Number_of_Failures": int(academics.number_of_failed_subjects),
+        "Number_of_Absences": int(round(220.0 * (1.0 - att_pct / 100.0))),
+        "Attendance_Percentage": float(att_pct),
+        "Attendance_Classification": map_attendance_classification(att_pct),
+        "Mother_Education": map_education(family.parents_education),
+        "Father_Education": map_education(family.parents_education),
+        "Family_Support": map_yes_no_lower(family.guardian_support),
+        "School_Support": map_yes_no_lower(behaviour.teacher_feedback),
+        "Internet_Access": map_yes_no_lower(technology.internet_access),
+        "Health_Status": map_health_status(health.nutrition_status),
+        "Family_Income": map_family_income(family.family_income),
+        "Financial_Difficulty": map_yes_no_title(family.financial_difficulty),
+        "Homework_Completion": map_homework_completion(behaviour.homework_completion),
+        "Low_Motivation": map_yes_no_title(behaviour.low_motivation),
+        "Mental_Health_Risk": map_mental_health_risk(health.mental_health_risk),
+        "Child_Labour_Risk": map_yes_no_title(family.child_labour_risk),
+        "Computer_Access": map_yes_no_title(technology.computer_access),
+        "Smartphone_Access": map_yes_no_title(technology.smartphone_access),
+        "Electricity_Availability": map_yes_no_title(technology.electricity_availability)
     }
 
-    # 3. Perform detailed field validation
+    # Verify that all 24 required features exist and are correctly formatted
     missing_cols = []
     invalid_types = []
 
@@ -110,35 +175,18 @@ def prepare_student_features(student: Student) -> pd.DataFrame:
             continue
         
         # Verify types and convert where needed
-        # Categorical strings
-        if col in ["Gender", "Section", "Medium_of_Instruction", "Community", "Classroom_Participation", 
-                   "Teacher_Feedback", "Parents_Education", "Parents_Occupation", "Single_Parent", "Guardian_Support",
-                   "Transport_Mode", "Chronic_Illness", "Nutrition_Status", "Vision_Problems", "Mental_Health_Risk",
-                   "Disability_Status", "Internet_Access", "Smartphone_Access", "Computer_Access", 
-                   "Electricity_Availability", "School_Type", "Teacher_Student_Ratio", "Midday_Meal_Beneficiary",
-                   "Participation_in_Extracurricular", "Library_Usage", "Financial_Difficulty", "Child_Labour_Risk",
-                   "Frequent_Migration", "Family_Issues", "Academic_Backlogs", "Low_Motivation", "Bullying_Experience"]:
-            if not isinstance(val, str):
-                raw_data[col] = str(val)
-        
-        # Numerical integers
-        elif col in ["Age", "Class", "Number_of_Failed_Subjects", "Consecutive_Absences", "Leave_Days", 
-                     "Late_Arrivals", "Discipline_Incidents", "Number_of_Siblings"]:
-            try:
-                raw_data[col] = int(val)
-            except (ValueError, TypeError):
-                invalid_types.append(f"{col} must be an integer, got {type(val)}")
-
-        # Numerical floats
-        elif col in ["Previous_Year_Percentage", "Unit_Test_Average", "Quarterly_Exam", "Half_Yearly_Exam", 
-                     "Annual_Exam", "Mathematics_Marks", "Science_Marks", "English_Marks", "Social_Science_Marks",
-                     "Regional_Language_Marks", "Overall_Percentage", "Homework_Completion", 
-                     "Assignment_Submission_Rate", "Family_Income", "Home_Study_Hours", "Distance_to_School_km",
-                     "Travel_Time_min"]:
+        if col in ["Age", "Previous_Year_Percentage", "Current_Year_Percentage", "Overall_Percentage", "Attendance_Percentage"]:
             try:
                 raw_data[col] = float(val)
             except (ValueError, TypeError):
                 invalid_types.append(f"{col} must be a float, got {type(val)}")
+        elif col in ["Number_of_Failures", "Number_of_Absences"]:
+            try:
+                raw_data[col] = int(val)
+            except (ValueError, TypeError):
+                invalid_types.append(f"{col} must be an integer, got {type(val)}")
+        else:
+            raw_data[col] = str(val)
 
     validation_errors = []
     if missing_cols:
@@ -149,12 +197,11 @@ def prepare_student_features(student: Student) -> pd.DataFrame:
     if validation_errors:
         raise ValueError(f"Feature engineering validation failed: {'. '.join(validation_errors)}")
 
-    # 4. Construct single row DataFrame in exact feature order
+    # Construct single row DataFrame in exact feature order
     df = pd.DataFrame([raw_data])
     df = df[feature_cols]
 
     return df
-
 
 def prepare_student_batch_features(students: List[Student]) -> pd.DataFrame:
     """
@@ -170,3 +217,4 @@ def prepare_student_batch_features(students: List[Student]) -> pd.DataFrame:
         return pd.DataFrame(columns=feature_cols)
 
     return pd.concat(dfs, ignore_index=True)
+
