@@ -79,7 +79,6 @@ def validate_and_convert_row(
     Validates a single row mapping dataset values to schema elements.
     """
     errors = []
-    mapped_data = {}
     
     # 1. Reverse-map the dataset keys to model attributes
     model_fields = {}
@@ -88,89 +87,6 @@ def validate_and_convert_row(
             continue
         val = row_data.get(dataset_col)
         model_fields[db_col] = str(val).strip() if val is not None else None
-
-    # PREPROCESSING / CONVERSIONS FOR NEW DATASET COMPATIBILITY
-    # Gender normalization
-    gender_raw = model_fields.get("gender")
-    if gender_raw:
-        gen_clean = str(gender_raw).strip().lower()
-        if gen_clean in ["male", "m"]:
-            model_fields["gender"] = "Male"
-        elif gen_clean in ["female", "f"]:
-            model_fields["gender"] = "Female"
-
-    # Family Income normalization (categorical -> float)
-    income_raw = model_fields.get("family_income")
-    if income_raw:
-        inc_clean = str(income_raw).strip().lower()
-        if inc_clean == "low":
-            model_fields["family_income"] = "25000.0"
-        elif inc_clean == "medium":
-            model_fields["family_income"] = "60000.0"
-        elif inc_clean == "high":
-            model_fields["family_income"] = "150000.0"
-
-    # Homework Completion normalization (categorical -> float)
-    hw_raw = model_fields.get("homework_completion")
-    if hw_raw:
-        hw_clean = str(hw_raw).strip().lower()
-        if hw_clean == "poor":
-            model_fields["homework_completion"] = "40.0"
-        elif hw_clean == "average":
-            model_fields["homework_completion"] = "65.0"
-        elif hw_clean == "good":
-            model_fields["homework_completion"] = "80.0"
-        elif hw_clean == "excellent":
-            model_fields["homework_completion"] = "95.0"
-
-    # Derive academic backlogs if missing
-    if not model_fields.get("academic_backlogs"):
-        failed_raw = model_fields.get("number_of_failed_subjects")
-        try:
-            failed_val = int(failed_raw) if failed_raw else 0
-        except ValueError:
-            failed_val = 0
-        model_fields["academic_backlogs"] = "Yes" if failed_val > 0 else "No"
-
-    # Derive dropout risk from dropout status if missing
-    status_raw = model_fields.get("dropout_status")
-    if not model_fields.get("dropout_risk") and status_raw:
-        status_clean = str(status_raw).strip()
-        if status_clean == "Yes":
-            model_fields["dropout_risk"] = "High"
-        elif status_clean == "At_Risk":
-            model_fields["dropout_risk"] = "Medium"
-        elif status_clean == "No":
-            model_fields["dropout_risk"] = "Low"
-        else:
-            model_fields["dropout_risk"] = "Low"
-
-    # Fallbacks for optional new dataset columns to support DB integrity
-    overall_raw = model_fields.get("overall_percentage") or "50.0"
-    hw_raw_float = model_fields.get("homework_completion") or "50.0"
-    
-    if not model_fields.get("unit_test_average"):
-        model_fields["unit_test_average"] = overall_raw
-    if not model_fields.get("quarterly_exam"):
-        model_fields["quarterly_exam"] = overall_raw
-    if not model_fields.get("half_yearly_exam"):
-        model_fields["half_yearly_exam"] = overall_raw
-    if not model_fields.get("annual_exam"):
-        model_fields["annual_exam"] = overall_raw
-    if not model_fields.get("mathematics_marks"):
-        model_fields["mathematics_marks"] = overall_raw
-    if not model_fields.get("science_marks"):
-        model_fields["science_marks"] = overall_raw
-    if not model_fields.get("english_marks"):
-        model_fields["english_marks"] = overall_raw
-    if not model_fields.get("social_science_marks"):
-        model_fields["social_science_marks"] = overall_raw
-    if not model_fields.get("regional_language_marks"):
-        model_fields["regional_language_marks"] = overall_raw
-    if not model_fields.get("assignment_submission_rate"):
-        model_fields["assignment_submission_rate"] = hw_raw_float
-    if not model_fields.get("home_study_hours"):
-        model_fields["home_study_hours"] = "3.0"
 
     # Helper function to extract float/int safely
     def get_float(field: str, label: str, required: bool = True, min_val: float = 0.0, max_val: float = 100.0) -> Optional[float]:
@@ -208,7 +124,7 @@ def validate_and_convert_row(
     # Validate Core Student info
     student_id = model_fields.get("student_id")
     if not student_id:
-        errors.append("Student_ID is required.")
+        errors.append("Student_Id is required.")
     else:
         # Check duplicate within this CSV
         if student_id in imported_student_ids:
@@ -219,225 +135,155 @@ def validate_and_convert_row(
             if exists:
                 errors.append(f"Student_ID '{student_id}' already exists in database.")
 
-    # Name: default to Student_ID if missing
-    full_name = model_fields.get("full_name") or f"Student {student_id}"
-    
-    # Class / Section
+    # Class
     class_name = model_fields.get("class_name")
     if not class_name:
         errors.append("Class is required.")
-    section = model_fields.get("section")
-    if not section:
-        errors.append("Section is required.")
         
-    gender = model_fields.get("gender")
-    if not gender:
-        errors.append("Gender is required.")
-    elif gender not in ["Male", "Female"]:
-        errors.append(f"Gender ('{gender}') must be 'Male' or 'Female'.")
-        
-    age = get_int("age", "Age", required=True, min_val=4)
-    
-    medium = model_fields.get("medium_of_instruction")
-    if not medium:
-        errors.append("Medium of Instruction is required.")
-    elif medium not in ["English", "Regional Language"]:
-        errors.append(f"Medium of Instruction ('{medium}') must be 'English' or 'Regional Language'.")
-        
-    community = model_fields.get("community")
-    if not community:
-        errors.append("Community is required.")
-    elif community not in ["General", "OBC", "SC", "ST", "EWS"]:
-        errors.append(f"Community ('{community}') must be 'General', 'OBC', 'SC', 'ST', or 'EWS'.")
-    
-    # Optional travel columns
-    distance = get_float("distance_to_school_km", "Distance to School", required=False, min_val=0, max_val=100)
+    # Distance to School (km)
+    distance = get_float("distance_to_school_km", "Distance to School (km)", required=False, min_val=0.0, max_val=100.0)
+
+    # Transport Mode
     transport = model_fields.get("transport_mode") or "Walking"
-    travel_time = get_float("travel_time_min", "Travel Time", required=False, min_val=0, max_val=300)
-    school_type = model_fields.get("school_type") or "Government"
-    ratio = model_fields.get("teacher_student_ratio") or "1:35"
 
-    # Validate Academics
-    prev_pct = get_float("previous_year_percentage", "Previous Year Percentage")
-    ut_avg = get_float("unit_test_average", "Unit Test Average")
-    q_exam = get_float("quarterly_exam", "Quarterly Exam")
-    hy_exam = get_float("half_yearly_exam", "Half Yearly Exam")
-    a_exam = get_float("annual_exam", "Annual Exam")
-    math = get_float("mathematics_marks", "Mathematics Marks")
-    sci = get_float("science_marks", "Science Marks")
-    eng = get_float("english_marks", "English Marks")
-    soc = get_float("social_science_marks", "Social Science Marks")
-    lang = get_float("regional_language_marks", "Regional Language Marks")
-    overall = get_float("overall_percentage", "Overall Percentage")
-    failed = get_int("number_of_failed_subjects", "Number of Failed Subjects")
-    backlogs = model_fields.get("academic_backlogs")
-    if not backlogs:
-        errors.append("Academic Backlogs is required.")
-    elif backlogs not in ["Yes", "No"]:
-        errors.append(f"Academic Backlogs ('{backlogs}') must be 'Yes' or 'No'.")
+    # Travel Time (mins)
+    travel_time = get_float("travel_time_min", "Travel Time (mins)", required=False, min_val=0.0, max_val=300.0)
 
-    # Validate Attendance
-    att_pct = get_float("attendance_percentage", "Attendance Percentage")
-    consec = get_int("consecutive_absences", "Consecutive Absences")
-    leaves = get_int("leave_days", "Leave Days")
-    late = get_int("late_arrivals", "Late Arrivals")
+    # Gender
+    gender_raw = model_fields.get("gender")
+    gender = None
+    if not gender_raw:
+        errors.append("Gender is required.")
+    else:
+        gen_clean = gender_raw.strip().lower()
+        if gen_clean in ["male", "m"]:
+            gender = "Male"
+        elif gen_clean in ["female", "f"]:
+            gender = "Female"
+        else:
+            errors.append(f"Gender ('{gender_raw}') must be 'Male' or 'Female'.")
+        
+    # Age
+    age = get_int("age", "Age", required=True, min_val=4)
 
-    # Validate Behaviour
-    hw = get_float("homework_completion", "Homework Completion")
-    assign = get_float("assignment_submission_rate", "Assignment Submission Rate")
-    
-    participate = model_fields.get("classroom_participation")
-    if not participate:
-        errors.append("Classroom Participation is required.")
-    elif participate not in ["High", "Medium", "Low"]:
-        errors.append(f"Classroom Participation ('{participate}') must be 'High', 'Medium', or 'Low'.")
-        
-    discipline = get_int("discipline_incidents", "Discipline Incidents")
-    feedback = model_fields.get("teacher_feedback") or "Average"
-    
-    extracur = model_fields.get("participation_in_extracurricular")
-    if not extracur:
-        errors.append("Participation in Extracurricular is required.")
-    elif extracur not in ["Yes", "No"]:
-        errors.append(f"Participation in Extracurricular ('{extracur}') must be 'Yes' or 'No'.")
-        
-    lib = model_fields.get("library_usage")
-    if not lib:
-        errors.append("Library Usage is required.")
-    elif lib not in ["High", "Medium", "Low"]:
-        errors.append(f"Library Usage ('{lib}') must be 'High', 'Medium', or 'Low'.")
-        
-    motivation = model_fields.get("low_motivation")
-    if not motivation:
-        errors.append("Low Motivation is required.")
-    elif motivation not in ["Yes", "No"]:
-        errors.append(f"Low Motivation ('{motivation}') must be 'Yes' or 'No'.")
-        
-    bullying = model_fields.get("bullying_experience")
-    if not bullying:
-        errors.append("Bullying Experience is required.")
-    elif bullying not in ["Yes", "No"]:
-        errors.append(f"Bullying Experience ('{bullying}') must be 'Yes' or 'No'.")
+    # Previous Year Percentage
+    prev_pct = get_float("previous_year_percentage", "Previous_Year_Percentage", required=True, min_val=0.0, max_val=100.0)
 
-    # Validate Family
-    income = get_float("family_income", "Family Income", min_val=0, max_val=10000000)
-    edu = model_fields.get("parents_education") or "Primary"
-    job = model_fields.get("parents_occupation") or "Farmer"
-    
-    single = model_fields.get("single_parent")
-    if not single:
-        errors.append("Single Parent is required.")
-    elif single not in ["Yes", "No"]:
-        errors.append(f"Single Parent ('{single}') must be 'Yes' or 'No'.")
-        
-    siblings = get_int("number_of_siblings", "Number of Siblings")
-    
-    guard = model_fields.get("guardian_support")
-    if not guard:
-        errors.append("Guardian Support is required.")
-    elif guard not in ["High", "Medium", "Low"]:
-        errors.append(f"Guardian Support ('{guard}') must be 'High', 'Medium', or 'Low'.")
-        
-    hours = get_float("home_study_hours", "Home Study Hours", min_val=0, max_val=24)
-    
-    difficulty = model_fields.get("financial_difficulty")
-    if not difficulty:
-        errors.append("Financial Difficulty is required.")
-    elif difficulty not in ["Yes", "No"]:
-        errors.append(f"Financial Difficulty ('{difficulty}') must be 'Yes' or 'No'.")
-        
-    labour = model_fields.get("child_labour_risk")
-    if not labour:
-        errors.append("Child Labour Risk is required.")
-    elif labour not in ["Yes", "No"]:
-        errors.append(f"Child Labour Risk ('{labour}') must be 'Yes' or 'No'.")
-        
-    migration = model_fields.get("frequent_migration")
-    if not migration:
-        errors.append("Frequent Migration is required.")
-    elif migration not in ["Yes", "No"]:
-        errors.append(f"Frequent Migration ('{migration}') must be 'Yes' or 'No'.")
-        
-    issues = model_fields.get("family_issues")
-    if not issues:
-        errors.append("Family Issues is required.")
-    elif issues not in ["Yes", "No"]:
-        errors.append(f"Family Issues ('{issues}') must be 'Yes' or 'No'.")
+    # Current Year Percentage
+    current_year_pct = get_float("current_year_percentage", "Current_Year_Percentage", required=True, min_val=0.0, max_val=100.0)
 
-    # Validate Health
-    illness = model_fields.get("chronic_illness")
-    if not illness:
-        errors.append("Chronic Illness is required.")
-    elif illness not in ["Yes", "No"]:
-        errors.append(f"Chronic Illness ('{illness}') must be 'Yes' or 'No'.")
-        
-    nutrition = model_fields.get("nutrition_status")
-    if not nutrition:
-        errors.append("Nutrition Status is required.")
-    elif nutrition not in ["Good", "Average", "Poor"]:
-        errors.append(f"Nutrition Status ('{nutrition}') must be 'Good', 'Average', or 'Poor'.")
-        
-    vision = model_fields.get("vision_problems")
-    if not vision:
-        errors.append("Vision Problems is required.")
-    elif vision not in ["Yes", "No"]:
-        errors.append(f"Vision Problems ('{vision}') must be 'Yes' or 'No'.")
-        
-    mental = model_fields.get("mental_health_risk")
-    if not mental:
-        errors.append("Mental Health Risk is required.")
-    elif mental not in ["Low", "Medium", "High"]:
-        errors.append(f"Mental Health Risk ('{mental}') must be 'Low', 'Medium', or 'High'.")
-        
-    disability = model_fields.get("disability_status")
-    if not disability:
-        errors.append("Disability Status is required.")
-    elif disability not in ["Yes", "No"]:
-        errors.append(f"Disability Status ('{disability}') must be 'Yes' or 'No'.")
-        
-    meal = model_fields.get("midday_meal_beneficiary")
-    if not meal:
-        errors.append("Midday Meal Beneficiary is required.")
-    elif meal not in ["Yes", "No"]:
-        errors.append(f"Midday Meal Beneficiary ('{meal}') must be 'Yes' or 'No'.")
+    # Overall Percentage
+    overall_pct = get_float("overall_percentage", "Overall_Percentage", required=True, min_val=0.0, max_val=100.0)
 
-    # Validate Tech
-    internet = model_fields.get("internet_access")
-    if not internet:
-        errors.append("Internet Access is required.")
-    elif internet not in ["Yes", "No"]:
-        errors.append(f"Internet Access ('{internet}') must be 'Yes' or 'No'.")
-        
-    phone = model_fields.get("smartphone_access")
-    if not phone:
-        errors.append("Smartphone Access is required.")
-    elif phone not in ["Yes", "No"]:
-        errors.append(f"Smartphone Access ('{phone}') must be 'Yes' or 'No'.")
-        
-    comp = model_fields.get("computer_access")
-    if not comp:
-        errors.append("Computer Access is required.")
-    elif comp not in ["Yes", "No"]:
-        errors.append(f"Computer Access ('{comp}') must be 'Yes' or 'No'.")
-        
-    elec = model_fields.get("electricity_availability")
-    if not elec:
-        errors.append("Electricity Availability is required.")
-    elif elec not in ["Yes", "No"]:
-        errors.append(f"Electricity Availability ('{elec}') must be 'Yes' or 'No'.")
+    # Number of Failures
+    failures = get_int("number_of_failures", "Number_of_Failures", required=True, min_val=0)
 
-    # Predictions
-    risk = model_fields.get("dropout_risk")
-    if not risk:
-        errors.append("Dropout Risk is required.")
-    elif risk not in ["Low", "Medium", "High"]:
-        errors.append(f"Dropout Risk ('{risk}') must be 'Low', 'Medium', or 'High'.")
-        
-    status = model_fields.get("dropout_status")
-    if not status:
-        errors.append("Dropout Status is required.")
-    elif status not in ["Yes", "No", "At_Risk"]:
-        errors.append(f"Dropout Status ('{status}') must be 'Yes', 'No', or 'At_Risk'.")
+    # Number of Absences
+    absences = get_int("number_of_absences", "Number_of_Absences", required=True, min_val=0)
+
+    # Attendance Percentage
+    att_pct = get_float("attendance_percentage", "Attendance_Percentage", required=True, min_val=0.0, max_val=100.0)
+
+    # Attendance Classification
+    att_class = model_fields.get("attendance_classification")
+    if att_class and att_class not in ["Excellent", "Good", "Moderate", "Poor"]:
+        errors.append(f"Attendance_Classification ('{att_class}') must be 'Excellent', 'Good', 'Moderate', or 'Poor'.")
+
+    # Mother and Father Education
+    mother_edu = model_fields.get("mother_education") or "Primary"
+    father_edu = model_fields.get("father_education") or "Primary"
+    parents_edu = mother_edu
+
+    # Family Support
+    fam_support = model_fields.get("family_support") or "No"
+
+    # School Support
+    sch_support = model_fields.get("school_support") or "No"
+
+    # Internet Access
+    internet = model_fields.get("internet_access") or "No"
+    if internet not in ["Yes", "No"]:
+        errors.append(f"Internet_Access ('{internet}') must be 'Yes' or 'No'.")
+
+    # Health Status
+    health_status = model_fields.get("health_status") or "Average"
+    if health_status not in ["Good", "Average", "Poor", "Excellent", "Very Poor"]:
+        errors.append(f"Health_Status ('{health_status}') must be 'Good', 'Average', 'Poor', 'Excellent', or 'Very Poor'.")
+
+    # Family Income
+    income_raw = model_fields.get("family_income")
+    income = None
+    if not income_raw:
+        errors.append("Family_Income is required.")
+    else:
+        inc_clean = income_raw.strip().lower()
+        if inc_clean == "low":
+            income = 25000.0
+        elif inc_clean == "medium":
+            income = 60000.0
+        elif inc_clean == "high":
+            income = 150000.0
+        else:
+            try:
+                income = float(income_raw)
+            except ValueError:
+                errors.append(f"Family_Income ('{income_raw}') must be 'Low', 'Medium', 'High', or a decimal number.")
+
+    # Financial Difficulty
+    difficulty = model_fields.get("financial_difficulty") or "No"
+    if difficulty not in ["Yes", "No"]:
+        errors.append(f"Financial_Difficulty ('{difficulty}') must be 'Yes' or 'No'.")
+
+    # Homework Completion
+    hw_raw = model_fields.get("homework_completion")
+    homework = None
+    if not hw_raw:
+        errors.append("Homework_Completion is required.")
+    else:
+        hw_clean = hw_raw.strip().lower()
+        if hw_clean == "poor":
+            homework = 40.0
+        elif hw_clean == "average":
+            homework = 65.0
+        elif hw_clean == "good":
+            homework = 80.0
+        elif hw_clean == "excellent":
+            homework = 95.0
+        else:
+            try:
+                homework = float(hw_raw)
+            except ValueError:
+                errors.append(f"Homework_Completion ('{hw_raw}') must be 'Poor', 'Average', 'Good', 'Excellent', or a decimal number.")
+
+    # Low Motivation
+    motivation = model_fields.get("low_motivation") or "No"
+    if motivation not in ["Yes", "No"]:
+        errors.append(f"Low_Motivation ('{motivation}') must be 'Yes' or 'No'.")
+
+    # Mental Health Risk
+    mental = model_fields.get("mental_health_risk") or "Low"
+    if mental not in ["Low", "Medium", "High", "Yes", "No"]:
+        errors.append(f"Mental_Health_Risk ('{mental}') must be 'Low', 'Medium', 'High', 'Yes', or 'No'.")
+
+    # Child Labour Risk
+    labour = model_fields.get("child_labour_risk") or "No"
+    if labour not in ["Yes", "No"]:
+        errors.append(f"Child_Labour_Risk ('{labour}') must be 'Yes' or 'No'.")
+
+    # Computer Access
+    comp = model_fields.get("computer_access") or "No"
+    if comp not in ["Yes", "No"]:
+        errors.append(f"Computer_Access ('{comp}') must be 'Yes' or 'No'.")
+
+    # Smartphone Access
+    phone = model_fields.get("smartphone_access") or "No"
+    if phone not in ["Yes", "No"]:
+        errors.append(f"Smartphone_Access ('{phone}') must be 'Yes' or 'No'.")
+
+    # Electricity Availability
+    elec = model_fields.get("electricity_availability") or "Yes"
+    if elec not in ["Yes", "No"]:
+        errors.append(f"Electricity_Availability ('{elec}') must be 'Yes' or 'No'.")
 
     if errors:
         return None, errors
@@ -446,71 +292,71 @@ def validate_and_convert_row(
     mapped_data = {
         "student": Student(
             student_id=student_id,
-            full_name=full_name,
+            full_name=f"Student {student_id}",
             gender=gender,
             age=age,
             class_name=class_name,
-            section=section,
-            medium_of_instruction=medium,
-            community=community,
+            section="A",
+            medium_of_instruction="English",
+            community="General",
             distance_to_school_km=distance,
             transport_mode=transport,
             travel_time_min=travel_time,
-            school_type=school_type,
-            teacher_student_ratio=ratio
+            school_type="Government",
+            teacher_student_ratio="1:35"
         ),
         "academics": StudentAcademics(
             previous_year_percentage=prev_pct,
-            unit_test_average=ut_avg,
-            quarterly_exam=q_exam,
-            half_yearly_exam=hy_exam,
-            annual_exam=a_exam,
-            mathematics_marks=math,
-            science_marks=sci,
-            english_marks=eng,
-            social_science_marks=soc,
-            regional_language_marks=lang,
-            overall_percentage=overall,
-            number_of_failed_subjects=failed,
-            academic_backlogs=backlogs
+            unit_test_average=current_year_pct,
+            quarterly_exam=current_year_pct,
+            half_yearly_exam=current_year_pct,
+            annual_exam=current_year_pct,
+            mathematics_marks=current_year_pct,
+            science_marks=current_year_pct,
+            english_marks=current_year_pct,
+            social_science_marks=current_year_pct,
+            regional_language_marks=current_year_pct,
+            overall_percentage=current_year_pct,
+            number_of_failed_subjects=failures,
+            academic_backlogs="Yes" if failures > 0 else "No"
         ),
         "attendance": StudentAttendance(
             attendance_percentage=att_pct,
-            consecutive_absences=consec,
-            leave_days=leaves,
-            late_arrivals=late
+            consecutive_absences=absences,
+            leave_days=0,
+            late_arrivals=0
         ),
         "behaviour": StudentBehaviour(
-            homework_completion=hw,
-            assignment_submission_rate=assign,
-            classroom_participation=participate,
-            discipline_incidents=discipline,
-            teacher_feedback=feedback,
-            participation_in_extracurricular=extracur,
-            library_usage=lib,
+            homework_completion=homework,
+            assignment_submission_rate=homework,
+            classroom_participation="Medium",
+            discipline_incidents=0,
+            teacher_feedback=sch_support,
+            participation_in_extracurricular="No",
+            library_usage="Medium",
             low_motivation=motivation,
-            bullying_experience=bullying
+            bullying_experience="No"
         ),
         "family": StudentFamily(
             family_income=income,
-            parents_education=edu,
-            parents_occupation=job,
-            single_parent=single,
-            number_of_siblings=siblings,
-            guardian_support=guard,
-            home_study_hours=hours,
+            parents_education=parents_edu,
+            parents_occupation="Farmer",
+            single_parent="No",
+            number_of_siblings=0,
+            guardian_support=fam_support,
+            home_study_hours=3.0,
             financial_difficulty=difficulty,
             child_labour_risk=labour,
-            frequent_migration=migration,
-            family_issues=issues
+            frequent_migration="No",
+            family_issues="No"
         ),
         "health": StudentHealth(
-            chronic_illness=illness,
-            nutrition_status=nutrition,
-            vision_problems=vision,
+            chronic_illness="No",
+            nutrition_status=health_status,
+            vision_problems="No",
             mental_health_risk=mental,
-            disability_status=disability,
-            midday_meal_beneficiary=meal
+            disability_status="No",
+            midday_meal_beneficiary="No"
         ),
         "technology": StudentTechnology(
             internet_access=internet,
@@ -519,8 +365,8 @@ def validate_and_convert_row(
             electricity_availability=elec
         ),
         "prediction": StudentPrediction(
-            dropout_risk=risk,
-            dropout_status=status
+            dropout_risk="Low",
+            dropout_status="No"
         )
     }
     
@@ -591,25 +437,17 @@ def import_mapped_records(
 
     # 1.1 Automatic column detection if mapping is empty
     expected_db_cols = [
-        'student_id', 'full_name', 'gender', 'age', 'class_name', 'section', 'medium_of_instruction', 'community',
-        'distance_to_school_km', 'transport_mode', 'travel_time_min', 'school_type', 'teacher_student_ratio',
-        'previous_year_percentage', 'unit_test_average', 'quarterly_exam', 'half_yearly_exam', 'annual_exam',
-        'mathematics_marks', 'science_marks', 'english_marks', 'social_science_marks', 'regional_language_marks',
-        'overall_percentage', 'number_of_failed_subjects', 'academic_backlogs',
-        'attendance_percentage', 'consecutive_absences', 'leave_days', 'late_arrivals',
-        'homework_completion', 'assignment_submission_rate', 'classroom_participation', 'discipline_incidents',
-        'teacher_feedback', 'participation_in_extracurricular', 'library_usage', 'low_motivation', 'bullying_experience',
-        'family_income', 'parents_education', 'parents_occupation', 'single_parent', 'number_of_siblings',
-        'guardian_support', 'home_study_hours', 'financial_difficulty', 'child_labour_risk', 'frequent_migration',
-        'family_issues',
-        'chronic_illness', 'nutrition_status', 'vision_problems', 'mental_health_risk', 'disability_status',
-        'midday_meal_beneficiary',
-        'internet_access', 'smartphone_access', 'computer_access', 'electricity_availability',
-        'dropout_risk', 'dropout_status'
+        'student_id', 'class_name', 'distance_to_school_km', 'transport_mode', 'travel_time_min', 'gender', 'age',
+        'previous_year_percentage', 'current_year_percentage', 'overall_percentage', 'number_of_failures', 'number_of_absences',
+        'attendance_percentage', 'attendance_classification', 'mother_education', 'father_education',
+        'family_support', 'school_support', 'internet_access', 'health_status', 'family_income', 'financial_difficulty',
+        'homework_completion', 'low_motivation', 'mental_health_risk', 'child_labour_risk', 'computer_access', 'smartphone_access',
+        'electricity_availability'
     ]
 
     def normalize_name(name: str) -> str:
-        return name.lower().replace(" ", "").replace("_", "").replace("-", "")
+        import re
+        return re.sub(r'[^a-z0-9]', '', name.lower())
 
     if not mapping:
         mapping = {}
@@ -627,15 +465,7 @@ def import_mapped_records(
                 mapping[header] = col
                 mapped_values.add(col)
                 break
-            elif norm_col == "overallpercentage" and norm_header == "overallpercentage":
-                mapping[header] = col
-                mapped_values.add(col)
-                break
-            elif norm_col == "numberoffailedsubjects" and norm_header == "numberoffailures":
-                mapping[header] = col
-                mapped_values.add(col)
-                break
-            elif norm_col == "consecutiveabsences" and norm_header == "numberofabsences":
+            elif norm_col == "traveltimemin" and norm_header == "traveltimemins":
                 mapping[header] = col
                 mapped_values.add(col)
                 break
@@ -646,17 +476,18 @@ def import_mapped_records(
 
     # 1.2 Column Validation (reject invalid datasets gracefully)
     REQUIRED_FIELDS = {
-        "student_id": "Student ID",
+        "student_id": "Student_Id",
+        "class_name": "Class",
         "gender": "Gender",
         "age": "Age",
-        "class_name": "Class",
-        "section": "Section",
-        "previous_year_percentage": "Previous Year Percentage",
-        "overall_percentage": "Overall Percentage",
-        "number_of_failed_subjects": "Number of Failed Subjects",
-        "attendance_percentage": "Attendance Percentage",
-        "homework_completion": "Homework Completion",
-        "family_income": "Family Income"
+        "previous_year_percentage": "Previous_Year_Percentage",
+        "current_year_percentage": "Current_Year_Percentage",
+        "overall_percentage": "Overall_Percentage",
+        "number_of_failures": "Number_of_Failures",
+        "number_of_absences": "Number_of_Absences",
+        "attendance_percentage": "Attendance_Percentage",
+        "homework_completion": "Homework_Completion",
+        "family_income": "Family_Income"
     }
 
     mapped_db_cols = set(mapping.values())
@@ -681,7 +512,7 @@ def import_mapped_records(
             failed += 1
             error_list.append(ImportErrorDetail(
                 row_index=row_idx,
-                student_id=row_data.get("Student_ID") or row_data.get("student_id"),
+                student_id=row_data.get("Student_ID") or row_data.get("Student_Id") or row_data.get("student_id"),
                 errors=row_errors
             ))
             
@@ -735,6 +566,14 @@ def import_mapped_records(
             db.add(pred)
             
             db.commit()
+
+            # Execute model auto-prediction immediately
+            try:
+                from app.services.prediction_service import predict_student
+                predict_student(db, student.id)
+            except Exception as pred_err:
+                from app.core.logging import logger
+                logger.error(f"Failed to auto-predict for imported student {student.id}: {str(pred_err)}")
             
             imported += 1
             imported_student_ids.add(student.student_id)
@@ -745,7 +584,7 @@ def import_mapped_records(
             error_msg = f"Database write error: {str(e)}"
             error_list.append(ImportErrorDetail(
                 row_index=row_idx,
-                student_id=row_data.get("Student_ID") or row_data.get("student_id"),
+                student_id=row_data.get("Student_ID") or row_data.get("Student_Id") or row_data.get("student_id"),
                 errors=[error_msg]
             ))
             failed_row_record = dict(row_data)
@@ -764,3 +603,5 @@ def import_mapped_records(
         errors=error_list,
         failed_rows_json=failed_json
     )
+
+

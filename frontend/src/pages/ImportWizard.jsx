@@ -33,76 +33,35 @@ export default function ImportWizard() {
 
   // List of expected database fields and labels
   const databaseFields = [
-    // Core
-    { key: 'student_id', label: 'Student ID', required: true },
-    { key: 'full_name', label: 'Student Full Name', required: false },
-    { key: 'gender', label: 'Gender', required: true },
-    { key: 'age', label: 'Age', required: true },
+    { key: 'student_id', label: 'Student_Id', required: true },
     { key: 'class_name', label: 'Class', required: true },
-    { key: 'section', label: 'Section', required: true },
-    { key: 'medium_of_instruction', label: 'Medium of Instruction', required: false },
-    { key: 'community', label: 'Community Group', required: false },
     { key: 'distance_to_school_km', label: 'Distance to School (km)', required: false },
     { key: 'transport_mode', label: 'Transport Mode', required: false },
     { key: 'travel_time_min', label: 'Travel Time (mins)', required: false },
-    { key: 'school_type', label: 'School Type', required: false },
-    { key: 'teacher_student_ratio', label: 'Teacher-Student Ratio', required: false },
-    // Academics
-    { key: 'previous_year_percentage', label: 'Previous Year Percentage', required: true },
-    { key: 'unit_test_average', label: 'Unit Test Average', required: true },
-    { key: 'quarterly_exam', label: 'Quarterly Exam Score', required: false },
-    { key: 'half_yearly_exam', label: 'Half Yearly Exam Score', required: false },
-    { key: 'annual_exam', label: 'Annual Exam Score', required: false },
-    { key: 'mathematics_marks', label: 'Mathematics Marks', required: false },
-    { key: 'science_marks', label: 'Science Marks', required: false },
-    { key: 'english_marks', label: 'English Marks', required: false },
-    { key: 'social_science_marks', label: 'Social Science Marks', required: false },
-    { key: 'regional_language_marks', label: 'Regional Language Marks', required: false },
-    { key: 'overall_percentage', label: 'Overall Percentage', required: true },
-    { key: 'number_of_failed_subjects', label: 'Failed Subjects Count', required: true },
-    { key: 'academic_backlogs', label: 'Academic Backlogs (Yes/No)', required: false },
-    // Attendance
-    { key: 'attendance_percentage', label: 'Attendance Percentage', required: true },
-    { key: 'consecutive_absences', label: 'Consecutive Absences', required: false },
-    { key: 'leave_days', label: 'Leave Days', required: false },
-    { key: 'late_arrivals', label: 'Late Arrivals', required: false },
-    // Behaviour
-    { key: 'homework_completion', label: 'Homework Completion %', required: true },
-    { key: 'assignment_submission_rate', label: 'Assignment Submission %', required: true },
-    { key: 'classroom_participation', label: 'Classroom Participation', required: false },
-    { key: 'discipline_incidents', label: 'Discipline Incidents', required: false },
-    { key: 'teacher_feedback', label: 'Teacher Feedback Description', required: false },
-    { key: 'participation_in_extracurricular', label: 'Extracurricular (Yes/No)', required: false },
-    { key: 'library_usage', label: 'Library Usage Frequency', required: false },
-    { key: 'low_motivation', label: 'Low Motivation (Yes/No)', required: false },
-    { key: 'bullying_experience', label: 'Bullying Experience (Yes/No)', required: false },
-    // Family
-    { key: 'family_income', label: 'Annual Family Income', required: true },
-    { key: 'parents_education', label: 'Parents Education Level', required: false },
-    { key: 'parents_occupation', label: 'Parents Occupation', required: false },
-    { key: 'single_parent', label: 'Single Parent (Yes/No)', required: false },
-    { key: 'number_of_siblings', label: 'Number of Siblings', required: false },
-    { key: 'guardian_support', label: 'Guardian Support Level', required: false },
-    { key: 'home_study_hours', label: 'Home Study Hours', required: true },
-    { key: 'financial_difficulty', label: 'Financial Difficulty (Yes/No)', required: false },
-    { key: 'child_labour_risk', label: 'Child Labour Risk (Yes/No)', required: false },
-    { key: 'frequent_migration', label: 'Frequent Migration (Yes/No)', required: false },
-    { key: 'family_issues', label: 'Domestic Family Issues (Yes/No)', required: false },
-    // Health
-    { key: 'chronic_illness', label: 'Chronic Illness (Yes/No)', required: false },
-    { key: 'nutrition_status', label: 'Nutrition Status', required: false },
-    { key: 'vision_problems', label: 'Vision Problems (Yes/No)', required: false },
-    { key: 'mental_health_risk', label: 'Mental Health Risk (Low/High)', required: false },
-    { key: 'disability_status', label: 'Disability Status (Yes/No)', required: false },
-    { key: 'midday_meal_beneficiary', label: 'Midday Meal Beneficiary (Yes/No)', required: false },
-    // Tech
-    { key: 'internet_access', label: 'Internet Access (Yes/No)', required: false },
-    { key: 'smartphone_access', label: 'Smartphone Access (Yes/No)', required: false },
-    { key: 'computer_access', label: 'Computer Access (Yes/No)', required: false },
-    { key: 'electricity_availability', label: 'Electricity Availability (Yes/No)', required: false },
-    // Predictions
-    { key: 'dropout_risk', label: 'Dropout Risk Category', required: false },
-    { key: 'dropout_status', label: 'Dropout Status (Yes/No)', required: false }
+    { key: 'gender', label: 'Gender', required: true },
+    { key: 'age', label: 'Age', required: true },
+    { key: 'previous_year_percentage', label: 'Previous_Year_Percentage', required: true },
+    { key: 'current_year_percentage', label: 'Current_Year_Percentage', required: true },
+    { key: 'overall_percentage', label: 'Overall_Percentage', required: true },
+    { key: 'number_of_failures', label: 'Number_of_Failures', required: true },
+    { key: 'number_of_absences', label: 'Number_of_Absences', required: true },
+    { key: 'attendance_percentage', label: 'Attendance_Percentage', required: true },
+    { key: 'attendance_classification', label: 'Attendance_Classification', required: false },
+    { key: 'mother_education', label: 'Mother_Education', required: false },
+    { key: 'father_education', label: 'Father_Education', required: false },
+    { key: 'family_support', label: 'Family_Support', required: false },
+    { key: 'school_support', label: 'School_Support', required: false },
+    { key: 'internet_access', label: 'Internet_Access', required: false },
+    { key: 'health_status', label: 'Health_Status', required: false },
+    { key: 'family_income', label: 'Family_Income', required: true },
+    { key: 'financial_difficulty', label: 'Financial_Difficulty', required: false },
+    { key: 'homework_completion', label: 'Homework_Completion', required: true },
+    { key: 'low_motivation', label: 'Low_Motivation', required: false },
+    { key: 'mental_health_risk', label: 'Mental_Health_Risk', required: false },
+    { key: 'child_labour_risk', label: 'Child_Labour_Risk', required: false },
+    { key: 'computer_access', label: 'Computer_Access', required: false },
+    { key: 'smartphone_access', label: 'Smartphone_Access', required: false },
+    { key: 'electricity_availability', label: 'Electricity_Availability', required: false }
   ];
 
   const fetchSchools = async () => {
@@ -140,16 +99,14 @@ export default function ImportWizard() {
       // Perform automapping
       const initialMappings = {};
       databaseFields.forEach(dbField => {
-        // Look for matching csv column (case-insensitive, ignoring spacing/underscores)
         const match = res.data.headers.find(csvHeader => {
-          const normCsv = csvHeader.toLowerCase().replace(/[\s_]/g, '');
-          const normDb = dbField.key.toLowerCase().replace(/[\s_]/g, '');
+          const normCsv = csvHeader.toLowerCase().replace(/[^a-z0-9]/g, '');
+          const normDb = dbField.key.toLowerCase().replace(/[^a-z0-9]/g, '');
           
-          // Custom matches for specific fields
+          if (normDb === normCsv) return true;
           if (normDb === 'classname' && normCsv === 'class') return true;
-          if (normDb === 'overallpercentage' && normCsv === 'overallpercentage') return true;
-
-          return normCsv === normDb;
+          if (normDb === 'traveltimemin' && normCsv === 'traveltimemins') return true;
+          return false;
         });
 
         if (match) {
