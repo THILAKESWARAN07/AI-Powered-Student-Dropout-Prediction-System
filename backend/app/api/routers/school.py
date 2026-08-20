@@ -139,7 +139,7 @@ def delete_school(
 ):
     """
     Permanently delete a school. Admin only.
-    Enforces dependency validation: cannot delete if school contains users or students.
+    Permanently deletes all associated students, student records, and non-admin users.
     """
     school = db.query(School).filter(School.id == school_id).first()
     if not school:
@@ -148,18 +148,31 @@ def delete_school(
             detail="School not found."
         )
 
-    # Option B: Dependency Validation Check
-    has_users = db.query(User).filter(User.school_id == school_id).first() is not None
-    has_students = db.query(Student).filter(Student.school_id == school_id).first() is not None
-    if has_users or has_students:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="This school contains users or students. Remove them before deleting the school."
-        )
-
     school_name = school.school_name
-    db.delete(school)
-    db.commit()
+
+    try:
+        # 1. Permanently delete all non-admin users assigned to this school
+        non_admin_users = db.query(User).filter(User.school_id == school_id, User.role != "admin").all()
+        for u in non_admin_users:
+            db.delete(u)
+
+        # 2. Permanently delete all students belonging to this school
+        # SQLAlchemy's delete-orphan cascades on relationships will delete their child table records
+        students = db.query(Student).filter(Student.school_id == school_id).all()
+        for s in students:
+            db.delete(s)
+
+        # 3. Permanently delete the school itself
+        db.delete(school)
+
+        # Commit transaction
+        db.commit()
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"An error occurred while permanently deleting the school and its associated records: {str(e)}"
+        )
 
     # Log action to audit logs
     client_ip = request.client.host if request.client else None
@@ -171,4 +184,4 @@ def delete_school(
         ip_address=client_ip
     )
 
-    return {"message": "School deleted successfully."}
+    return {"message": "School and all associated records deleted successfully."}

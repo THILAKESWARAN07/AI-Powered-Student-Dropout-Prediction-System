@@ -28,8 +28,8 @@ api.interceptors.response.use(
   (error) => {
     const status = error.response ? error.response.status : null;
     
-    if (status === 401) {
-      // Clear credentials if token expired (Module 2+)
+    if (status === 401 || status === 403) {
+      // Clear credentials if token expired or invalidated (Module 2+)
       localStorage.removeItem('token');
       // Redirect to login if user is in app views (exclude public auth routes)
       const publicPaths = ['/login', '/register', '/forgot-password', '/reset-password', '/'];

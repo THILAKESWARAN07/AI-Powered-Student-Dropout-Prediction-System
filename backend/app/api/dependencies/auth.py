@@ -38,6 +38,20 @@ def get_current_user(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Inactive user"
         )
+    # Enforce school active status for non-admin users
+    if user.role != "admin":
+        if user.school_id is None:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="User has no assigned school."
+            )
+        from app.models.school import School
+        school_exists = db.query(School).filter(School.id == user.school_id).first() is not None
+        if not school_exists:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="User's assigned school has been deleted."
+            )
     return user
 
 

@@ -750,8 +750,8 @@ export default function SchoolManagement() {
             <p className="text-sm text-slate-800 dark:text-slate-200 font-bold mb-2">
               {schoolToDelete.school_name}
             </p>
-            <div className="flex gap-2 bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 p-3.5 rounded-xl text-xs font-semibold leading-normal mb-6">
-              <span>WARNING: Deleting this school will permanently remove all associated data according to system rules. This action cannot be undone.</span>
+            <div className="flex gap-2 bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 p-3.5 rounded-xl text-xs font-semibold leading-normal mb-6">
+              <span>WARNING: Deleting this school will permanently delete the school, all students, all student-related records, and all teachers/headmasters assigned to it. This action cannot be undone.</span>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3">
