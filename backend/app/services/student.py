@@ -121,6 +121,16 @@ def validate_and_convert_row(
             errors.append(f"{label} ('{val_str}') must be a valid integer.")
             return None
 
+    def normalize_yes_no(val: Optional[str]) -> Optional[str]:
+        if val is None:
+            return None
+        val_clean = str(val).strip()
+        if val_clean.lower() == "yes":
+            return "Yes"
+        elif val_clean.lower() == "no":
+            return "No"
+        return val_clean
+
     # Validate Core Student info
     student_id = model_fields.get("student_id")
     if not student_id:
@@ -195,13 +205,13 @@ def validate_and_convert_row(
     parents_edu = mother_edu
 
     # Family Support
-    fam_support = model_fields.get("family_support") or "No"
+    fam_support = normalize_yes_no(model_fields.get("family_support") or "No")
 
     # School Support
-    sch_support = model_fields.get("school_support") or "No"
+    sch_support = normalize_yes_no(model_fields.get("school_support") or "No")
 
     # Internet Access
-    internet = model_fields.get("internet_access") or "No"
+    internet = normalize_yes_no(model_fields.get("internet_access") or "No")
     if internet not in ["Yes", "No"]:
         errors.append(f"Internet_Access ('{internet}') must be 'Yes' or 'No'.")
 
@@ -230,7 +240,7 @@ def validate_and_convert_row(
                 errors.append(f"Family_Income ('{income_raw}') must be 'Low', 'Medium', 'High', or a decimal number.")
 
     # Financial Difficulty
-    difficulty = model_fields.get("financial_difficulty") or "No"
+    difficulty = normalize_yes_no(model_fields.get("financial_difficulty") or "No")
     if difficulty not in ["Yes", "No"]:
         errors.append(f"Financial_Difficulty ('{difficulty}') must be 'Yes' or 'No'.")
 
@@ -256,32 +266,47 @@ def validate_and_convert_row(
                 errors.append(f"Homework_Completion ('{hw_raw}') must be 'Poor', 'Average', 'Good', 'Excellent', or a decimal number.")
 
     # Low Motivation
-    motivation = model_fields.get("low_motivation") or "No"
+    motivation = normalize_yes_no(model_fields.get("low_motivation") or "No")
     if motivation not in ["Yes", "No"]:
         errors.append(f"Low_Motivation ('{motivation}') must be 'Yes' or 'No'.")
 
     # Mental Health Risk
-    mental = model_fields.get("mental_health_risk") or "Low"
+    mental_raw = model_fields.get("mental_health_risk") or "Low"
+    mental_norm = normalize_yes_no(mental_raw)
+    if mental_norm in ["Yes", "No"]:
+        mental = mental_norm
+    else:
+        # Check low/medium/high case-insensitively
+        mental_clean = mental_raw.strip().lower()
+        if mental_clean == "low":
+            mental = "Low"
+        elif mental_clean == "medium":
+            mental = "Medium"
+        elif mental_clean == "high":
+            mental = "High"
+        else:
+            mental = mental_raw
+            
     if mental not in ["Low", "Medium", "High", "Yes", "No"]:
         errors.append(f"Mental_Health_Risk ('{mental}') must be 'Low', 'Medium', 'High', 'Yes', or 'No'.")
 
     # Child Labour Risk
-    labour = model_fields.get("child_labour_risk") or "No"
+    labour = normalize_yes_no(model_fields.get("child_labour_risk") or "No")
     if labour not in ["Yes", "No"]:
         errors.append(f"Child_Labour_Risk ('{labour}') must be 'Yes' or 'No'.")
 
     # Computer Access
-    comp = model_fields.get("computer_access") or "No"
+    comp = normalize_yes_no(model_fields.get("computer_access") or "No")
     if comp not in ["Yes", "No"]:
         errors.append(f"Computer_Access ('{comp}') must be 'Yes' or 'No'.")
 
     # Smartphone Access
-    phone = model_fields.get("smartphone_access") or "No"
+    phone = normalize_yes_no(model_fields.get("smartphone_access") or "No")
     if phone not in ["Yes", "No"]:
         errors.append(f"Smartphone_Access ('{phone}') must be 'Yes' or 'No'.")
 
     # Electricity Availability
-    elec = model_fields.get("electricity_availability") or "Yes"
+    elec = normalize_yes_no(model_fields.get("electricity_availability") or "Yes")
     if elec not in ["Yes", "No"]:
         errors.append(f"Electricity_Availability ('{elec}') must be 'Yes' or 'No'.")
 
