@@ -1,112 +1,209 @@
-# DropGuard 🛡️ — AI-Powered Student Dropout Prediction System...
+# DropGuard – AI-Powered Student Dropout Prediction System
 
-<div align="center">
-  
-  <br />
-  
-  [![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vite.dev/)
-  [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
-  [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-  [![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
-  [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
-  [![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-  [![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
-
-  <p align="center">
-    <strong>An enterprise-grade educational intelligence platform leveraging Machine Learning to predict student dropout risks and power timely, targeted institutional interventions.</strong>
-  </p>
-
-</div>
+DropGuard is a multi-role educational intelligence platform designed to combat student attrition. By combining advanced Machine Learning with multi-dimensional student profiling, DropGuard proactively identifies students at risk of dropping out before they disengage, allowing educational institutions to implement timely, targeted support.
 
 ---
 
-## 🚀 Live Demo
+## 🌐 Live Demo
 
-Experience DropGuard live using the deployed application or explore the backend APIs through the interactive documentation.
+Experience the active DropGuard client application live:
 
-| Resource | Link |
-|----------|------|
-| 🌐 Live Application | [https://ai-powered-student-dropout-predicti.vercel.app](https://ai-powered-student-dropout-predicti.vercel.app) |
-| ⚙️ Backend API | [https://dropguard-backend.onrender.com](https://dropguard-backend.onrender.com) |
-| 📖 Swagger API Documentation | [https://dropguard-backend.onrender.com/docs](https://dropguard-backend.onrender.com/docs) |
-| 📚 ReDoc API Documentation | [https://dropguard-backend.onrender.com/redoc](https://dropguard-backend.onrender.com/redoc) |
-
-> **Note:** The backend is deployed on Render's free plan. If the application has been inactive for some time, the first request may take approximately **30–60 seconds** while the backend service starts. Subsequent requests will respond normally.
+*   **🌐 Live Demo:** [https://ai-powered-student-dropout-predicti.vercel.app](https://ai-powered-student-dropout-predicti.vercel.app)
 
 ---
 
-## 📌 Overview
+## 1. Overview
 
-**DropGuard** is a multi-role web application designed to help educational institutions combat student attrition. By combining advanced Machine Learning algorithms with multi-dimensional student profiling, DropGuard proactively identifies students at risk of dropping out *before* they disengage.
+**DropGuard** is a secure, role-based educational web application designed for schools and administrative bodies. The system processes academic records, attendance history, behavioral observations, socio-economic factors, health metrics, and technology accessibility indexes to output high-accuracy dropout risk scores.
 
-### ❓ Why DropGuard Was Built
-Educational dropouts are rarely caused by a single factor. They are the result of compounding issues across academics, attendance, socio-economic hardships, family stability, and digital access barriers. Traditional student information systems are reactive, displaying historical statistics when it is often too late to intervene. DropGuard transforms this paradigm into a proactive model.
-
-### 👥 Who Can Use It
-- **System Administrators (DEO / Admin)**: Enforce global school registries, audit system operations, and manage administrative credentials.
-- **Headmasters / School Principals**: Monitor school-wide metrics, perform bulk database migrations via intelligent CSV uploads, and manage teaching staff.
-- **Teachers / Educators**: Maintain classroom rosters, edit individual student profiles, log performance details, and access machine learning explainability dashboards to understand and address student risks.
-
-### 📈 Real-World Educational Impact
-By giving educators an interactive, predictive window into student struggles, DropGuard drives metrics-based actions. The integration of **Explainable AI (XAI)** highlights the exact root causes of a student's risk profile—be it attendance drops, technology deserts, or socio-economic strain—allowing school counselors to implement tailored financial, academic, or counseling support systems.
+The system performs the following key functions:
+*   **Multi-Dimensional Analysis:** Evaluates academic, attendance, behavioral, family, health, and technology factors.
+*   **Risk Classification:** Classifies student dropout risk tiers into **Low**, **Medium**, and **High** levels.
+*   **Probability & Confidence:** Provides prediction probability scores and model confidence metrics.
+*   **Explainable AI (XAI):** Uses model coefficients to explain the top variables driving each prediction.
+*   **Actionable Interventions:** Generates localized recommendations based on a student's specific risk vectors.
+*   **Analytics Dashboard:** Displays school-level analytics for administrators, headmasters, and teachers.
+*   **Secure Student Directory:** Scopes data access and operations based on user roles and school boundaries.
 
 ---
 
-## ✨ Key Features
+## 2. Problem Statement
 
-### 🔐 Authentication & Session Security
-- **JWT Session Authorization**: Cryptographically signed JSON Web Tokens for stateless, secure API validation.
-- **Role-Based Access Control (RBAC)**: Strict separation of privileges between Admins, Headmasters, and Teachers.
-- **Automatic School Isolation**: Direct row-level security filtering ensures educators only access student records belonging to their assigned institution.
-
-### 🏫 School & Registry Management
-- **School Registry CRUD**: Complete lifecycle management of schools with detailed regional tracking (districts, blocks, villages).
-- **User Directory**: Central user repository with status toggles (`is_active`) and email verification attributes.
-- **Audit Trails**: Global activity logging tracking IP addresses, operational actions, timestamps, and detail payloads.
-
-### 🧑‍🎓 Student Administration & CSV Wizard
-- **Comprehensive Profiles**: Management of demographic, academic, behavioral, health, and technological attributes.
-- **Smart CSV Import Wizard**:
-  - **Dynamic Column Mapping**: Map arbitrary CSV columns to database schemas in real-time.
-  - **Live Preview & Dry Run**: Inspect data parsing before initiating database commits.
-  - **Robust Validation**: Identifies duplicates, parses formatting errors, and displays a comprehensive import summary.
-  - **Transactional Bulk Import**: Inserts large student batches safely using rollback mechanics.
-
-### 🤖 Machine Learning Inference Engine
-- **CatBoost Classifier**: Advanced gradient boosting model trained on multi-dimensional tabular datasets.
-- **Dual Inference Flow**: Supports single student updates and scheduled batch predictions.
-- **Explainable Insights (SHAP)**: Renders the top three driving features behind a student's predicted risk score.
-- **Prescriptive Actions**: Contextual recommendations generated dynamically based on the student's primary risk vectors.
-
-### 📊 Modern UI & Responsive UX
-- **Interactive Dashboards**: Live data visualizations displaying risk distributions, attendance trends, and recent logs.
-- **Student History Timeline**: Chronological record tracking a student's performance logs and risk status over time.
-- **Optimistic UI Updates**: Instant state feedback on forms and logs for smooth navigation.
-- **Backend Cold-Start Handling**: Built-in backend wake-up triggers and premium loading screens for serverless deployments.
+Student attrition is a complex educational challenge driven by intersecting factors, including academic difficulties, socio-economic hardships, family stability, and accessibility barriers. Standard Student Information Systems (SIS) are reactive—they show historical statistics when it is often too late for intervention. Educators and school administrators lack proactive, early-warning tools to recognize at-risk students and coordinate preventive support.
 
 ---
 
-## 🖼️ System Interface & Mockups
+## 3. Objectives
 
-| Screen | Preview Placeholder | Description |
-| :--- | :--- | :--- |
-| **Landing & Auth** | `![Landing Page](https://via.placeholder.com/800x450/1e293b/ffffff?text=DropGuard+Landing+Page)` | Secure entry point with JWT login and landing resources. |
-| **Global Dashboard** | `![Global Dashboard](https://via.placeholder.com/800x450/1e293b/ffffff?text=Analytics+Dashboard)` | Comprehensive view showing school performance, risk maps, and user counts. |
-| **School Panel** | `![School Dashboard](https://via.placeholder.com/800x450/1e293b/ffffff?text=School+Management)` | Scoped overview of a school's statistics, active rosters, and registries. |
-| **Student Roster** | `![Students Panel](https://via.placeholder.com/800x450/1e293b/ffffff?text=Student+Roster+Directory)` | List view of students with filtering by class, section, and dropout risk tiers. |
-| **CSV Importer** | `![Import Wizard](https://via.placeholder.com/800x450/1e293b/ffffff?text=CSV+Import+Wizard+Mapper)` | Dynamic database mapping tool, file parsing preview, and collision validation. |
-| **Timeline View** | `![Student Timeline](https://via.placeholder.com/800x450/1e293b/ffffff?text=Student+Timeline+Tracking)` | Chronological mapping of academic tests, attendance logs, and risk adjustments. |
+*   **Early Prediction:** Proactively classify student dropout risks using a predictive model.
+*   **Preventive Interventions:** Identify specific risk categories early, enabling coordinated school-level support.
+*   **Explainable Insights:** Provide transparent, coefficient-based explainable insights to reveal *why* a student was flagged.
+*   **Data Integration:** Enable easy batch imports of student profiles with validation.
+*   **School Isolation & Security:** Enforce role-based access control and school-scoped data isolation.
 
 ---
 
-## 🏗️ System Architecture
+## 4. Key Features
 
-The following diagram illustrates the decoupled architecture of DropGuard, detailing data flow and boundaries:
+### 🔐 Authentication & RBAC
+*   **Role-Based Access Control (RBAC):** Strict permissions separation for **System Administrators**, **Headmasters**, and **Teachers**.
+*   **JWT Authentication:** Secure, stateless session authorization using JSON Web Tokens.
+*   **School-Level Data Isolation:** Row-level scope enforcement ensures staff members only access student records belonging to their assigned school.
+
+### 🧑‍🎓 Student Management
+*   **Comprehensive Student Profiles:** Management of demographics, academics, attendance, behaviors, family, health, and tech attributes.
+*   **Manual Roster Updates:** Register, update, and search students within a scoped classroom.
+*   **Permanent Student Deletion:** Admin-only function to permanently delete individual student entries.
+*   **Bulk Student Deletion:** Admin-only capability to batch delete student records.
+*   **Activity Logs & Timeline:** Audit trail tracking student predictions and academic adjustments over time.
+
+### 🤖 AI Prediction
+*   **Tuned Logistic Regression:** High-performance binary classifier optimized for student tabular data.
+*   **Risk Categorization:** Low, Medium, and High dropout risk groups.
+*   **Inference Dashboard:** Displays probability scores and prediction confidence.
+*   **Coefficient-Based Explainability:** Renders the top high-impact factors behind a student's predicted risk score.
+
+### 📋 Intervention Recommendations
+*   **Targeted Recommendations:** Contextual recommendations mapped directly to primary risk vectors.
+*   **Intervention Domains:** Focuses on academic support, attendance monitoring, financial aid, and counseling.
+
+### 📥 Import System
+*   **Smart CSV/Excel Import Wizard:**
+    *   **Dynamic Column Mapping:** Maps arbitrary import columns to database fields in real time.
+    *   **Dry-Run Validation:** Validates formats, duplicates, and missing details before writing to the database.
+    *   **Normalization:** Normalizes boolean/categorical inputs (e.g., case-insensitive Yes/No normalization).
+    *   **School Scoping:** Ensures imports are automatically associated with the user's school.
+
+### 🏫 School Management
+*   **School Registry CRUD:** System Admin tools to register and manage educational institutes.
+*   **Performance Dashboards:** Statistics on student/staff counts, risk tier distribution, attendance metrics, and audit history.
+*   **Permanent School Deletion:** Admin-only function that permanently deletes a school.
+*   **Cascading Deletes:** Deleting a school automatically triggers cascading database deletion of associated students, academic records, attendance history, behavioral files, and assigned non-admin users.
+
+### 📊 Reporting
+*   **Export Actions:** Download student lists and risk distributions in CSV or Excel format.
+
+### ⚡ Render Wake-Up Mechanism
+*   **Lightweight Pings:** The client application automatically dispatches a database-free wake-up request to the backend `/ping` endpoint when loaded or returned to in the browser.
+*   **Timeout & Retry:** If the initial wake-up ping fails or times out, the service retries exactly once after 4 seconds.
+*   **Reactivation Listening:** Listens to `visibilitychange` events to wake the backend container if the browser tab is reactivated after being idle for 20+ minutes.
+
+---
+
+## 5. How It Works
+
+```
+[Student Data Source] ──> [Smart Import Wizard] ──> [Feature Engineering Layer (24 features)]
+                                                                  │
+                                                                  ▼
+[Explainable AI Engine] <── [Tuned Logistic Regression] <── [Model Pipeline Inference]
+          │
+          ▼
+[High-Impact Risk Factors] ──> [Intervention Recommendations] ──> [Dashboard Visualizations]
+```
+
+1.  **Ingestion:** The CSV/Excel Import Wizard maps raw files to database columns, validating data fields during parsing.
+2.  **Feature Engineering:** The backend merges and normalizes the stored student attributes into a structured 24-feature vector.
+3.  **Inference:** The prediction pipeline loads the Tuned Logistic Regression model to compute dropout probability, risk level, and prediction confidence.
+4.  **Explainability:** The explanation engine maps the model's coefficients back to the student's values, calculating the top 5 factors impacting the risk classification.
+5.  **Intervention:** Custom recommendations are generated based on the highest risk vectors (e.g., high failure counts trigger academic tutoring advice).
+
+---
+
+## 6. Dataset & ML Features
+
+### Student Import Columns (29 Columns)
+The CSV/Excel import system parses student datasets containing the following **29 columns**:
+
+1.  `Student_Id`
+2.  `Class`
+3.  `Distance to School (km)`
+4.  `Transport Mode`
+5.  `Travel Time (mins)`
+6.  `Gender`
+7.  `Age`
+8.  `Previous_Year_Percentage`
+9.  `Current_Year_Percentage`
+10. `Overall_Percentage`
+11. `Number_of_Failures`
+12. `Number_of_Absences`
+13. `Attendance_Percentage`
+14. `Attendance_Classification`
+15. `Mother_Education`
+16. `Father_Education`
+17. `Family_Support`
+18. `School_Support`
+19. `Internet_Access`
+20. `Health_Status`
+21. `Family_Income`
+22. `Financial_Difficulty`
+23. `Homework_Completion`
+24. `Low_Motivation`
+25. `Mental_Health_Risk`
+26. `Child_Labour_Risk`
+27. `Computer_Access`
+28. `Smartphone_Access`
+29. `Electricity_Availability`
+
+### Feature Engineering
+*   The import columns serve as a raw registry.
+*   The ML model does not ingest all 29 raw columns directly.
+*   The backend feature engineering layer validates, encodes, and merges these raw attributes into the **24 engineered features** expected by the model pipeline (e.g., student IDs and class sections are saved as metadata, while scores and attendance data are normalized).
+
+---
+
+## 7. Machine Learning Model
+
+The current DropGuard system uses a **Tuned Logistic Regression** pipeline, which was adopted after transitioning from the previous model implementation.
+
+### Model Artifacts
+Trained model artifacts are loaded dynamically by the prediction service:
+*   `backend/app/ml/dropguard_model.pkl` — Trained scikit-learn pipeline (preprocessor + classifier).
+*   `backend/app/ml/label_encoder.pkl` — Encodings for prediction targets.
+*   `backend/app/ml/feature_names.pkl` — Reference order for model input features.
+*   `backend/app/ml/metrics.json` — Evaluation metrics from validation.
+
+### Verified Model Metrics
+*   **Dataset Size:** 647 rows
+*   **ML Input Features:** 24 features
+*   **Accuracy:** 85.32%
+*   **ROC-AUC:** 95.93%
+
+*Note: Preprocessing, scaling, and categorical encoding are handled automatically inside the scikit-learn pipeline, and model coefficients are utilized directly to calculate relative feature importance for explainable insights.*
+
+---
+
+## 8. Tech Stack
+
+### Frontend
+*   **React** (Vite build system)
+*   **TailwindCSS** (Vanilla CSS configurations)
+*   **Axios** (API communications with token interceptors)
+*   **Framer Motion** (Transitions and loading states)
+*   **Lucide React** (Vector iconography)
+
+### Backend
+*   **FastAPI** (ASGI Framework)
+*   **SQLAlchemy** (ORM model management)
+*   **Pydantic** (JSON serialization & validation schemas)
+*   **Alembic** (Database migration control)
+
+### Database
+*   **PostgreSQL** (Relational storage, supported by Neon Cloud PostgreSQL)
+
+### Machine Learning
+*   **Python**
+*   **scikit-learn** (Pipeline, preprocessing, and classifier)
+*   **joblib** (Model serialization)
+
+---
+
+## 9. System Architecture
 
 ```mermaid
 graph TB
     subgraph Client_Tier [Client Tier - React SPA]
-        A[React UI Component] -->|Calls API via Axios| B[API Client Manager]
+        A[React UI Components] -->|Calls API via Axios| B[API Client Manager]
         B -->|Saves state in Context| C[Auth & Global State Context]
     end
 
@@ -117,16 +214,16 @@ graph TB
     end
 
     subgraph Inference_Engine [ML Inference & Explainability]
-        F -->|Input Features JSON| G[CatBoost Classifier Model]
+        F -->|Input Features JSON| G[Tuned Logistic Regression Model]
         G -->|Predictions & Confidence| F
-        F -->|Feature Contribution Analysis| H[SHAP Explainability Loader]
-        H -->|Feature Importances| F
+        F -->|Model Coefficient Analysis| H[Coefficient Explainability Engine]
+        H -->|High-Impact Features| F
     end
 
     subgraph Data_Storage [Data Storage - PostgreSQL]
         F -->|Queries & Operations| I[SQLAlchemy ORM]
         I -->|Database Migrations| J[Alembic Engine]
-        I -->|Read/Write Operations| K[(PostgreSQL Neon Instance)]
+        I -->|Read/Write Operations| K[(PostgreSQL Database)]
     end
     
     style Client_Tier fill:#0f172a,stroke:#38b2ac,stroke-width:2px,color:#fff
@@ -137,348 +234,183 @@ graph TB
 
 ---
 
-## 📂 Folder Structure
+## 10. Database
+
+The database is built on PostgreSQL, utilizing standard relations with cascade deletes to maintain integrity.
+
+### Entities & Tables
+*   **`schools`**: Relational registry of schools (District, Block, Village, School Type, Medium, Student Strength).
+*   **`users`**: Central account directory storing full name, credentials, roles, active flags, and `school_id` links (FK set to NULL on school deletion).
+*   **`students`**: Core registry holding demographic characteristics, commute info, and logical markers.
+*   **`student_academics`**: Academic marks, fails, and backlog status.
+*   **`student_attendance`**: Term attendance percentage, consecutive absences, leave days, and delays.
+*   **`student_behaviour`**: Homework rates, participation metrics, classroom feedback, and motivation flags.
+*   **`student_family`**: Annual household income, parents' education, sibling counts, and child labor risk.
+*   **`student_health`**: Nutrition ratings, chronic illness history, and mental health risks.
+*   **`student_technology`**: Availability indices for internet, electricity, smartphones, and computers.
+*   **`student_predictions`**: Computed risk tier, probabilities, coefficients, and recommendations.
+*   **`activity_logs`**: System audit records storing user IDs, actions, description, and IP addresses.
+
+### Cascade & Deletion Behaviors
+*   **Student Deletion:** Deleting a student deletes related tables (`student_academics`, `student_attendance`, `student_behaviour`, `student_family`, `student_health`, `student_technology`, `student_predictions`) via SQLAlchemy's `delete-orphan` cascades.
+*   **School Deletion:** Deleting a school cascade-deletes all associated students, user assignments (for non-admins), and associated student history records.
+
+---
+
+## 11. Security & RBAC
+
+*   **JWT Authorizations:** Session tokens authenticate requests to API endpoints.
+*   **Password Protection:** Passwords are encrypted using the `bcrypt` algorithm.
+*   **Row-Level Isolation:** Access scopes filter student records and user registries, locking down views to the user's assigned school.
+*   **Auditing:** System events (deletes, updates, imports, logins) are logged to the database with client IP address information.
+*   **Parametrized Queries:** SQLAlchemy ORM compiles queries safely, protecting the database from SQL Injection attacks.
+*   **Deletion Safety:** Destructive actions (individual student deletion, bulk student deletes, and school deletion) require Admin credentials.
+
+---
+
+## 12. Project Structure
 
 ```
 .
 ├── backend/                    # FastAPI ASGI Backend Service
-│   ├── alembic/                # Database versioning and schemas history
+│   ├── alembic/                # DB versioning history and migration scripts
 │   ├── app/                    # Primary application package
-│   │   ├── api/                # API Routers (auth, school, user, logs, student, prediction, dashboard)
-│   │   ├── core/               # Security, logging, tokens, configuration setup
-│   │   ├── db/                 # Base database class, session config, seeding scripts
-│   │   ├── middleware/         # Custom CORS filters and HTTP exception handlers
-│   │   ├── ml/                 # CatBoost model binaries, pipelines, and evaluation metrics
-│   │   ├── models/             # SQLAlchemy ORM schemas
-│   │   ├── schemas/            # Pydantic schemas for request/response serialization
-│   │   ├── services/           # Backend services (inference runner, CSV mapping processor)
+│   │   ├── api/routers/        # Endpoint routers (auth, dashboard, logs, prediction, school, student, user)
+│   │   ├── core/               # Security, token signing, config properties
+│   │   ├── db/                 # Base database, connection setup, seeds
+│   │   ├── middleware/         # CORS and exception middleware
+│   │   ├── ml/                 # Pickled models, metadata, feature mappings, and metrics.json
+│   │   ├── models/             # SQLAlchemy ORM models
+│   │   ├── schemas/            # Pydantic schemas for JSON data mapping
+│   │   ├── services/           # Services (predict pipelines, csv mapper, log activity)
 │   │   └── utils/              # Helper utilities
-│   ├── requirements.txt        # Python backend package checklist
-│   ├── alembic.ini             # Database migration configuration file
-│   └── Dockerfile.backend      # Container image definition for backend
-├── frontend/                   # React Single-Page Application
-│   ├── public/                 # Static asset server assets
-│   ├── src/                    # Primary source code
-│   │   ├── assets/             # Styled assets, global styles
-│   │   ├── components/         # Reusable layouts, UI controls, loading components
-│   │   ├── context/            # React Auth context and Global app hooks
-│   │   ├── lib/                # Utility configurations (Tailwind merges, CN hooks)
-│   │   ├── pages/              # Modular screens (Dashboard, Students, Imports, Management)
-│   │   └── services/           # Axios interceptors, REST API wrapper handlers
-│   ├── package.json            # NPM package and scripts checklist
-│   ├── tailwind.config.js      # Tailwind layout specifications
+│   ├── requirements.txt        # Python backend dependencies
+│   ├── alembic.ini             # Alembic migration configuration
+│   └── Dockerfile.backend      # Docker build configuration for backend
+├── frontend/                   # React Single-Page Client Application
+│   ├── public/                 # Static public assets
+│   ├── src/                    # Client source
+│   │   ├── assets/             # Static SVGs, custom icons, styles
+│   │   ├── components/         # Reusable layouts, UI controls, navigation widgets
+│   │   ├── context/            # Auth and system state hooks
+│   │   ├── pages/              # App screens (Dashboard, Students, Imports, Settings, Auth)
+│   │   └── services/           # Interceptors, API endpoints, wakeup service
+│   ├── package.json            # Node dependency configuration
+│   ├── tailwind.config.js      # Tailwind style tokens
 │   ├── vite.config.js          # Vite build pipeline setup
-│   └── Dockerfile.frontend     # Container image definition for frontend
-└── README.md                   # Project Documentation
+│   └── Dockerfile.frontend     # Docker build configuration for frontend
+├── dataset/                    # Reference data files
+│   ├── dropguard_dataset_2_fin.csv # Full model training dataset (647 rows)
+│   ├── sample_dataset.csv      # Sample batch mapping template
+│   └── data_dictionary.md      # Mapping definition dictionary
+├── docker-compose.yml          # Container stack orchestration config
+├── LICENSE                     # System License file
+└── README.md                   # Application Documentation
 ```
 
 ---
 
-## 🗄️ Database Design
+## 13. Installation
 
-DropGuard utilizes a normalized relational database schema built on PostgreSQL. Cascade deletes (`ondelete="CASCADE"`) are enforced on sub-tables to maintain integrity.
+### Backend Setup
+1.  Navigate to the backend directory:
+    ```bash
+    cd backend
+    ```
+2.  Set up a virtual environment:
+    ```bash
+    # Unix/macOS
+    python3 -m venv venv
+    source venv/bin/activate
 
-```mermaid
-erDiagram
-    SCHOOLS ||--o{ USERS : "employs"
-    SCHOOLS ||--o{ STUDENTS : "enrolls"
-    USERS ||--o{ ACTIVITY_LOGS : "logs"
-    STUDENTS ||--|| STUDENT_ACADEMICS : "has"
-    STUDENTS ||--|| STUDENT_ATTENDANCE : "has"
-    STUDENTS ||--|| STUDENT_BEHAVIOUR : "exhibits"
-    STUDENTS ||--|| STUDENT_FAMILY : "belongs_to"
-    STUDENTS ||--|| STUDENT_HEALTH : "displays"
-    STUDENTS ||--|| STUDENT_TECHNOLOGY : "uses"
-    STUDENTS ||--o{ STUDENT_PREDICTIONS : "generates"
-
-    SCHOOLS {
-        int id PK
-        string school_name
-        string school_code
-        string district
-        string block
-        string village
-        string school_type
-        string medium
-        string headmaster_name
-        int student_strength
-        datetime created_at
-    }
-
-    USERS {
-        int id PK
-        string full_name
-        string email UK
-        string password_hash
-        string role
-        int school_id FK
-        string phone
-        string profile_image
-        boolean email_verified
-        boolean is_active
-        datetime last_login
-    }
-
-    STUDENTS {
-        int id PK
-        string student_id UK
-        string full_name
-        string gender
-        int age
-        string class_name
-        string section
-        string medium_of_instruction
-        string community
-        float distance_to_school_km
-        string transport_mode
-        float travel_time_min
-        string school_type
-        int school_id FK
-        boolean is_deleted
-    }
-
-    STUDENT_PREDICTIONS {
-        int id PK
-        int student_id FK
-        string dropout_risk
-        string dropout_status
-        float probability
-        float confidence
-        json top_features
-        json recommended_actions
-        string model_version
-        datetime predicted_at
-    }
-```
-
-### Table Dictionary Details
-1. **`schools`**: Represents the educational institutes. Key parameters include regional indicators and student capacity.
-2. **`users`**: Central repository for credentials, access levels (`admin`, `headmaster`, `teacher`), and school links.
-3. **`students`**: Basic demographics, school settings, and a logical deletion flag (`is_deleted`) to support optimistic updates.
-4. **`student_academics`**: High-resolution performance history (grades across mathematics, science, language, and exams).
-5. **`student_attendance`**: Granular attendance profiles (leave days, consecutive absences, and delay occurrences).
-6. **`student_behaviour`**: Educator feedback, assignment completion tracking, and involvement details.
-7. **`student_family`**: Socio-economic variables including parents' education level, domestic income, and migration signals.
-8. **`student_health`**: Physical and psychological assessments (mental health indicators, vision, and chronic illness records).
-9. **`student_technology`**: Digital accessibility indexes (electricity, hardware access, and internet details).
-10. **`student_predictions`**: Model outcomes containing computed risks, scores, SHAP top parameters, and advice text.
-11. **`activity_logs`**: System audit ledger tracking administrative movements with IP address logging.
-
----
-
-## 🔑 Role-Based Access Control (RBAC)
-
-DropGuard implements role-based boundaries to protect student records. School-level data isolation is active for school staff.
-
-| Role | School Isolation Enforced | Permissions Scope |
-| :---: | :---: | :--- |
-| **System Admin** | ❌ (Global View) | • Create, view, update, and delete all school registries.<br>• Full system user management (CRUD, active toggles, permanent deletion).<br>• View global system-wide analytics.<br>• Inspect all security audit activity logs. |
-| **Headmaster** | ✅ (School-only) | • Manage user registry for teachers belonging to their school.<br>• Full CSV Smart Import Wizard suite (mapping, validations, imports).<br>• Create and update student entries inside the school registry.<br>• View school-specific analytics dashboards and student timelines.<br>• Execute batch risk predictions. |
-| **Teacher** | ✅ (School-only) | • Access, read, and search scoped classrooms.<br>• Manually add, update, and soft-delete classroom students.<br>• Run single predictions and update profiles.<br>• View individual student metrics, SHAP feature logs, and timelines. |
-
----
-
-## 🤖 Machine Learning Pipeline
-
-The AI engine in DropGuard processes comprehensive tabular data to output risk predictions alongside actionable interventions.
-
-```mermaid
-graph TD
-    A[Student Raw Profile] -->|Parse & Clean| B[Preprocessing Pipeline]
-    B -->|Impute & Map Encodings| C[Feature Vector Engine]
-    C -->|Feed Array| D[CatBoost Inference Model]
-    
-    subgraph Model_Execution_Engine [Prediction Suite]
-        D -->|Probability Scoring| E[Binary Classifier]
-        D -->|Confidence Score| F[Confidence Evaluator]
-        D -->|Feature Influence Matrix| G[SHAP Explanations Engine]
-    end
-
-    E -->|Dropout Status: Yes/No| H[Risk Assignment Engine]
-    F -->|Risk Classification: Low/Med/High| H
-    G -->|Extract Top 3 Feature Weights| H
-
-    H -->|Generate JSON Payload| I[PostgreSQL Database]
-    I -->|Live JSON Feed| J[Interactive Dashboard UI]
-    
-    J -->|View Risk Indicators| K[Educator Intervention]
-```
-
-1. **Preprocessing Pipeline**: Handles missing data, cleans text, and scales metrics.
-2. **CatBoost Classifier**: Classifies binary dropout likelihood using trees optimized for categorical features.
-3. **SHAP Engine**: Calculates Shapley values dynamically to return the three largest features impacting each prediction.
-4. **Recommendation Module**: Matches risk factors to structured advice (e.g., poor hardware access triggers technology loan programs).
-
----
-
-## 🚀 Installation & Setup
-
-### Prerequisites
-- **Python**: `3.10` or higher
-- **Node.js**: `18.0` or higher (with `npm`)
-- **PostgreSQL**: `13` or higher (Local database server or cloud instance like Neon)
-
----
-
-### Backend Service Setup
-
-1. **Clone and navigate to backend**:
-   ```bash
-   cd backend
-   ```
-
-2. **Establish Python virtual environment**:
-   ```bash
-   # Linux/macOS
-   python3 -m venv venv
-   source venv/bin/activate
-
-   # Windows
-   python -m venv venv
-   .\venv\Scripts\activate
-   ```
-
-3. **Install application dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Configure Environment variables**:
-   Create a `.env` configuration file in the backend root:
-   ```ini
-   ENVIRONMENT=development
-   DATABASE_URL=postgresql://postgres:password@localhost:5432/dropout_prediction_db
-   SECRET_KEY=enter-a-highly-secure-jwt-secret-key-phrase
-   ALGORITHM=HS256
-   ACCESS_TOKEN_EXPIRE_MINUTES=1440
-   BACKEND_CORS_ORIGINS=["http://localhost:5173"]
-   ```
-
-5. **Run database migrations**:
-   Create database structure using Alembic:
-   ```bash
-   alembic upgrade head
-   ```
-
-6. **Seed administrative account (Optional)**:
-   Create a root administrator user to get started:
-   ```bash
-   python create_admin.py
-   ```
-
-7. **Start FastAPI Application**:
-   Run the ASGI development server:
-   ```bash
-   uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
-   ```
-
----
+    # Windows
+    python -m venv venv
+    .\venv\Scripts\activate
+    ```
+3.  Install dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
+4.  Configure environment variables in `.env`:
+    ```ini
+    ENVIRONMENT=development
+    DATABASE_URL=postgresql://postgres:password@127.0.0.1:5432/dropguard_db
+    SECRET_KEY=your_jwt_secret_key
+    ALGORITHM=HS256
+    ACCESS_TOKEN_EXPIRE_MINUTES=1440
+    BACKEND_CORS_ORIGINS=["http://127.0.0.1:5173"]
+    ```
+5.  Run migrations and seed the database:
+    ```bash
+    alembic upgrade head
+    python create_admin.py
+    ```
+6.  Start the FastAPI application server:
+    ```bash
+    uvicorn app.main:app --reload
+    ```
 
 ### Frontend Setup
-
-1. **Navigate to frontend directory**:
-   ```bash
-   cd ../frontend
-   ```
-
-2. **Install Node packages**:
-   ```bash
-   npm install
-   ```
-
-3. **Configure Environment variables**:
-   Create a `.env` configuration file in the frontend root:
-   ```ini
-   VITE_API_URL=http://127.0.0.1:8000/api/v1
-   ```
-
-4. **Launch development server**:
-   Run the Vite development server locally:
-   ```bash
-   npm run dev
-   ```
-   *The application will boot on [http://localhost:5173](http://localhost:5173).*
+1.  Navigate to the frontend directory:
+    ```bash
+    cd frontend
+    ```
+2.  Install dependencies:
+    ```bash
+    npm install
+    ```
+3.  Configure the environment URL in `.env`:
+    ```ini
+    VITE_API_URL=http://127.0.0.1:8000/api/v1
+    ```
+4.  Launch the client development server:
+    ```bash
+    npm run dev
+    ```
+    *The client application boots locally (typically on port 5173).*
 
 ---
 
-## 🌐 API Documentation
+## 14. Deployment
 
-Once the backend service initializes, you can access the self-documenting interactive API suites:
-
-- **Swagger UI (Interactive API Client)**: [http://localhost:8000/docs](http://localhost:8000/docs)
-- **ReDoc (Structured documentation)**: [http://localhost:8000/redoc](http://localhost:8000/redoc)
+*   **Backend:** Deployed as a containerized Docker service on cloud infrastructure (e.g., Render Web Services) connected to a PostgreSQL instance (e.g., Neon Cloud PostgreSQL).
+*   **Frontend:** Deployed on static application servers (e.g., Vercel) with the environment parameter `VITE_API_URL` pointing to the live API gateway.
 
 ---
 
-## ☁️ Deployment Guide
+## 15. Live Demo
 
-### Backend Service (Render Deployment)
-1. Fork or push the repository. Link your repository in Render's control center.
-2. Select **Web Service**, specify the **Root Directory** as `backend`, and choose the **Docker** runtime environment.
-3. Attach environment configurations under **Environment Variables** (`DATABASE_URL`, `SECRET_KEY`, `ALGORITHM`, `BACKEND_CORS_ORIGINS`).
-4. Ensure the Web Service uses port `8000` (Render binds this automatically or reads the Dockerfile environment).
-
-### Frontend Application (Vercel Deployment)
-1. Link your repository in the Vercel dashboard.
-2. Choose the project directory as `frontend`.
-3. Set the **Framework Preset** to `Vite`.
-4. Configure the **Build Command** to `npm run build` and **Output Directory** to `dist`.
-5. Add the production environment configuration `VITE_API_URL` pointing to your Render backend domain.
+🌐 **Live Demo:** [https://ai-powered-student-dropout-predicti.vercel.app](https://ai-powered-student-dropout-predicti.vercel.app)
 
 ---
 
-## 🔒 Security Architectures
+## 16. Testing & Validation
 
-- **Password Hashing**: Cryptographic password hashing implemented using `bcrypt` and verification through `passlib`.
-- **Stateless Authorization**: Encrypted API gateways require verified headers containing valid bearer JWTs.
-- **Data Isolation Rules**: Queries automatically enforce user-to-school relationships, isolating database read/write queries behind school parameters.
-- **SQL Injection Prevention**: All queries pass through SQLAlchemy ORM parametrizations, preventing SQL injection issues.
-
----
-
-## ⚡ Performance Optimizations
-
-- **Automatic Backend Wake-Up**: Cold-start handler script in the client application issues health checks at boot time to wake up free-tier backend instances.
-- **Modular Code-Splitting**: Code-splitting and React routing lazy loading speeds up initial client loads.
-- **Axios Optimization**: Configured timeouts and retry parameters prevent client hangs on slow network connections.
-- **Optimistic State Management**: Actions immediately update the local client state before database validation reports back, improving UI responsiveness.
+### Validation Checks
+*   **Compilation:** Backend Python packages build cleanly; no syntax or importing issues.
+*   **Model Compatibility:** Scikit-learn pipelines load and parse predictions matching structural orders defined in `feature_names.pkl`.
+*   **API Tests:** Endpoint requests (authentication, logs, profile edits) validate schema compliance using Pydantic.
+*   **CSV Mapping:** CSV file parsing handles normalization, validation, and dry-run diagnostics correctly.
+*   **Cascading Test:** School and student deletions trigger complete cascade removal of nested entities in the relational database.
+*   **Production Build:** Client source compiles successfully using `npm run build` with zero compiler block issues.
 
 ---
 
-## 🛠️ Implementation Status
+## 17. Future Scope
 
-- [x] JWT Authentication & Token Validations
-- [x] Role-Based Access Control Policies (RBAC)
-- [x] School Registry CRUD Endpoints
-- [x] Student Registry CRUD Endpoints
-- [x] Student Soft-deletion & Optimistic UI Updates
-- [x] User Directory and Active/Inactive Toggles
-- [x] CSV Import Wizard with Dynamic Mapping
-- [x] CatBoost Prediction Engine Implementation
-- [x] Single Predict & Batch Predict Handlers
-- [x] Interactive Analytics & Chart Dashboards
-- [x] Student Chronological Performance Timeline
-- [x] Security Audit Logging Engine
-- [x] Automated Recommendation Pipeline
-- [x] Docker Containers for Dev and Prod Deployments
+*   **Attribution Views:** Interactive coefficient waterfall charts integrated directly into student detail pages.
+*   **Intervention Outcome Ledger:** Record specific support programs applied to students and track risk tier drops.
+*   **Automated Alerts:** Send automated notifications (Email/SMS) to guardians and counselors when high-risk prediction states occur.
+*   **Regional Analytics:** Map regional attrition statistics across school districts.
 
 ---
 
-## 🔮 Future Roadmap
+## 18. Contributors
 
-- **Explainable AI UI Enhancements**: Visual SHAP waterfalls directly inside the student detail card.
-- **Intervention Logging Engine**: Track support actions (e.g. scholarship awards, counseling sessions) and evaluate if student risk levels drop over time.
-- **Automated Alerts**: Email and SMS alerts sent to school authorities when a student is predicted as "High Risk".
-- **Predictive Trend Mapping**: Longitudinal analytics mapping predictive drop trends across school clusters.
+*   **DropGuard Engineering Team**
 
 ---
 
-## 👥 Contributors
+## 19. License
 
-- **DropGuard System Architects & Developers** - *For questions, reach out to the core engineering team.*
-
----
-
-## 📄 License
-
-This project is licensed under the **MIT License**. Check the [LICENSE](file:///c:/Users/HP/OneDrive/Pictures/Desktop/Dropout%20Prediction/LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
