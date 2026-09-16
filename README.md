@@ -91,46 +91,52 @@ Student attrition is a complex educational challenge driven by intersecting acad
 
 ## Dataset & ML Features
 
-### Student Import Columns (29 Columns)
-The CSV/Excel import system parses student datasets containing the following **29 columns**:
-1.  `Student_Id`
-2.  `Class`
-3.  `Distance to School (km)`
-4.  `Transport Mode`
-5.  `Travel Time (mins)`
-6.  `Gender`
-7.  `Age`
-8.  `Previous_Year_Percentage`
-9.  `Current_Year_Percentage`
-10. `Overall_Percentage`
-11. `Number_of_Failures`
-12. `Number_of_Absences`
-13. `Attendance_Percentage`
-14. `Attendance_Classification`
-15. `Mother_Education`
-16. `Father_Education`
-17. `Family_Support`
-18. `School_Support`
-19. `Internet_Access`
-20. `Health_Status`
-21. `Family_Income`
-22. `Financial_Difficulty`
-23. `Homework_Completion`
-24. `Low_Motivation`
-25. `Mental_Health_Risk`
-26. `Child_Labour_Risk`
-27. `Computer_Access`
-28. `Smartphone_Access`
-29. `Electricity_Availability`
+The dataset contains 25 attributes/columns, consisting of 24 predictive input attributes and one target variable, Dropout_Status.
 
-### Feature Engineering Details
-*   The import columns serve as a raw registry containing 29 columns.
-*   The ML model does not ingest all 29 raw columns directly; it uses **24 engineered features**.
-*   The backend feature engineering layer validates, encodes, and merges the raw student information into the model's required 24-feature representation (e.g., student IDs and class sections are saved as metadata, while scores and attendance data are normalized).
+### Dataset Schema
+
+| # | Attribute | Type/Role | Description |
+| :- | :--- | :--- | :--- |
+| 1 | `Gender` | Input Feature (Categorical) | Student gender identification (`M` / `F`). |
+| 2 | `Age` | Input Feature (Numerical) | Age of the student in years. |
+| 3 | `Previous_Year_Percentage` | Input Feature (Numerical) | Overall academic marks percentage achieved in the previous academic year. |
+| 4 | `Current_Year_Percentage` | Input Feature (Numerical) | Academic marks percentage in current year assessments. |
+| 5 | `Overall_Percentage` | Input Feature (Numerical) | Cumulative average academic performance percentage. |
+| 6 | `Number_of_Failures` | Input Feature (Numerical) | Total count of past subject or class failures. |
+| 7 | `Number_of_Absences` | Input Feature (Numerical) | Total count of school days missed during the academic term. |
+| 8 | `Attendance_Percentage` | Input Feature (Numerical) | Overall percentage of school days attended. |
+| 9 | `Attendance_Classification` | Input Feature (Categorical) | Categorized attendance level (e.g., `Poor`, `Moderate`, `Good`, `Excellent`). |
+| 10 | `Mother_Education` | Input Feature (Categorical) | Highest educational attainment level of the student's mother. |
+| 11 | `Father_Education` | Input Feature (Categorical) | Highest educational attainment level of the student's father. |
+| 12 | `Family_Support` | Input Feature (Categorical) | Availability of educational support from family (`Yes` / `No`). |
+| 13 | `School_Support` | Input Feature (Categorical) | Extra educational support provided by the school (`Yes` / `No`). |
+| 14 | `Internet_Access` | Input Feature (Categorical) | Access to home internet connectivity (`Yes` / `No`). |
+| 15 | `Health_Status` | Input Feature (Categorical) | Overall student health assessment (e.g., `Poor`, `Average`, `Good`, `Excellent`). |
+| 16 | `Family_Income` | Input Feature (Categorical) | Household income bracket (e.g., `Low`, `Medium`, `High`). |
+| 17 | `Financial_Difficulty` | Input Feature (Categorical) | Indicator of household financial struggle (`Yes` / `No`). |
+| 18 | `Homework_Completion` | Input Feature (Categorical) | Consistency and quality of homework completion (e.g., `Poor`, `Average`, `Good`). |
+| 19 | `Low_Motivation` | Input Feature (Categorical) | Indicator of low academic motivation or disengagement (`Yes` / `No`). |
+| 20 | `Mental_Health_Risk` | Input Feature (Categorical) | Identified mental health or emotional well-being risk indicator (`Yes` / `No`). |
+| 21 | `Child_Labour_Risk` | Input Feature (Categorical) | Indicator of child labour risk or student working during school years (`Yes` / `No`). |
+| 22 | `Computer_Access` | Input Feature (Categorical) | Access to a computer or laptop at home for study (`Yes` / `No`). |
+| 23 | `Smartphone_Access` | Input Feature (Categorical) | Availability of a smartphone for educational purposes (`Yes` / `No`). |
+| 24 | `Electricity_Availability` | Input Feature (Categorical) | Stable availability of household electricity (`Yes` / `No`). |
+| 25 | `Dropout_Status` | Target Variable (Categorical) | Target variable representing student dropout status (`Yes` / `No`). Not used as an input feature. |
+
+### Ingestion & Pipeline Details
+*   **Dataset Structure:** The complete dataset contains 25 columns (24 predictive input attributes and 1 target variable: `Dropout_Status`).
+*   **Inference Pipeline:** When importing spreadsheets or generating real-time predictions, the ML prediction pipeline uses the **24 input features** to compute dropout risk, while `Dropout_Status` serves strictly as the ground-truth target variable for model evaluation and historical tracking.
+*   **Data Validation:** The backend ingestion layer validates, normalizes, and encodes student records into the required 24-feature representation for model inference.
 
 ## Machine Learning Model
 
 The current DropGuard system uses a **Tuned Logistic Regression** pipeline, which is optimized for student tabular data.
+
+### Model Architecture & Features
+*   **Model Type:** Tuned Logistic Regression (scikit-learn pipeline with preprocessing and scaling)
+*   **ML Input Features:** 24 input features
+*   **Target Variable:** `Dropout_Status` (target variable, not used as an input feature)
+*   **Explainability:** Model coefficients are extracted directly to provide transparent, interpretable risk factor insights for each student.
 
 ### Model Artifacts
 Trained model artifacts are loaded dynamically by the prediction service:
@@ -140,8 +146,9 @@ Trained model artifacts are loaded dynamically by the prediction service:
 *   `backend/app/ml/metrics.json` — Evaluation metrics from validation.
 
 ### Verified Model Metrics
-*   **Dataset Size:** 647 rows
+*   **Training Dataset Size:** 647 rows
 *   **ML Input Features:** 24 features
+*   **Target Variable:** `Dropout_Status` (1 target variable)
 *   **Accuracy:** 85.32%
 *   **ROC-AUC:** 95.93%
 
